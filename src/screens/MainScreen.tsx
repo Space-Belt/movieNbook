@@ -1,13 +1,16 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import MainStackNavigator from '../navigation/MainStackNavigator';
+import BottomTabNavigator from '../navigation/BottomTabNavigator';
 
 const RootStack = createStackNavigator();
 
 const MainScreen = () => {
   return (
     <RootStack.Navigator screenOptions={{headerShown: false}}>
-      <RootStack.Screen name="MainStack" component={MainStackNavigator} />
+      <RootStack.Screen
+        name="BottomTabNavigator"
+        component={BottomTabNavigator}
+      />
     </RootStack.Navigator>
   );
 };

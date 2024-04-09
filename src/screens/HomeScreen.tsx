@@ -1,9 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {COLORS} from '../theme/theme';
 
 const HomeScreen = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>HomeScreen</Text>
     </View>
   );
@@ -11,4 +12,8 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: COLORS.Black,
+  },
+});
