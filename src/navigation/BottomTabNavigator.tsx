@@ -2,6 +2,7 @@
 // import CustomIcon from '../components/icons/CustomIcon';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
+
 import {StyleSheet, View} from 'react-native';
 import CustomIcon from '../components/icons/CustomIcon';
 import HomeScreen from '../screens/HomeScreen';
@@ -11,6 +12,18 @@ import UserScreen from '../screens/UserScreen';
 import {COLORS, FONTSIZE, SPACING} from '../theme/theme';
 
 const Tab = createBottomTabNavigator();
+
+const tabBarIconRendering = (name: string, focused: boolean) => {
+  return (
+    <View
+      style={[
+        styles.activeTabBackground,
+        focused ? {backgroundColor: COLORS.Orange} : {},
+      ]}>
+      <CustomIcon name={name} color={COLORS.White} size={FONTSIZE.size_30} />
+    </View>
+  );
+};
 
 const BottomTabNavigator = () => {
   return (
@@ -30,19 +43,7 @@ const BottomTabNavigator = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({focused, color, size}) => {
-            return (
-              <View
-                style={[
-                  styles.activeTabBackground,
-                  focused ? {backgroundColor: COLORS.Orange} : {},
-                ]}>
-                <CustomIcon
-                  name="video"
-                  color={COLORS.White}
-                  size={FONTSIZE.size_30}
-                />
-              </View>
-            );
+            return tabBarIconRendering('video', focused);
           },
         }}
       />
@@ -52,19 +53,7 @@ const BottomTabNavigator = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({focused, color, size}) => {
-            return (
-              <View
-                style={[
-                  styles.activeTabBackground,
-                  focused ? {backgroundColor: COLORS.Orange} : {},
-                ]}>
-                <CustomIcon
-                  name="search"
-                  color={COLORS.White}
-                  size={FONTSIZE.size_30}
-                />
-              </View>
-            );
+            return tabBarIconRendering('search', focused);
           },
         }}
       />
@@ -74,19 +63,7 @@ const BottomTabNavigator = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({focused, color, size}) => {
-            return (
-              <View
-                style={[
-                  styles.activeTabBackground,
-                  focused ? {backgroundColor: COLORS.Orange} : {},
-                ]}>
-                <CustomIcon
-                  name="ticket"
-                  color={COLORS.White}
-                  size={FONTSIZE.size_30}
-                />
-              </View>
-            );
+            return tabBarIconRendering('ticket', focused);
           },
         }}
       />
@@ -95,20 +72,9 @@ const BottomTabNavigator = () => {
         component={UserScreen}
         options={{
           tabBarShowLabel: false,
+
           tabBarIcon: ({focused, color, size}) => {
-            return (
-              <View
-                style={[
-                  styles.activeTabBackground,
-                  focused ? {backgroundColor: COLORS.Orange} : {},
-                ]}>
-                <CustomIcon
-                  name="user"
-                  color={COLORS.White}
-                  size={FONTSIZE.size_30}
-                />
-              </View>
-            );
+            return tabBarIconRendering('user', focused);
           },
         }}
       />
