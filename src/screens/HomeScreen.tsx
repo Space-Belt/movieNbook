@@ -8,14 +8,14 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import {searchMovies} from '../api/apiMovie';
 import InputHeader from '../components/InputHeader';
 import {COLORS} from '../theme/theme';
 
 const {width, height} = Dimensions.get('window');
 
-const getNowPlayingMoviesList = async () => {
-  try {
-  } catch (error) {}
+const getNowPlayingMoviesList = async (keyword: string) => {
+  searchMovies(keyword);
 };
 
 const HomeScreen = () => {
@@ -29,7 +29,8 @@ const HomeScreen = () => {
     React.useState<any>(undefined);
 
   const searchMoviesFunction = () => {
-    navigation.navigate('Search');
+    // navigation.navigate('Search');
+    searchMovies('a');
   };
 
   if (

@@ -16,7 +16,7 @@ import {
 import CustomIcon from './icons/CustomIcon';
 
 interface Props {
-  searchFunction: (args: string) => void;
+  searchFunction: () => void;
 }
 
 const InputHeader = ({searchFunction}: Props) => {
@@ -33,7 +33,7 @@ const InputHeader = ({searchFunction}: Props) => {
       />
       <TouchableOpacity
         style={styles.searchIcon}
-        onPress={() => props.searchFunction(searchText)}>
+        onPress={() => searchFunction()}>
         <CustomIcon
           name="search"
           color={COLORS.Orange}
