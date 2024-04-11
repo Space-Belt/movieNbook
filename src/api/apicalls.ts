@@ -1,6 +1,6 @@
 const apikey: string = 'dc843826d32b72b7a6875e9b7e92645b';
 export const baseImagePath = (size: string, path: string) => {
-  return `https://image.tmdb.org/t/p/${size}${path}`;
+  return `https://image.tmdb.org/t/p/${size}/${path}`;
 };
 export const nowPlayingMovies: string = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apikey}`;
 export const upcomingMovies: string = `https://api.themoviedb.org/3/movie/upcoming?api_key=${apikey}`;
