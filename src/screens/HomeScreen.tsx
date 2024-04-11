@@ -12,9 +12,10 @@ import {
 import {IMovie, getMovies, queryKey} from '../api/apiMovie';
 import CategoryHeader from '../components/CategoryHeader';
 import InputHeader from '../components/InputHeader';
+import NowPlayingList from '../components/MainPageComponents/NowPlayingList';
 import {COLORS} from '../theme/theme';
 
-const {width, height} = Dimensions.get('window');
+export const {width, height} = Dimensions.get('window');
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -75,9 +76,9 @@ const HomeScreen = () => {
     }
     // console.log(nowPlayingMoviesList);
   }, [nowPlayingMovies]);
-  React.useEffect(() => {
-    console.log(nowPlayingMoviesList);
-  }, [nowPlayingMoviesList]);
+  // React.useEffect(() => {
+  //   console.log(nowPlayingMoviesList);
+  // }, [nowPlayingMoviesList]);
 
   if (
     nowPlayingLoading == null ||
@@ -106,7 +107,9 @@ const HomeScreen = () => {
       <View style={styles.categoryWrapper}>
         <CategoryHeader title={'Now Playing'} />
       </View>
-
+      <NowPlayingList
+        data={nowPlayingMovies !== undefined ? nowPlayingMovies : []}
+      />
       {/* 2. 인기 영화  3번이랑 같은 컴포넌트*/}
       <View></View>
 
