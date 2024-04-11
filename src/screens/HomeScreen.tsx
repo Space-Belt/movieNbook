@@ -1,4 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
+import {useQuery} from '@tanstack/react-query';
 import * as React from 'react';
 import {
   ActivityIndicator,
@@ -8,38 +9,80 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {searchMovies} from '../api/apiMovie';
+import {IMovie, getMovies, queryKey} from '../api/apiMovie';
+import CategoryHeader from '../components/CategoryHeader';
 import InputHeader from '../components/InputHeader';
 import {COLORS} from '../theme/theme';
 
 const {width, height} = Dimensions.get('window');
 
-const getNowPlayingMoviesList = async (keyword: string) => {
-  searchMovies(keyword);
-};
-
 const HomeScreen = () => {
   const navigation = useNavigation();
 
-  const [nowPlayingMoviesList, setNowPlayingMoviesList] =
-    React.useState<any>(undefined);
-  const [popularMoviesList, setPopularMoviesList] =
-    React.useState<any>(undefined);
-  const [upcomingMoviesList, setUpcomingMoviesList] =
-    React.useState<any>(undefined);
+  const {
+    data: nowPlayingMovies,
+    isLoading: nowPlayingLoading,
+    isError: nowPlayingIsError,
+    error: nowPlayingError,
+    isSuccess: nowPlayingIsSuccess,
+  } = useQuery({
+    queryKey: queryKey,
+    queryFn: () => getMovies('now_playing'),
+    staleTime: 5 * 60 * 1000,
+  });
 
-  const searchMoviesFunction = () => {
-    // navigation.navigate('Search');
-    searchMovies('a');
-  };
+  const {
+    data: popularMovies,
+    isLoading: popularLoading,
+    isError: popularIsError,
+    error: popularError,
+    isSuccess: popularSuccess,
+  } = useQuery({
+    queryKey: queryKey,
+    queryFn: () => getMovies('popular'),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const {
+    data: upcomingMovies,
+    isLoading: upcomingLoading,
+    isError: upcomingIsError,
+    error: upcomingError,
+    isSuccess: upcomingSuccess,
+  } = useQuery({
+    queryKey: queryKey,
+    queryFn: () => getMovies('upcoming'),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const [nowPlayingMoviesList, setNowPlayingMoviesList] = React.useState<
+    IMovie[]
+  >([]);
+  const [popularMoviesList, setPopularMoviesList] = React.useState<IMovie[]>(
+    [],
+  );
+  const [upcomingMoviesList, setUpcomingMoviesList] = React.useState<IMovie[]>(
+    [],
+  );
+
+  const searchMoviesFunction = () => {};
+
+  const aa = async () => {};
+
+  React.useEffect(() => {
+    if (nowPlayingMovies !== null) {
+      setNowPlayingMoviesList(nowPlayingMovies);
+    }
+    // console.log(nowPlayingMoviesList);
+  }, [nowPlayingMovies]);
+  React.useEffect(() => {
+    console.log(nowPlayingMoviesList);
+  }, [nowPlayingMoviesList]);
 
   if (
-    nowPlayingMoviesList == undefined &&
-    nowPlayingMoviesList == null &&
-    popularMoviesList == undefined &&
-    popularMoviesList == null &&
-    upcomingMoviesList == undefined &&
-    upcomingMoviesList == null
+    nowPlayingLoading == null ||
+    popularLoading == null ||
+    upcomingLoading == null
   ) {
     return (
       <ScrollView
@@ -47,9 +90,7 @@ const HomeScreen = () => {
         bounces={false}
         contentContainerStyle={styles.scrollViewContainer}>
         <StatusBar hidden />
-        <View>
-          <InputHeader searchFunction={searchMoviesFunction} />
-        </View>
+        <InputHeader searchFunction={searchMoviesFunction} />
         <View style={styles.loadingContainer}>
           <ActivityIndicator size={'large'} color={COLORS.Orange} />
         </View>
@@ -60,8 +101,16 @@ const HomeScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <StatusBar hidden />
+      <InputHeader searchFunction={searchMoviesFunction} />
+      {/* 1. 랜덤 영화들 나오는 부분  내가 정한 기준 불러온것들 */}
+      <View style={styles.categoryWrapper}>
+        <CategoryHeader title={'Now Playing'} />
+      </View>
 
-      <View style={styles.loadingContainer}></View>
+      {/* 2. 인기 영화  3번이랑 같은 컴포넌트*/}
+      <View></View>
+
+      {/* 3. 개봉 예정 영화들 */}
     </ScrollView>
   );
 };
@@ -82,4 +131,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputHeaderContainer: {},
+
+  categoryWrapper: {
+    flex: 1,
+    marginTop: 20,
+  },
 });
