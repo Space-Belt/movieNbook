@@ -68,17 +68,11 @@ const HomeScreen = () => {
 
   const searchMoviesFunction = () => {};
 
-  const aa = async () => {};
-
   React.useEffect(() => {
     if (nowPlayingMovies !== null) {
       setNowPlayingMoviesList(nowPlayingMovies);
     }
-    // console.log(nowPlayingMoviesList);
   }, [nowPlayingMovies]);
-  // React.useEffect(() => {
-  //   console.log(nowPlayingMoviesList);
-  // }, [nowPlayingMoviesList]);
 
   if (
     nowPlayingLoading == null ||
@@ -111,7 +105,9 @@ const HomeScreen = () => {
         data={nowPlayingMovies !== undefined ? nowPlayingMovies : []}
       />
       {/* 2. 인기 영화  3번이랑 같은 컴포넌트*/}
-      <View></View>
+      <View style={styles.categoryWrapper}>
+        <CategoryHeader title={'Popular'} />
+      </View>
 
       {/* 3. 개봉 예정 영화들 */}
     </ScrollView>
