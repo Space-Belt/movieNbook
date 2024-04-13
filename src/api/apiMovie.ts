@@ -72,6 +72,6 @@ export const getMovies = async (category: string): Promise<IMovie[]> => {
     return response;
   } catch (error) {
     console.error('Error fetching movies:', error);
-    throw error; // Rethrow the error to handle it at a higher level if needed
+    throw error;
   }
 };

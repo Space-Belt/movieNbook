@@ -1,10 +1,27 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
+import {IMovie} from '../../api/apiMovie';
 
-const reusableMovieList = () => {
+type props = {
+  renderItem: React.ReactElement;
+  data: any;
+};
+
+const reusableMovieList = ({data}: props) => {
+  const keyExtractor = item => {
+    return `${item}`;
+  };
+  const renderItem = item => {
+    return <View></View>;
+  };
   return (
     <View>
-      <Text>reusableMovieList</Text>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item: IMovie) => keyExtractor(item)}
+        horizontal={true}
+      />
     </View>
   );
 };
