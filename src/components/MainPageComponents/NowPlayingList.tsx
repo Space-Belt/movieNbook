@@ -19,11 +19,6 @@ const NowPlayingList = ({data}: props) => {
     return `${item.id}`;
   };
 
-  React.useEffect(() => {
-    console.log('dfdf');
-    console.log(data);
-  }, [data]);
-
   return (
     <View style={styles.container}>
       <Carousel
@@ -31,8 +26,6 @@ const NowPlayingList = ({data}: props) => {
         renderItem={renderItem}
         sliderWidth={Number(windowWidth)}
         itemWidth={Number(windowWidth) * 0.8}
-        // sliderWidth={typeof windowWidth === 'number' ? windowWidth : 100}
-        // itemWidth={typeof windowWidth === 'number' ? windowWidth * 0.8 : 100}
         keyExtractor={keyExtractor}
         inactiveSlideScale={0.9}
         inactiveSlideOpacity={0.5}
