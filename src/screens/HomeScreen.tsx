@@ -4,16 +4,19 @@ import * as React from 'react';
 import {
   ActivityIndicator,
   Dimensions,
+  FlatList,
   ScrollView,
   StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
 import {IMovie, getMovies, queryKey} from '../api/apiMovie';
+import {baseImagePath} from '../api/apicalls';
 import CategoryHeader from '../components/CategoryHeader';
 import InputHeader from '../components/InputHeader';
+import MovieCard from '../components/MainPageComponents/MovieCard';
 import NowPlayingList from '../components/MainPageComponents/NowPlayingList';
-import {COLORS} from '../theme/theme';
+import {COLORS, SPACING} from '../theme/theme';
 
 export const {width, height} = Dimensions.get('window');
 
@@ -110,6 +113,42 @@ const HomeScreen = () => {
       </View>
 
       {/* 3. 개봉 예정 영화들 */}
+      <FlatList
+        data={nowPlayingMoviesList}
+        keyExtractor={(item: any) => item.id}
+        bounces={false}
+        snapToInterval={width * 0.7 + SPACING.space_36}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        decelerationRate={0}
+        contentContainerStyle={styles.containerGap36}
+        renderItem={({item, index}) => {
+          if (!item.original_title) {
+            return (
+              <View
+                style={{
+                  width: (width - (width * 0.7 + SPACING.space_36 * 2)) / 2,
+                }}></View>
+            );
+          }
+          return (
+            <MovieCard
+              shoudlMarginatedAtEnd={true}
+              cardFunction={() => {
+                navigation.navigate('MovieDetails', {movieid: item.id});
+              }}
+              cardWidth={width * 0.7}
+              isFirst={index == 0 ? true : false}
+              isLast={index == upcomingMoviesList?.length - 1 ? true : false}
+              title={item.original_title}
+              imagePath={baseImagePath('w780', item.poster_path)}
+              genre={item.genre_ids.slice(1, 4)}
+              vote_average={item.vote_average}
+              vote_count={item.vote_count}
+            />
+          );
+        }}
+      />
     </ScrollView>
   );
 };
@@ -134,5 +173,8 @@ const styles = StyleSheet.create({
   categoryWrapper: {
     flex: 1,
     marginTop: 20,
+  },
+  containerGap36: {
+    gap: SPACING.space_36,
   },
 });
