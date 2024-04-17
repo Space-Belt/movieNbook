@@ -33,7 +33,7 @@ const NowPlayingList = ({data}: Props) => {
         autoplay={true}
         autoplayDelay={1000}
         keyExtractor={(item, index) => keyExtractor(item, index)}
-        initialNumToRender={0}
+        initialNumToRender={2}
         layout={'default'}
         loop={true}
       />
