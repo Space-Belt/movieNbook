@@ -4,20 +4,24 @@ import Carousel from 'react-native-snap-carousel';
 import {IMovie} from '../../api/apiMovie';
 import NowPlayingCard from './NowPlayingCard';
 
-type props = {
+type Props = {
   data: IMovie[];
 };
 
 const windowWidth = Dimensions.get('window').width;
 
-const NowPlayingList = ({data}: props) => {
+const NowPlayingList = ({data}: Props) => {
   const renderItem = ({item}: {item: IMovie}) => {
     return <NowPlayingCard item={item} handleCardClicked={() => {}} />;
   };
 
-  const keyExtractor = (item: IMovie) => {
-    return `${item.id}`;
+  const keyExtractor = (item: IMovie, index: number) => {
+    return `${item.id}-${item.original_title}-${index}`;
   };
+
+  React.useEffect(() => {
+    console.log(windowWidth);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -25,11 +29,11 @@ const NowPlayingList = ({data}: props) => {
         data={data}
         renderItem={renderItem}
         sliderWidth={Number(windowWidth)}
-        itemWidth={Number(windowWidth) * 0.8}
-        keyExtractor={keyExtractor}
-        inactiveSlideScale={0.9}
-        inactiveSlideOpacity={0.5}
-        initialNumToRender={1}
+        itemWidth={266}
+        autoplay={true}
+        autoplayDelay={1000}
+        keyExtractor={(item, index) => keyExtractor(item, index)}
+        initialNumToRender={0}
         layout={'default'}
         loop={true}
       />

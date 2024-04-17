@@ -5,19 +5,19 @@ import {IMovie} from '../../api/apiMovie';
 import {baseImagePath} from '../../api/apicalls';
 import {BORDERRADIUS, COLORS} from '../../theme/theme';
 
-type props = {
+type Props = {
   item: IMovie;
   handleCardClicked: (args: number) => void;
 };
 
-const NowPlayingCard = ({item, handleCardClicked}: props) => {
+const NowPlayingCard = ({item, handleCardClicked}: Props) => {
   return (
     <TouchableOpacity onPress={() => handleCardClicked(item.id)}>
       <View style={styles.container}>
         <FastImage
           source={{uri: baseImagePath('w780', item.poster_path)}}
           style={styles.imageStyle}
-          resizeMode={FastImage.resizeMode.cover}
+          // resizeMode={FastImage.resizeMode.cover}
         />
         <Text style={styles.titleText}>{item.id}</Text>
       </View>
@@ -30,6 +30,7 @@ export default NowPlayingCard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: 266,
     backgroundColor: COLORS.Black,
     justifyContent: 'center',
     alignItems: 'center',
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
     aspectRatio: 2 / 3,
     borderRadius: BORDERRADIUS.radius_20,
     width: '100%',
+    resizeMode: 'cover',
   },
 
   titleText: {
