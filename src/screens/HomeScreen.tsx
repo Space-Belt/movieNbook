@@ -13,7 +13,7 @@ import {
 import {IMovie, getMovies, queryKey} from '../api/apiMovie';
 import {baseImagePath} from '../api/apicalls';
 import CategoryHeader from '../components/CategoryHeader';
-import InputHeader from '../components/InputHeader';
+import InputHeader from '../components/Inputs/InputHeader';
 import MovieCard from '../components/MainPageComponents/MovieCard';
 import NowPlayingList from '../components/MainPageComponents/NowPlayingList';
 import {COLORS, SPACING} from '../theme/theme';

@@ -12,8 +12,8 @@ import {
   FONTFAMILY,
   FONTSIZE,
   SPACING,
-} from '../theme/theme';
-import CustomIcon from './icons/CustomIcon';
+} from '../../theme/theme';
+import CustomIcon from '../icons/CustomIcon';
 
 interface Props {
   searchFunction: () => void;

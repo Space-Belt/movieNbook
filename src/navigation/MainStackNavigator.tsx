@@ -2,6 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
+import SignInScreen from '../screens/SignInScreen';
 
 const MainStack = createStackNavigator();
 
@@ -9,8 +10,8 @@ const MainStackNavigator = () => {
   return (
     <MainStack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName="HomeScreen">
-      <MainStack.Screen name="HomeScreen" component={HomeScreen} />
+      initialRouteName="SignInScreen">
+      <MainStack.Screen name="SignInScreen" component={SignInScreen} />
     </MainStack.Navigator>
   );
 };
