@@ -17,7 +17,6 @@ const NowPlayingCard = ({item, handleCardClicked}: Props) => {
         <FastImage
           source={{uri: baseImagePath('w780', item.poster_path)}}
           style={styles.imageStyle}
-          // resizeMode={FastImage.resizeMode.cover}
         />
         <Text style={styles.titleText}>{item.id}</Text>
       </View>

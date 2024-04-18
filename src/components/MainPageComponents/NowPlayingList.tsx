@@ -29,6 +29,7 @@ const NowPlayingList = ({data}: Props) => {
         data={data}
         renderItem={renderItem}
         sliderWidth={Number(windowWidth)}
+        inactiveSlideScale={0.8}
         itemWidth={266}
         autoplay={true}
         autoplayDelay={1000}
