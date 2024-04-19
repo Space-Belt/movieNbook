@@ -29,10 +29,8 @@ const NowPlayingList = ({data}: Props) => {
         data={data}
         renderItem={renderItem}
         sliderWidth={Number(windowWidth)}
-        inactiveSlideScale={0.8}
+        inactiveSlideScale={0.87}
         itemWidth={266}
-        autoplay={true}
-        autoplayDelay={1000}
         keyExtractor={(item, index) => keyExtractor(item, index)}
         initialNumToRender={2}
         layout={'default'}
@@ -48,6 +46,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    marginTop: 30,
   },
 });
