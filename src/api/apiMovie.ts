@@ -77,3 +77,14 @@ export const getMovies = async (
     throw error;
   }
 };
+
+export const movieDetails = async (id: number) => {
+  const endPoint = `/movie/${id}?api_key=${API_KEY}`;
+  try {
+    const response = (await apiClient.get(endPoint)).data;
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
+};
