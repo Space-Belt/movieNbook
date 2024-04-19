@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -12,9 +13,11 @@ import {RootStackParamList} from './MainScreen';
 import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {useQuery} from '@tanstack/react-query';
 import {movieDetails, searchMovies} from '../api/apiMovie';
-import {COLORS} from '../theme/theme';
+import {BORDERRADIUS, COLORS, FONTSIZE, SPACING} from '../theme/theme';
 import {baseImagePath} from '../api/apicalls';
 import LinearGradient from 'react-native-linear-gradient';
+import CustomIcon from '../components/icons/CustomIcon';
+import {useFocusEffect} from '@react-navigation/native';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -25,23 +28,24 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
   const {
     data: movieDetail,
     isLoading,
-    isError,
-    isSuccess,
+    refetch,
   } = useQuery({
     queryKey: ['movieDetail'],
     queryFn: () => movieDetails(route.params.movieId),
     staleTime: 5 * 60 * 1000,
   });
 
-  React.useEffect(() => {
-    console.log(movieDetail);
-  }, [movieDetail]);
-
   if (isLoading) {
     <View>
       <ActivityIndicator size={'large'} color={COLORS.White} />
     </View>;
   }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch();
+    }, []),
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -53,7 +57,13 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
         <LinearGradient
           colors={[COLORS.BlackRGB10, COLORS.Black]}
           style={styles.linearGradient}>
-          <Text style={{color: 'white'}}>Sign in with Facebook</Text>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => {
+              navigation.goBack();
+            }}>
+            <CustomIcon name="close" style={styles.iconStyle} />
+          </TouchableOpacity>
         </LinearGradient>
       </ImageBackground>
     </ScrollView>
@@ -73,5 +83,20 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     height: '100%',
+  },
+  iconContainer: {
+    position: 'absolute',
+    top: SPACING.space_20 * 2,
+    left: SPACING.space_36,
+    height: SPACING.space_36,
+    width: SPACING.space_36,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: BORDERRADIUS.radius_20,
+    backgroundColor: COLORS.Orange,
+  },
+  iconStyle: {
+    color: COLORS.White,
+    fontSize: FONTSIZE.size_24,
   },
 });
