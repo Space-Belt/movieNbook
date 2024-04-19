@@ -1,4 +1,9 @@
-import {ImageBackground, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {baseImagePath} from '../../api/apicalls';
 import LinearGradient from 'react-native-linear-gradient';
@@ -33,7 +38,7 @@ export default LinearHeader;
 const styles = StyleSheet.create({
   imageBG: {
     width: '100%',
-    aspectRatio: 3072 / 1727,
+    height: 221,
   },
   linearGradient: {
     height: '100%',

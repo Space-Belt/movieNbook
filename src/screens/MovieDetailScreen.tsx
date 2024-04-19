@@ -1,8 +1,11 @@
 import {
   ActivityIndicator,
+  Image,
   ImageBackground,
   ScrollView,
+  StatusBar,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -12,12 +15,19 @@ import {RootStackParamList} from './MainScreen';
 import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {useQuery} from '@tanstack/react-query';
 import {movieDetails, searchMovies} from '../api/apiMovie';
-import {BORDERRADIUS, COLORS, FONTSIZE, SPACING} from '../theme/theme';
+import {
+  BORDERRADIUS,
+  COLORS,
+  FONTFAMILY,
+  FONTSIZE,
+  SPACING,
+} from '../theme/theme';
 import {baseImagePath} from '../api/apicalls';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomIcon from '../components/icons/CustomIcon';
 import {useFocusEffect} from '@react-navigation/native';
 import LinearHeader from '../components/DetailPageComponents/LinearHeader';
+import FastImage from 'react-native-fast-image';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -52,11 +62,24 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <LinearHeader
-        imagePath={movieDetail?.backdrop_path}
-        action={handleGoBack}
-      />
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={{height: 471}}>
+        <LinearHeader
+          imagePath={movieDetail?.backdrop_path}
+          action={handleGoBack}
+        />
+        <FastImage
+          source={{uri: baseImagePath('w342', movieDetail?.poster_path)}}
+          style={styles.cardImage}
+        />
+      </View>
+      <View style={styles.runtimeWrapper}>
+        <CustomIcon name="clock" style={styles.clockIcon} />
+        <Text style={styles.runtimeText}>
+          {Math.floor(movieDetail?.runtime / 60)}h{' '}
+          {Math.floor(movieDetail?.runtime % 60)}m
+        </Text>
+      </View>
     </ScrollView>
   );
 };
@@ -72,13 +95,18 @@ const styles = StyleSheet.create({
     width: '100%',
     aspectRatio: 3072 / 1727,
   },
+
+  appHeaderContainer: {
+    marginHorizontal: SPACING.space_36,
+    marginTop: SPACING.space_20 * 2,
+  },
   linearGradient: {
     height: '100%',
   },
   iconContainer: {
     position: 'absolute',
-    top: SPACING.space_20 * 2,
-    left: SPACING.space_36,
+    top: SPACING.space_12,
+    left: SPACING.space_12,
     height: SPACING.space_36,
     width: SPACING.space_36,
     alignItems: 'center',
@@ -89,5 +117,29 @@ const styles = StyleSheet.create({
   iconStyle: {
     color: COLORS.White,
     fontSize: FONTSIZE.size_24,
+  },
+  cardImage: {
+    width: 236,
+    height: 353,
+    resizeMode: 'cover',
+    top: -118,
+    left: '50%',
+    transform: [{translateX: -118}],
+    borderRadius: BORDERRADIUS.radius_10,
+  },
+  runtimeWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  clockIcon: {
+    fontSize: FONTSIZE.size_20,
+    color: COLORS.WhiteRGBA50,
+    marginRight: SPACING.space_8,
+  },
+  runtimeText: {
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_14,
+    color: COLORS.White,
   },
 });
