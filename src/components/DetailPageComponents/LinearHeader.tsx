@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     position: 'absolute',
-    top: SPACING.space_20 * 2,
-    left: SPACING.space_36,
+    top: SPACING.space_28,
+    left: SPACING.space_20,
     height: SPACING.space_36,
     width: SPACING.space_36,
     alignItems: 'center',

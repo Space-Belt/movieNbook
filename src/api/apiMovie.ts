@@ -68,7 +68,7 @@ export const getMovies = async (
   category: string,
   page: number,
 ): Promise<IMovie[]> => {
-  const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}`;
+  const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}&language=ko-KR`;
   try {
     const response = (await apiClient.get(endPoint)).data.results;
     return response;
@@ -79,7 +79,7 @@ export const getMovies = async (
 };
 
 export const movieDetails = async (id: number) => {
-  const endPoint = `/movie/${id}?api_key=${API_KEY}`;
+  const endPoint = `/movie/${id}?api_key=${API_KEY}&language=ko-KR`;
   try {
     const response = (await apiClient.get(endPoint)).data;
     return response;

@@ -28,6 +28,7 @@ import CustomIcon from '../components/icons/CustomIcon';
 import {useFocusEffect} from '@react-navigation/native';
 import LinearHeader from '../components/DetailPageComponents/LinearHeader';
 import FastImage from 'react-native-fast-image';
+import DetailBasicComponents from '../components/DetailPageComponents/DetailBasicComponents';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -61,85 +62,16 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     </View>;
   }
 
+  console.log(movieDetail);
+
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={{height: 471}}>
-        <LinearHeader
-          imagePath={movieDetail?.backdrop_path}
-          action={handleGoBack}
-        />
-        <FastImage
-          source={{uri: baseImagePath('w342', movieDetail?.poster_path)}}
-          style={styles.cardImage}
-        />
-      </View>
-      <View style={styles.runtimeWrapper}>
-        <CustomIcon name="clock" style={styles.clockIcon} />
-        <Text style={styles.runtimeText}>
-          {Math.floor(movieDetail?.runtime / 60)}h{' '}
-          {Math.floor(movieDetail?.runtime % 60)}m
-        </Text>
-      </View>
-    </ScrollView>
+    <DetailBasicComponents
+      movieDetail={movieDetail}
+      handleGoBack={handleGoBack}
+    />
   );
 };
 
 export default MovieDetailScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.Black,
-  },
-  imageBG: {
-    width: '100%',
-    aspectRatio: 3072 / 1727,
-  },
-
-  appHeaderContainer: {
-    marginHorizontal: SPACING.space_36,
-    marginTop: SPACING.space_20 * 2,
-  },
-  linearGradient: {
-    height: '100%',
-  },
-  iconContainer: {
-    position: 'absolute',
-    top: SPACING.space_12,
-    left: SPACING.space_12,
-    height: SPACING.space_36,
-    width: SPACING.space_36,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: BORDERRADIUS.radius_20,
-    backgroundColor: COLORS.Orange,
-  },
-  iconStyle: {
-    color: COLORS.White,
-    fontSize: FONTSIZE.size_24,
-  },
-  cardImage: {
-    width: 236,
-    height: 353,
-    resizeMode: 'cover',
-    top: -118,
-    left: '50%',
-    transform: [{translateX: -118}],
-    borderRadius: BORDERRADIUS.radius_10,
-  },
-  runtimeWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  clockIcon: {
-    fontSize: FONTSIZE.size_20,
-    color: COLORS.WhiteRGBA50,
-    marginRight: SPACING.space_8,
-  },
-  runtimeText: {
-    fontFamily: FONTFAMILY.poppins_medium,
-    fontSize: FONTSIZE.size_14,
-    color: COLORS.White,
-  },
-});
+const styles = StyleSheet.create({});
