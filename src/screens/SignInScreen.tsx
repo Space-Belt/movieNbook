@@ -21,9 +21,8 @@ const SignInScreen = () => {
 
   const isFilled: boolean = email.length > 0 && password.length > 0;
 
-  const handleInput = (text: any, setValue: Dispatch<SetStateAction<any>>) => {
-    setValue(text);
-  };
+  // 로그인시에 작동할 함수
+  const handleLogin = () => {};
 
   const filledStyle: StyleProp<ViewStyle> = {
     backgroundColor: isFilled ? '#FF5524' : '#333',

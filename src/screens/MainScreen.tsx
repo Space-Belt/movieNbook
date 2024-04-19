@@ -9,7 +9,7 @@ const MainScreen = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
 
   const checkLogin = () => {
-    return true;
+    return false;
   };
   React.useEffect(() => {
     setIsLoggedIn(checkLogin());
