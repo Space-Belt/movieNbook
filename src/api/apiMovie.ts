@@ -64,9 +64,11 @@ export const searchMovies = async (keyword: string): Promise<IMovie[]> => {
   return response;
 };
 
-export const getMovies = async (category: string): Promise<IMovie[]> => {
-  const endPoint = `/movie/${category}?api_key=${API_KEY}`;
-
+export const getMovies = async (
+  category: string,
+  page: number,
+): Promise<IMovie[]> => {
+  const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}`;
   try {
     const response = (await apiClient.get(endPoint)).data.results;
     return response;
