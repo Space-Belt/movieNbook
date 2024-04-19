@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import LinearHeader from './LinearHeader';
 import FastImage from 'react-native-fast-image';
@@ -12,13 +12,19 @@ import {
   FONTFAMILY,
 } from '../../theme/theme';
 import moment from 'moment';
+import CategoryHeader from '../CategoryHeader';
 
 type Props = {
   movieDetail: any;
+  castingMember: any;
   handleGoBack: () => void;
 };
 
-const DetailBasicComponents = ({movieDetail, handleGoBack}: Props) => {
+const DetailBasicComponents = ({
+  movieDetail,
+  handleGoBack,
+  castingMember,
+}: Props) => {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.topWrapper}>
@@ -52,12 +58,17 @@ const DetailBasicComponents = ({movieDetail, handleGoBack}: Props) => {
       <View style={styles.rateWrapper}>
         <CustomIcon name="star" style={styles.starIcon} />
         <Text style={styles.runtimeText}>
-          {movieDetail?.vote_average.toFixed(1)} ({movieDetail?.vote_count})
-        </Text>
-        <Text style={styles.runtimeText}>
-          {moment(movieDetail?.release_date).format('YYYY년 MM월 DD일')}
+          {movieDetail?.vote_average.toFixed(1)} (
+          {movieDetail?.vote_count.toLocaleString()})
         </Text>
       </View>
+
+      <Text style={styles.dateText}>
+        {moment(movieDetail?.release_date).format('YYYY년 MM월 DD일')}
+      </Text>
+      <Text style={styles.descriptionText}>{movieDetail?.overview}</Text>
+
+      <CategoryHeader title="캐스팅" />
     </ScrollView>
   );
 };
@@ -139,7 +150,15 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_20,
     color: COLORS.Yellow,
   },
+  dateText: {
+    marginTop: 5,
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_12,
+    color: COLORS.White,
+  },
   descriptionText: {
+    marginTop: 15,
+    marginBottom: 25,
     fontFamily: FONTFAMILY.poppins_light,
     fontSize: FONTSIZE.size_14,
     color: COLORS.White,

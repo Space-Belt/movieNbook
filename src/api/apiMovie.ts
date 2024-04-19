@@ -88,3 +88,14 @@ export const movieDetails = async (id: number) => {
     throw error;
   }
 };
+
+export const getCastings = async (id: number) => {
+  const endPoint = `/movie/${id}/credits?api_key=${API_KEY}&language=ko-KR`;
+  try {
+    const response = (await apiClient.get(endPoint)).data;
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
+};

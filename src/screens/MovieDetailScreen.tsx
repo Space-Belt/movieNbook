@@ -14,7 +14,7 @@ import React from 'react';
 import {RootStackParamList} from './MainScreen';
 import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {useQuery} from '@tanstack/react-query';
-import {movieDetails, searchMovies} from '../api/apiMovie';
+import {getCastings, movieDetails, searchMovies} from '../api/apiMovie';
 import {
   BORDERRADIUS,
   COLORS,
@@ -45,6 +45,11 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     queryFn: () => movieDetails(route.params.movieId),
     staleTime: 5 * 60 * 1000,
   });
+  const {data: castingMember, refetch: castingRefetch} = useQuery({
+    queryKey: ['castingActors'],
+    queryFn: () => getCastings(route.params.movieId),
+    staleTime: 5 * 60 * 1000,
+  });
 
   const handleGoBack = () => {
     navigation.goBack();
@@ -53,6 +58,7 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
   useFocusEffect(
     React.useCallback(() => {
       refetch();
+      castingRefetch();
     }, []),
   );
 
@@ -62,11 +68,12 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     </View>;
   }
 
-  console.log(movieDetail);
+  console.log(castingMember);
 
   return (
     <DetailBasicComponents
       movieDetail={movieDetail}
+      castingMember={castingMember}
       handleGoBack={handleGoBack}
     />
   );
