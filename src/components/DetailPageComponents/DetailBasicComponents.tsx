@@ -11,6 +11,7 @@ import {
   SPACING,
   FONTFAMILY,
 } from '../../theme/theme';
+import moment from 'moment';
 
 type Props = {
   movieDetail: any;
@@ -48,6 +49,15 @@ const DetailBasicComponents = ({movieDetail, handleGoBack}: Props) => {
         })}
       </View>
       <Text style={styles.subDescription}>{movieDetail?.tagline}</Text>
+      <View style={styles.rateWrapper}>
+        <CustomIcon name="star" style={styles.starIcon} />
+        <Text style={styles.runtimeText}>
+          {movieDetail?.vote_average.toFixed(1)} ({movieDetail?.vote_count})
+        </Text>
+        <Text style={styles.runtimeText}>
+          {moment(movieDetail?.release_date).format('YYYY년 MM월 DD일')}
+        </Text>
+      </View>
     </ScrollView>
   );
 };
@@ -119,5 +129,19 @@ const styles = StyleSheet.create({
     marginHorizontal: SPACING.space_36,
     marginVertical: SPACING.space_15,
     textAlign: 'center',
+  },
+  rateWrapper: {
+    flexDirection: 'row',
+    gap: SPACING.space_10,
+    alignItems: 'center',
+  },
+  starIcon: {
+    fontSize: FONTSIZE.size_20,
+    color: COLORS.Yellow,
+  },
+  descriptionText: {
+    fontFamily: FONTFAMILY.poppins_light,
+    fontSize: FONTSIZE.size_14,
+    color: COLORS.White,
   },
 });
