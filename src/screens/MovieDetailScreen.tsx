@@ -3,7 +3,6 @@ import {
   ImageBackground,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -18,6 +17,7 @@ import {baseImagePath} from '../api/apicalls';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomIcon from '../components/icons/CustomIcon';
 import {useFocusEffect} from '@react-navigation/native';
+import LinearHeader from '../components/DetailPageComponents/LinearHeader';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -35,11 +35,9 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     staleTime: 5 * 60 * 1000,
   });
 
-  if (isLoading) {
-    <View>
-      <ActivityIndicator size={'large'} color={COLORS.White} />
-    </View>;
-  }
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -47,25 +45,18 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     }, []),
   );
 
+  if (isLoading) {
+    <View>
+      <ActivityIndicator size={'large'} color={COLORS.White} />
+    </View>;
+  }
+
   return (
     <ScrollView style={styles.container}>
-      <ImageBackground
-        source={{
-          uri: baseImagePath('w780', movieDetail?.backdrop_path),
-        }}
-        style={styles.imageBG}>
-        <LinearGradient
-          colors={[COLORS.BlackRGB10, COLORS.Black]}
-          style={styles.linearGradient}>
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => {
-              navigation.goBack();
-            }}>
-            <CustomIcon name="close" style={styles.iconStyle} />
-          </TouchableOpacity>
-        </LinearGradient>
-      </ImageBackground>
+      <LinearHeader
+        imagePath={movieDetail?.backdrop_path}
+        action={handleGoBack}
+      />
     </ScrollView>
   );
 };
