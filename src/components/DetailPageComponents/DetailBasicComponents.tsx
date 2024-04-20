@@ -13,6 +13,8 @@ import {
 } from '../../theme/theme';
 import moment from 'moment';
 import CategoryHeader from '../CategoryHeader';
+import CastPicComponent from './CastPicComponent';
+import {MutationMeta} from '@tanstack/react-query';
 
 type Props = {
   movieDetail: any;
@@ -25,6 +27,18 @@ const DetailBasicComponents = ({
   handleGoBack,
   castingMember,
 }: Props) => {
+  const keyExtractor = (item: any) => {
+    return `${item.id}`;
+  };
+
+  const castingRendring = ({item}: {item: any}) => {
+    return (
+      <CastPicComponent
+        imagePath={baseImagePath('w185', item.profile_path)}
+        title={item.original_name}
+      />
+    );
+  };
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.topWrapper}>
@@ -69,6 +83,13 @@ const DetailBasicComponents = ({
       <Text style={styles.descriptionText}>{movieDetail?.overview}</Text>
 
       <CategoryHeader title="캐스팅" />
+      <FlatList
+        data={castingMember.cast}
+        keyExtractor={keyExtractor}
+        renderItem={castingRendring}
+        horizontal
+        contentContainerStyle={styles.castingListWrapper}
+      />
     </ScrollView>
   );
 };
@@ -162,5 +183,9 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_light,
     fontSize: FONTSIZE.size_14,
     color: COLORS.White,
+  },
+  castingListWrapper: {
+    gap: 30,
+    marginTop: 15,
   },
 });
