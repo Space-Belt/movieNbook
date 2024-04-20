@@ -29,6 +29,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import LinearHeader from '../components/DetailPageComponents/LinearHeader';
 import FastImage from 'react-native-fast-image';
 import DetailBasicComponents from '../components/DetailPageComponents/DetailBasicComponents';
+import SelectSeatComponent from '../components/DetailPageComponents/SelectSeatComponent';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -51,6 +52,8 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     staleTime: 5 * 60 * 1000,
   });
 
+  const [reservationPage, setReservationPage] = React.useState<number>(0);
+
   const handleGoBack = () => {
     navigation.goBack();
   };
@@ -70,13 +73,21 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
 
   console.log(castingMember);
 
-  return (
-    <DetailBasicComponents
-      movieDetail={movieDetail}
-      castingMember={castingMember}
-      handleGoBack={handleGoBack}
-    />
-  );
+  if (reservationPage === 0) {
+    return (
+      <DetailBasicComponents
+        movieDetail={movieDetail}
+        castingMember={castingMember}
+        handleGoBack={handleGoBack}
+        page={reservationPage}
+        setPage={setReservationPage}
+      />
+    );
+  }
+
+  if (reservationPage === 1) {
+    return <SelectSeatComponent />;
+  }
 };
 
 export default MovieDetailScreen;

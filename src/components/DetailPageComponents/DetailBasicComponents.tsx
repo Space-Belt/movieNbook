@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import LinearHeader from './LinearHeader';
 import FastImage from 'react-native-fast-image';
 import {baseImagePath} from '../../api/apicalls';
@@ -27,12 +27,16 @@ type Props = {
   movieDetail: any;
   castingMember: any;
   handleGoBack: () => void;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
 };
 
 const DetailBasicComponents = ({
   movieDetail,
   handleGoBack,
   castingMember,
+  page,
+  setPage,
 }: Props) => {
   const keyExtractor = (item: any) => {
     return `${item.id}`;
@@ -98,7 +102,11 @@ const DetailBasicComponents = ({
         contentContainerStyle={styles.castingListWrapper}
       />
 
-      <TouchableOpacity style={styles.buttonStyle} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={() => {
+          setPage(prev => prev + 1);
+        }}>
         <Text style={styles.buttonText}>예약하기</Text>
       </TouchableOpacity>
     </ScrollView>
