@@ -86,7 +86,12 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
   }
 
   if (reservationPage === 1) {
-    return <SelectSeatComponent />;
+    return (
+      <SelectSeatComponent
+        handleGoBack={handleGoBack}
+        poster={movieDetail?.backdrop_path}
+      />
+    );
   }
 };
 
