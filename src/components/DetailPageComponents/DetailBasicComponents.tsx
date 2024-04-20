@@ -1,4 +1,11 @@
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import LinearHeader from './LinearHeader';
 import FastImage from 'react-native-fast-image';
@@ -90,6 +97,10 @@ const DetailBasicComponents = ({
         horizontal
         contentContainerStyle={styles.castingListWrapper}
       />
+
+      <TouchableOpacity style={styles.buttonStyle} onPress={() => {}}>
+        <Text style={styles.buttonText}>예약하기</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -187,5 +198,19 @@ const styles = StyleSheet.create({
   castingListWrapper: {
     gap: 30,
     marginTop: 15,
+  },
+  buttonStyle: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.Orange,
+    marginVertical: SPACING.space_24,
+    borderRadius: BORDERRADIUS.radius_25 * 2,
+    height: 46,
+  },
+  buttonText: {
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_12,
+    color: COLORS.White,
   },
 });
