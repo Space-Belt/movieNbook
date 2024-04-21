@@ -2,6 +2,7 @@ import * as React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import InputHeader from '../components/Inputs/InputHeader';
 import {searchMovies} from '../api/apiMovie';
+import {COLORS} from '../theme/theme';
 
 const SearchScreen = () => {
   const handleSearch = async (text: string) => {
@@ -18,5 +19,8 @@ const SearchScreen = () => {
 export default SearchScreen;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.Black,
+  },
 });
