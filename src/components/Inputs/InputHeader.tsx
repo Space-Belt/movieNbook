@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,11 +17,11 @@ import CustomIcon from '../icons/CustomIcon';
 
 interface Props {
   searchFunction: (args: string) => void;
+  searchText: string;
+  setSearchText: Dispatch<SetStateAction<string>>;
 }
 
-const InputHeader = ({searchFunction}: Props) => {
-  const [searchText, setSearchText] = React.useState<string>('');
-
+const InputHeader = ({searchFunction, searchText, setSearchText}: Props) => {
   return (
     <View style={styles.inputBox}>
       <TextInput
@@ -40,7 +40,6 @@ const InputHeader = ({searchFunction}: Props) => {
           size={FONTSIZE.size_20}
         />
       </TouchableOpacity>
-      <Text style={styles.searchedText}>{searchText}</Text>
     </View>
   );
 };
