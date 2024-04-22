@@ -52,8 +52,10 @@ const SearchScreen = () => {
         searchText={searchText}
         setSearchText={setSearchText}
       />
-      {searchResult == undefined ? (
-        <EmptyResult noticeContent={'Sorry, Nothing Found'} />
+      {searchResult.length === 0 ? (
+        <EmptyResult
+          noticeContent={`검색어 : ${searchText}에 \n 부합하는 결과가 없습니다.`}
+        />
       ) : (
         <View style={styles.flatWrapper}>
           <FlatList
