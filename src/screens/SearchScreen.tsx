@@ -84,8 +84,6 @@ const styles = StyleSheet.create({
     gap: SPACING.space_12,
   },
   contentContainerStyle: {
-    alignItems: 'center',
-
     marginHorizontal: 5,
   },
 });
