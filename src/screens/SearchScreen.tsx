@@ -35,6 +35,9 @@ const SearchScreen = () => {
       />
     );
   };
+  const keyExtractor = (item: any, index: number) => {
+    return `${item.id}-number-${index}`;
+  };
 
   React.useEffect(() => {
     if (debouncedQuery.length > 0) {
@@ -52,8 +55,15 @@ const SearchScreen = () => {
       {searchResult == undefined ? (
         <EmptyResult noticeContent={'Sorry, Nothing Found'} />
       ) : (
-        <View>
-          <FlatList data={searchResult} renderItem={renderItem} />
+        <View style={styles.flatWrapper}>
+          <FlatList
+            data={searchResult}
+            renderItem={renderItem}
+            numColumns={2}
+            keyExtractor={(item: any, index) => keyExtractor(item, index)}
+            contentContainerStyle={styles.contentContainerStyle}
+            style={styles.flatStyle}
+          />
         </View>
       )}
     </View>
@@ -66,5 +76,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
+  },
+  flatWrapper: {
+    flex: 1,
+  },
+  flatStyle: {
+    gap: SPACING.space_12,
+  },
+  contentContainerStyle: {
+    alignItems: 'center',
+
+    marginHorizontal: 5,
   },
 });

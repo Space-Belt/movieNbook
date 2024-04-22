@@ -58,10 +58,14 @@ export interface IMovie {
 }
 
 export const searchMovies = async (keyword: string): Promise<IMovie[]> => {
-  const endPoint = `search/movie?api_key=${API_KEY}&query=${keyword}&language=ko-KR`;
-  const response = (await apiClient.get(endPoint)).data.results;
-
-  console.log(response);
+  const endPoint = `search/movie?api_key=${API_KEY}&query=${keyword}`;
+  const response: any = [];
+  const totalPage = (await apiClient.get(endPoint)).data.total_pages;
+  for (let i = 1; i <= totalPage; i++) {
+    const temp = (await apiClient.get(`${endPoint}&page=${i}&language=ko-KR`))
+      .data.results;
+    response.push(...temp);
+  }
   return response;
 };
 

@@ -7,40 +7,17 @@ import {
   FONTSIZE,
   SPACING,
 } from '../../theme/theme';
-import CustomIcon from '../icons/CustomIcon';
-
-const genres: any = {
-  12: 'Adventure',
-  14: 'Fantasy',
-  16: 'Animation',
-  18: 'Drama',
-  28: 'Action',
-  35: 'Comedy',
-  80: 'Crime',
-  99: 'Documentry',
-  10751: 'Family',
-  36: 'History',
-  27: 'Horror',
-  10402: 'Music',
-  9648: 'Mystry',
-  10749: 'Romance',
-  878: 'Science Fiction',
-  10770: 'TV Movie',
-  53: 'Thriller',
-  10752: 'War',
-  37: 'Western',
-};
 
 const MovieCard = (props: any) => {
   return (
     <TouchableOpacity onPress={() => props.cardFunction()}>
-      <View style={{maxWidth: props.cardWidth}}>
+      <View style={[styles.cardWrapper, {maxWidth: props.cardWidth}]}>
         <Image
           style={[styles.cardImage, {width: props.cardWidth}]}
           source={{uri: props.imagePath}}
         />
         <View>
-          <Text numberOfLines={1} style={styles.textTitle}>
+          <Text numberOfLines={2} style={styles.textTitle}>
             {props.title}
           </Text>
         </View>
@@ -55,51 +32,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.Black,
   },
+  cardWrapper: {
+    margin: SPACING.space_12,
+  },
   cardImage: {
     aspectRatio: 2 / 3,
     borderRadius: BORDERRADIUS.radius_20,
   },
   textTitle: {
     fontFamily: FONTFAMILY.poppins_regular,
-    fontSize: FONTSIZE.size_24,
+    fontSize: FONTSIZE.size_14,
     color: COLORS.White,
     textAlign: 'center',
     paddingVertical: SPACING.space_10,
-  },
-  rateContainer: {
-    flexDirection: 'row',
-    gap: SPACING.space_10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: SPACING.space_10,
-  },
-  starIcon: {
-    fontSize: FONTSIZE.size_20,
-    color: COLORS.Yellow,
-  },
-  voteText: {
-    fontFamily: FONTFAMILY.poppins_medium,
-    fontSize: FONTSIZE.size_14,
-    color: COLORS.White,
-  },
-  genreContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    gap: SPACING.space_20,
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-  genreBox: {
-    borderColor: COLORS.WhiteRGBA50,
-    borderWidth: 1,
-    paddingVertical: SPACING.space_4,
-    paddingHorizontal: SPACING.space_10,
-    borderRadius: BORDERRADIUS.radius_25,
-  },
-  genreText: {
-    fontFamily: FONTFAMILY.poppins_regular,
-    fontSize: FONTSIZE.size_10,
-    color: COLORS.WhiteRGBA75,
   },
 });
 
