@@ -1,12 +1,15 @@
 import * as React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import InputHeader from '../components/Inputs/InputHeader';
 import {searchMovies} from '../api/apiMovie';
-import {COLORS} from '../theme/theme';
+import {COLORS, SPACING} from '../theme/theme';
 import EmptyResult from '../components/EmptyResult';
 import {useQuery} from '@tanstack/react-query';
 import debounce from 'lodash/debounce';
 import {useDebouncedState} from '../components/hooks/useDebounceSearch';
+import MovieCard from '../components/MainPageComponents/MovieCard';
+import {width} from './HomeScreen';
+import {baseImagePath} from '../api/apicalls';
 
 const SearchScreen = () => {
   const [searchText, setSearchText] = React.useState<string>('');
@@ -23,6 +26,16 @@ const SearchScreen = () => {
     enabled: true,
   });
 
+  const renderItem = ({item}: {item: any}) => {
+    return (
+      <MovieCard
+        cardWidth={width / 2 - SPACING.space_12 * 2}
+        title={item.original_title}
+        imagePath={baseImagePath('w342', item.poster_path)}
+      />
+    );
+  };
+
   React.useEffect(() => {
     if (debouncedQuery.length > 0) {
       refetch();
@@ -36,7 +49,13 @@ const SearchScreen = () => {
         searchText={searchText}
         setSearchText={setSearchText}
       />
-      <EmptyResult noticeContent={'Sorry, Nothing Found'} />
+      {searchResult == undefined ? (
+        <EmptyResult noticeContent={'Sorry, Nothing Found'} />
+      ) : (
+        <View>
+          <FlatList data={searchResult} renderItem={renderItem} />
+        </View>
+      )}
     </View>
   );
 };
