@@ -16,12 +16,12 @@ import {
 import CustomIcon from '../icons/CustomIcon';
 
 interface Props {
-  searchFunction: (args: string) => void;
+  handleDelete: () => void;
   searchText: string;
   setSearchText: Dispatch<SetStateAction<string>>;
 }
 
-const InputHeader = ({searchFunction, searchText, setSearchText}: Props) => {
+const InputHeader = ({handleDelete, searchText, setSearchText}: Props) => {
   return (
     <View style={styles.inputBox}>
       <TextInput
@@ -31,9 +31,7 @@ const InputHeader = ({searchFunction, searchText, setSearchText}: Props) => {
         placeholder="Search your Movies..."
         placeholderTextColor={COLORS.WhiteRGBA32}
       />
-      <TouchableOpacity
-        style={styles.searchIcon}
-        onPress={() => searchFunction(searchText)}>
+      <TouchableOpacity style={styles.searchIcon} onPress={handleDelete}>
         <CustomIcon
           name="search"
           color={COLORS.Orange}
