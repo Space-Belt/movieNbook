@@ -29,7 +29,6 @@ const AuthInput = ({
   placeholder,
   type,
   secureTextEntry,
-
   regex,
 }: Props) => {
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
@@ -47,21 +46,23 @@ const AuthInput = ({
   };
 
   return (
-    <View style={[styles.inputWrapper, isFocused && focusStyle]}>
-      {icon}
-      <TextInput
-        value={value}
-        onChangeText={text => {
-          setValue(text);
-        }}
-        keyboardType={type}
-        placeholder={placeholder}
-        placeholderTextColor={COLORS.Grey}
-        style={styles.textInputStyle}
-        secureTextEntry={secureTextEntry}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-      />
+    <View>
+      <View style={[styles.inputWrapper, isFocused && focusStyle]}>
+        {icon}
+        <TextInput
+          value={value}
+          onChangeText={text => {
+            setValue(text);
+          }}
+          keyboardType={type}
+          placeholder={placeholder}
+          placeholderTextColor={COLORS.Grey}
+          style={styles.textInputStyle}
+          secureTextEntry={secureTextEntry}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      </View>
     </View>
   );
 };
