@@ -15,6 +15,7 @@ import AuthInput from '../components/Inputs/AuthInput';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ViewStyle} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {signIn} from '../api/apiAuth';
 
 const SignInScreen = () => {
   const navigator = useNavigation();
@@ -25,7 +26,9 @@ const SignInScreen = () => {
   const isFilled: boolean = email.length > 0 && password.length > 0;
 
   // 로그인시에 작동할 함수
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    signIn(email, password);
+  };
 
   const filledStyle: StyleProp<ViewStyle> = {
     backgroundColor: isFilled ? '#FF5524' : '#333',
@@ -54,7 +57,7 @@ const SignInScreen = () => {
           regex={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
         />
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={handleLogin}
           style={[styles.buttonStyle, filledStyle]}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
