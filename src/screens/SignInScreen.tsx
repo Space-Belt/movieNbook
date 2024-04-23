@@ -14,8 +14,11 @@ import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../theme/theme';
 import AuthInput from '../components/Inputs/AuthInput';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ViewStyle} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const SignInScreen = () => {
+  const navigator = useNavigation();
+
   const [email, setEmail] = React.useState<any>('');
   const [password, setPassword] = React.useState<any>('');
 
@@ -54,6 +57,13 @@ const SignInScreen = () => {
           onPress={() => {}}
           style={[styles.buttonStyle, filledStyle]}>
           <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigator.navigate('SignUpScreen');
+          }}
+          style={styles.signUpBtn}>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -99,5 +109,15 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.White,
+  },
+  signUpBtn: {
+    backgroundColor: '#E1CD17',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 46,
+    marginTop: 20,
+
+    borderRadius: BORDERRADIUS.radius_20,
   },
 });
