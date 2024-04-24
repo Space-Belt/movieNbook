@@ -3,6 +3,11 @@ import React from 'react';
 import BottomTabNavigator from '../navigation/BottomTabNavigator';
 import MainStackNavigator from '../navigation/MainStackNavigator';
 import MovieDetailScreen from './MovieDetailScreen';
+import {useCheckAuth} from '../components/hooks/useCheckAuth';
+import {useIsFocused} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useRecoilState, useRecoilValue} from 'recoil';
+import {isLoggedInState} from '../recoil/auth';
 
 export type RootStackParamList = {
   MovieDetailScreen: {movieId: number};
@@ -13,22 +18,23 @@ export type RootStackParamList = {
 const RootStack = createStackNavigator<RootStackParamList>();
 
 const MainScreen = () => {
-  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
 
-  const checkLogin = () => {
-    return true;
-  };
   React.useEffect(() => {
-    setIsLoggedIn(checkLogin());
+    const checkIsLogin = async () => {
+      const result = await AsyncStorage.getItem('accessToken');
+      if (result) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    };
+    checkIsLogin();
   }, []);
+
   return (
     <RootStack.Navigator screenOptions={{headerShown: false}}>
       {isLoggedIn ? (
-        <RootStack.Screen
-          name="MainStackNavigator"
-          component={MainStackNavigator}
-        />
-      ) : (
         <>
           <RootStack.Screen
             name="BottomTabNavigator"
@@ -39,6 +45,11 @@ const MainScreen = () => {
             component={MovieDetailScreen}
           />
         </>
+      ) : (
+        <RootStack.Screen
+          name="MainStackNavigator"
+          component={MainStackNavigator}
+        />
       )}
     </RootStack.Navigator>
   );
