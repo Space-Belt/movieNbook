@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {authApiClient} from './apiClient';
+import {customApiClient} from './apiClient';
 
 export const signUp = async (
   userName: string,
@@ -8,7 +8,7 @@ export const signUp = async (
 ) => {
   const endPoint = 'auth/signup';
   try {
-    const response = await authApiClient
+    const response = await customApiClient
       .post(endPoint, {
         username: userName,
         email: email,
@@ -30,7 +30,7 @@ export const signUp = async (
 export const signIn = async (email: string, password: string) => {
   const endPoint = 'auth/login';
   try {
-    const response = await authApiClient.post(endPoint, {
+    const response = await customApiClient.post(endPoint, {
       email: email,
       password: password,
     });

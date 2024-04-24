@@ -7,7 +7,7 @@ export const apiClient = axios.create({
   },
 });
 
-export const authApiClient = axios.create({
+export const customApiClient = axios.create({
   baseURL: 'https://j10fjln2vc.execute-api.ap-northeast-2.amazonaws.com/dev/',
   headers: {
     'Content-Type': 'application/json',
