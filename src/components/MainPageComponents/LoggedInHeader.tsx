@@ -3,15 +3,22 @@ import React from 'react';
 import FastImage from 'react-native-fast-image';
 import {ImageAssets} from '../../assets/images/ImageAssets';
 import {COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
+import {useRecoilValue} from 'recoil';
+import {userInfoState} from '../../recoil/User';
 
 const LoggedInHeader = () => {
   const [userName, setMyUserName] = React.useState<string>('Hoon Park');
+  const myInfo = useRecoilValue(userInfoState);
 
   React.useEffect(() => {}, []);
   return (
     <View style={styles.wrapper}>
-      <FastImage source={ImageAssets.profileImage} style={styles.imageStyle} />
-      <Text style={styles.textStyle}>Welcome {userName}!</Text>
+      <FastImage
+        source={ImageAssets.profileImage}
+        // source={{uri: myInfo.profileImage}}
+        style={styles.imageStyle}
+      />
+      <Text style={styles.textStyle}>{myInfo.user_name} 님! 반가워요👋 </Text>
     </View>
   );
 };
