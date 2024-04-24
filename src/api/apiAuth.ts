@@ -37,7 +37,7 @@ export const signIn = async (email: string, password: string) => {
       })
       .then(res => {
         console.log(res.data.accessToken);
-        AsyncStorage.setItem('access_token', res.data.accessToken);
+        AsyncStorage.setItem('accessToken', res.data.accessToken);
       });
     return response;
   } catch (error) {
@@ -46,4 +46,8 @@ export const signIn = async (email: string, password: string) => {
     return 500;
     throw error;
   }
+};
+
+export const logout = async () => {
+  await AsyncStorage.removeItem('accessToken');
 };
