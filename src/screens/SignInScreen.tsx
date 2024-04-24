@@ -16,18 +16,26 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {ViewStyle} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {signIn} from '../api/apiAuth';
+import {useSetRecoilState} from 'recoil';
+import {isLoggedInState} from '../recoil/auth';
 
 const SignInScreen = () => {
-  const navigator = useNavigation();
+  const navigation = useNavigation();
+
+  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
   const [email, setEmail] = React.useState<any>('');
   const [password, setPassword] = React.useState<any>('');
 
   const isFilled: boolean = email.length > 0 && password.length > 0;
 
-  // 로그인시에 작동할 함수
-  const handleLogin = () => {
-    signIn(email, password);
+  const handleLogin = async () => {
+    const result = await signIn(email, password);
+    if (result === 201) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
   };
 
   const filledStyle: StyleProp<ViewStyle> = {
@@ -63,7 +71,7 @@ const SignInScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigator.navigate('SignUpScreen');
+            navigation.navigate('SignUpScreen' as never);
           }}
           style={styles.signUpBtn}>
           <Text style={styles.buttonText}>Sign Up</Text>
