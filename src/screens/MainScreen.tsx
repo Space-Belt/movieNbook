@@ -1,20 +1,22 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import {useRecoilState} from 'recoil';
 import BottomTabNavigator from '../navigation/BottomTabNavigator';
 import MainStackNavigator from '../navigation/MainStackNavigator';
 import MovieDetailScreen from './MovieDetailScreen';
-import {useCheckAuth} from '../components/hooks/useCheckAuth';
-import {useIsFocused} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useRecoilState, useRecoilValue} from 'recoil';
-import {isLoggedInState} from '../recoil/auth';
+
 import {getMyInfo} from '../api/apiUser';
+
 import {userInfoState} from '../recoil/User';
+import {isLoggedInState} from '../recoil/Auth';
+import EditProfileScreen from './EditProfileScreen';
 
 export type RootStackParamList = {
   MovieDetailScreen: {movieId: number};
   BottomTabNavigator: undefined;
   MainStackNavigator: undefined;
+  EditProfileScreen: undefined;
 };
 
 const RootStack = createStackNavigator<RootStackParamList>();
@@ -59,6 +61,10 @@ const MainScreen = () => {
           <RootStack.Screen
             name="MovieDetailScreen"
             component={MovieDetailScreen}
+          />
+          <RootStack.Screen
+            name="EditProfileScreen"
+            component={EditProfileScreen}
           />
         </>
       ) : (
