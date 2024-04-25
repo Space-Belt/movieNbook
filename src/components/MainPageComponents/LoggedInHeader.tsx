@@ -7,7 +7,6 @@ import {useRecoilValue} from 'recoil';
 import {userInfoState} from '../../recoil/User';
 
 const LoggedInHeader = () => {
-  const [userName, setMyUserName] = React.useState<string>('Hoon Park');
   const myInfo = useRecoilValue(userInfoState);
 
   React.useEffect(() => {}, []);
