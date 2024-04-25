@@ -1,11 +1,38 @@
-import {Modal, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Modal, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import CustomIcon from '../icons/CustomIcon';
 import {FONTSIZE} from '../../theme/theme';
+import {
+  CameraOptions,
+  ImageLibraryOptions,
+  launchCamera,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 
-interface IProps {}
+interface IProps {
+  onClose: () => void;
+}
 
-const ImageSelectWayModal = () => {
+const imagePickerOption = {
+  mediaType: 'photo',
+};
+
+const ImageSelectWayModal = ({onClose}: IProps) => {
+  const onPickImage = (res: any) => {
+    if (res.didCancel || !res) {
+      return;
+    }
+    console.log('PickImage', res);
+  };
+
+  const onLaunchCamera = () => {
+    launchCamera(imagePickerOption as CameraOptions, onPickImage);
+  };
+
+  const onLaunchImageLibrary = () => {
+    launchImageLibrary(imagePickerOption as ImageLibraryOptions, onPickImage);
+  };
+
   return (
     <View style={styles.background}>
       <View style={styles.whiteBox}>
@@ -13,8 +40,8 @@ const ImageSelectWayModal = () => {
           style={styles.actionButton}
           android_ripple={{color: '#eee'}}
           onPress={() => {
-            // onLaunchCamera();
-            // onClose();
+            onLaunchCamera();
+            onClose();
           }}>
           <CustomIcon name="video" style={styles.iconStyle} />
           <Text style={styles.actionText}>카메라로 촬영하기</Text>
@@ -23,8 +50,8 @@ const ImageSelectWayModal = () => {
           style={styles.actionButton}
           android_ripple={{color: '#eee'}}
           onPress={() => {
-            // onLaunchImageLibrary();
-            // onClose();
+            onLaunchImageLibrary();
+            onClose();
           }}>
           <Text style={styles.actionText}>사진 선택하기</Text>
         </Pressable>

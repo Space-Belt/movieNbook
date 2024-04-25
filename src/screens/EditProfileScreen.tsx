@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useCallback} from 'react';
 import CustomIcon from '../components/icons/CustomIcon';
 import {SPACING, BORDERRADIUS, COLORS, FONTSIZE} from '../theme/theme';
 import ProfileHeader from '../components/Profile/ProfileHeader';
@@ -26,6 +26,10 @@ const EditProfileScreen = () => {
   );
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
+  const modalClose = () => {
+    setModalOpen(prev => !prev);
+  };
+
   return (
     <>
       <SafeAreaView style={styles.container}>
@@ -39,10 +43,8 @@ const EditProfileScreen = () => {
       </SafeAreaView>
       <ReusableModal
         visible={modalOpen}
-        onClose={() => {
-          setModalOpen(false);
-        }}
-        children={<ImageSelectWayModal />}
+        onClose={modalClose}
+        children={<ImageSelectWayModal onClose={modalClose} />}
       />
     </>
   );
