@@ -17,7 +17,7 @@ import {ViewStyle} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {signIn} from '../api/apiAuth';
 import {useSetRecoilState} from 'recoil';
-import {isLoggedInState} from '../recoil/auth';
+import {isLoggedInState} from '../recoil/Auth';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
