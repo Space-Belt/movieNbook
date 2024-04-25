@@ -8,18 +8,24 @@ import {
   SPACING,
 } from '../../theme/theme';
 import CustomIcon from '../icons/CustomIcon';
+import {useNavigation} from '@react-navigation/native';
 
 interface IProfileHeader {
   closeBtnVisible: boolean;
   title: string;
 }
 
-const ProfileHeader = ({closeBtnVisible, title}: IProfileHeader) => {
+const ProfileHeader = React.memo(({closeBtnVisible, title}: IProfileHeader) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.invisibleIcon}>
         {closeBtnVisible && (
-          <TouchableOpacity style={styles.iconContainer} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.iconContainer}
+            onPress={() => {
+              navigation.goBack();
+            }}>
             <CustomIcon name="close" style={styles.iconStyle} />
           </TouchableOpacity>
         )}
@@ -28,7 +34,7 @@ const ProfileHeader = ({closeBtnVisible, title}: IProfileHeader) => {
       <View style={styles.invisibleIcon} />
     </View>
   );
-};
+});
 
 export default ProfileHeader;
 
