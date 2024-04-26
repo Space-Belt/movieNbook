@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from 'react-native';
 import React, {useCallback} from 'react';
 import CustomIcon from '../components/icons/CustomIcon';
@@ -40,6 +41,15 @@ const EditProfileScreen = () => {
   const [userName, setUserName] = React.useState<string>(
     myInfo.user_name ? myInfo.user_name : '',
   );
+
+  const changeTextStyle: TextStyle = {
+    color: COLORS.White,
+  };
+
+  const changeBtnStyle: ViewStyle = {
+    backgroundColor: userName !== '' ? COLORS.Orange : COLORS.Grey,
+  };
+
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
   const modalClose = () => {
@@ -86,15 +96,22 @@ const EditProfileScreen = () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <ProfileHeader title={'Edit Profile'} closeBtnVisible={true} />
-        <EditableInfo
-          setProfileImage={setProfileImage}
-          myInfo={myInfo}
-          profileImage={profileImage}
-          userName={userName}
-          setModalOpen={setModalOpen}
-          handleModalOpen={handleModalOpen}
-        />
+        <View style={styles.topWrapper}>
+          <ProfileHeader title={'Edit Profile'} closeBtnVisible={true} />
+          <EditableInfo
+            setProfileImage={setProfileImage}
+            myInfo={myInfo}
+            profileImage={profileImage}
+            userName={userName}
+            setUserName={setUserName}
+            handleModalOpen={handleModalOpen}
+          />
+        </View>
+        <TouchableOpacity
+          style={[styles.btnStyle, changeBtnStyle]}
+          onPress={() => {}}>
+          <Text style={[styles.btnText, changeTextStyle]}>Save</Text>
+        </TouchableOpacity>
       </SafeAreaView>
       <ReusableModal
         visible={modalOpen}
@@ -118,6 +135,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.Black,
   },
+  topWrapper: {
+    flex: 1,
+  },
   iconContainer: {
     position: 'absolute',
     top: SPACING.space_28,
@@ -132,5 +152,16 @@ const styles = StyleSheet.create({
   iconStyle: {
     color: COLORS.White,
     fontSize: FONTSIZE.size_24,
+  },
+  btnStyle: {
+    width: '100%',
+    borderRadius: 19.5,
+    height: 46,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnText: {
+    fontSize: FONTSIZE.size_16,
+    fontWeight: '600',
   },
 });

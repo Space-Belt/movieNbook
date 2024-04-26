@@ -24,13 +24,6 @@ const ImageSelectWayModal = ({
   onLaunchCamera,
   onLaunchImageLibrary,
 }: IProps) => {
-  const onPickImage = (res: any) => {
-    if (res.didCancel || !res) {
-      return;
-    }
-    console.log('PickImage', res);
-  };
-
   return (
     <View style={styles.background}>
       <View style={styles.whiteBox}>
