@@ -11,26 +11,24 @@ import {
 
 interface IProps {
   onClose: () => void;
+  onLaunchCamera: () => void;
+  onLaunchImageLibrary: () => void;
 }
 
 const imagePickerOption = {
   mediaType: 'photo',
 };
 
-const ImageSelectWayModal = ({onClose}: IProps) => {
+const ImageSelectWayModal = ({
+  onClose,
+  onLaunchCamera,
+  onLaunchImageLibrary,
+}: IProps) => {
   const onPickImage = (res: any) => {
     if (res.didCancel || !res) {
       return;
     }
     console.log('PickImage', res);
-  };
-
-  const onLaunchCamera = () => {
-    launchCamera(imagePickerOption as CameraOptions, onPickImage);
-  };
-
-  const onLaunchImageLibrary = () => {
-    launchImageLibrary(imagePickerOption as ImageLibraryOptions, onPickImage);
   };
 
   return (

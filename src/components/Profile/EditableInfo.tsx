@@ -3,37 +3,53 @@ import React, {Dispatch, SetStateAction} from 'react';
 import FastImage from 'react-native-fast-image';
 import {ImageAssets} from '../../assets/images/ImageAssets';
 import EditIcon from '../../assets/images/editIcon.svg';
+import CloseIcon from '../../assets/images/closeIcon.svg';
+import {Asset, ImagePickerResponse} from 'react-native-image-picker';
 
 interface IProps {
   myInfo: any;
-  profileImage: string | null;
+  profileImage: Asset | null;
+  setProfileImage: Dispatch<SetStateAction<Asset | null>>;
   userName: string;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
+  handleModalOpen: () => void;
 }
 
 const EditableInfo = ({
   myInfo,
   profileImage,
+  setProfileImage,
   userName,
   setModalOpen,
+  handleModalOpen,
 }: IProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageArea}>
-        {profileImage !== null ? (
+        {profileImage === null ? (
           <TouchableOpacity
             style={styles.imageWrapper}
-            onPress={() => {
-              setModalOpen(prev => !prev);
-            }}>
+            onPress={handleModalOpen}>
             <FastImage
+              // source={{uri: myInfo.profileImage}}
               source={ImageAssets.profileImage}
               style={styles.imageStyle}
             />
             <EditIcon style={styles.editIconStyle} />
           </TouchableOpacity>
         ) : (
-          <View></View>
+          <View style={styles.imageWrapper}>
+            <FastImage
+              source={{uri: profileImage.uri}}
+              style={styles.imageStyle}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                setProfileImage(null);
+              }}>
+              <CloseIcon style={styles.editIconStyle} />
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     </View>
