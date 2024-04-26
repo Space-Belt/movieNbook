@@ -41,10 +41,10 @@ const MainScreen = () => {
     const getInfo = async () => {
       const result = await getMyInfo();
       setIsMyInfo({
-        id: result.id,
-        email: result.email,
-        user_name: result.user_name,
-        profileImage: result.profileImage,
+        id: result?.id,
+        email: result?.email,
+        user_name: result?.user_name,
+        profileImage: result?.profileImage,
       });
     };
     getInfo();
