@@ -95,7 +95,7 @@ const DetailBasicComponents = ({
 
       <CategoryHeader title="캐스팅" />
       <FlatList
-        data={castingMember.cast}
+        data={castingMember?.cast}
         keyExtractor={keyExtractor}
         renderItem={castingRendring}
         horizontal
