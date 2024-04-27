@@ -14,7 +14,12 @@ import React from 'react';
 import {RootStackParamList} from './MainScreen';
 import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {useQuery} from '@tanstack/react-query';
-import {getCastings, movieDetails, searchMovies} from '../api/apiMovie';
+import {
+  getCastings,
+  getMovieDate,
+  movieDetails,
+  searchMovies,
+} from '../api/apiMovie';
 import {
   BORDERRADIUS,
   COLORS,
@@ -71,8 +76,6 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     </View>;
   }
 
-  console.log(castingMember);
-
   if (reservationPage === 0) {
     return (
       <DetailBasicComponents
@@ -90,6 +93,7 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
       <SelectSeatComponent
         handleGoBack={handleGoBack}
         poster={movieDetail?.backdrop_path}
+        movieId={route.params.movieId}
       />
     );
   }

@@ -10,7 +10,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {IMovie, getMovies, queryKey} from '../api/apiMovie';
+import {IMovie, getMovie, getMovies, queryKey} from '../api/apiMovie';
 import CategoryHeader from '../components/CategoryHeader';
 import NowPlayingList from '../components/MainPageComponents/NowPlayingList';
 import {COLORS, SPACING} from '../theme/theme';
@@ -30,7 +30,7 @@ const HomeScreen = () => {
     isSuccess: nowPlayingIsSuccess,
   } = useQuery({
     queryKey: ['nowPlayingMoviesKey'],
-    queryFn: () => getMovies('now_playing', 1),
+    queryFn: () => getMovie('now-playing', 1),
     staleTime: 5 * 60 * 1000,
   });
 
