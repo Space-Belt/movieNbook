@@ -8,7 +8,13 @@ import {
 } from 'react-native';
 import React from 'react';
 import LinearHeader from './LinearHeader';
-import {COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../../theme/theme';
+import {
+  BORDERRADIUS,
+  COLORS,
+  FONTFAMILY,
+  FONTSIZE,
+  SPACING,
+} from '../../theme/theme';
 import {getMovieDate, getSeats} from '../../api/apiMovie';
 import {useQuery} from '@tanstack/react-query';
 import moment from 'moment';
@@ -84,6 +90,15 @@ const SelectSeatComponent = ({poster, handleGoBack, movieId}: Props) => {
             );
           }}
         />
+        <View style={styles.buttonPriceContainer}>
+          <View style={styles.priceContainer}>
+            <Text style={styles.totalPriceText}>Total Price</Text>
+            <Text style={styles.price}>$ {movieDate.price}.00</Text>
+          </View>
+          <TouchableOpacity style={styles.buttonWrapper} onPress={() => {}}>
+            <Text style={styles.buttonText}>Buy Tickets</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );
@@ -116,6 +131,42 @@ const styles = StyleSheet.create({
   dayText: {
     fontFamily: FONTFAMILY.poppins_regular,
     fontSize: FONTSIZE.size_12,
+    color: COLORS.White,
+  },
+  buttonPriceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 46,
+    paddingHorizontal: SPACING.space_24,
+    // paddingBottom: SPACING.space_24,
+  },
+  priceContainer: {
+    alignItems: 'center',
+  },
+  totalPriceText: {
+    fontFamily: FONTFAMILY.poppins_regular,
+    fontSize: FONTSIZE.size_14,
+    color: COLORS.Grey,
+  },
+  price: {
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_24,
+    color: COLORS.White,
+  },
+  buttonWrapper: {
+    borderRadius: BORDERRADIUS.radius_25,
+    width: 219,
+    height: 46,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.Orange,
+  },
+  buttonText: {
+    // paddingHorizontal: SPACING.space_24,
+    // paddingVertical: SPACING.space_10,
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_16,
     color: COLORS.White,
   },
 });
