@@ -13,3 +13,10 @@ export const customApiClient = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+export const tempApiClient = axios.create({
+  baseURL: 'https://j10fjln2vc.execute-api.ap-northeast-2.amazonaws.com/dev/',
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
+});

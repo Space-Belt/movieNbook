@@ -25,6 +25,7 @@ import {
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
+import {changeInfo} from '../api/apiUser';
 
 const imagePickerOption = {
   mediaType: 'photo',
@@ -61,7 +62,14 @@ const EditProfileScreen = () => {
       return;
     }
     console.log('PickImage', res);
-    setProfileImage(res.assets[0]);
+    // setProfileImage(res.assets[0]);
+    setProfileImage({
+      ...res.assets[0],
+      uri:
+        Platform.OS === 'android'
+          ? res.assets[0].uri
+          : res.assets[0].uri!.replace('file://', ''),
+    });
   };
 
   const onLaunchCamera = () => {
@@ -76,7 +84,6 @@ const EditProfileScreen = () => {
     if (Platform.OS === 'android') {
       setModalOpen(prev => !prev);
     } else {
-      console.log('dfdfdfdfdfdfd');
       ActionSheetIOS.showActionSheetWithOptions(
         {
           options: ['사진 찍기', '사진 선택', '취소'],
@@ -91,6 +98,17 @@ const EditProfileScreen = () => {
         },
       );
     }
+  };
+
+  const changeProfile = () => {
+    const formdata = new FormData();
+    const file = {
+      name: profileImage?.fileName,
+      type: profileImage?.type,
+      uri: profileImage?.uri,
+    };
+    formdata.append('file', file);
+    changeInfo(formdata, userName);
   };
 
   return (
@@ -109,7 +127,9 @@ const EditProfileScreen = () => {
         </View>
         <TouchableOpacity
           style={[styles.btnStyle, changeBtnStyle]}
-          onPress={() => {}}>
+          onPress={() => {
+            changeProfile();
+          }}>
           <Text style={[styles.btnText, changeTextStyle]}>Save</Text>
         </TouchableOpacity>
       </SafeAreaView>
