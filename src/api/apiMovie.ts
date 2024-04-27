@@ -112,7 +112,6 @@ export const getMovie = async (
   const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}&language=ko-KR`;
   try {
     const response = (await customApiClient.get(endPoint)).data.results;
-    // console.log(response);
     return response;
   } catch (error) {
     console.error('Error fetching movies:', error);
@@ -125,6 +124,18 @@ export const getMovieDate = async (movieId: number) => {
   try {
     const response = (await customApiClient.get(endPoint)).data;
     console.log('이거임');
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
+};
+
+export const getSeats = async (shotimeId: number) => {
+  const endPoint = `booking/seats/10`;
+  try {
+    const response = (await customApiClient.get(endPoint)).data;
     console.log(response);
     return response;
   } catch (error) {

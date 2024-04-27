@@ -9,8 +9,9 @@ import {
 import React from 'react';
 import LinearHeader from './LinearHeader';
 import {COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../../theme/theme';
-import {getMovieDate} from '../../api/apiMovie';
+import {getMovieDate, getSeats} from '../../api/apiMovie';
 import {useQuery} from '@tanstack/react-query';
+import moment from 'moment';
 
 type Props = {
   poster: string;
@@ -19,17 +20,37 @@ type Props = {
 };
 
 const SelectSeatComponent = ({poster, handleGoBack, movieId}: Props) => {
-  const [availableDate, setAvailableDate] = React.useState<string[]>([]);
+  const [availableDate, setAvailableDate] = React.useState<
+    {
+      date: string;
+      dayOfWeek: string;
+    }[]
+  >([]);
+  const [selectedDateIndex, setSelectedDateIndex] = React.useState<number>();
+
   const {data: movieDate, refetch: dateRefetch} = useQuery({
     queryKey: ['movieDate'],
     queryFn: () => getMovieDate(movieId),
   });
+  const {data: movieSeats, refetch: seatRefetch} = useQuery({
+    queryKey: ['movieSeats'],
+    queryFn: () => getSeats(movieId),
+  });
 
   React.useEffect(() => {
     if (movieDate !== undefined) {
-      setAvailableDate(Object.keys(movieDate?.result));
+      let result = [];
+      for (const date in movieDate?.result) {
+        const tempDate = moment(date);
+        result.push({
+          date: tempDate.format('YYYY-MM-DD'),
+          dayOfWeek: tempDate.format('dddd'),
+        });
+      }
+      setAvailableDate(result);
     }
   }, [movieDate]);
+  console.log(movieSeats);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -40,12 +61,24 @@ const SelectSeatComponent = ({poster, handleGoBack, movieId}: Props) => {
           keyExtractor={item => item.date}
           horizontal
           bounces={false}
-          // contentContainerStyle={styles.containerGap24}
+          contentContainerStyle={styles.containerGap24}
           renderItem={({item, index}) => {
             return (
-              <TouchableOpacity onPress={() => {}}>
-                <View style={[styles.dateContainer]}>
-                  <Text style={styles.dateText}>{item}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedDateIndex(index);
+                }}>
+                <View
+                  style={[
+                    styles.dateContainer,
+                    index === selectedDateIndex && {
+                      backgroundColor: COLORS.Orange,
+                    },
+                  ]}>
+                  <Text style={styles.dateText}>{item.date.split('-')[2]}</Text>
+                  <Text style={styles.dayText}>
+                    {item.dayOfWeek.slice(0, 3)}
+                  </Text>
                 </View>
               </TouchableOpacity>
             );
