@@ -12,7 +12,7 @@ import React, {useCallback} from 'react';
 import CustomIcon from '../components/icons/CustomIcon';
 import {SPACING, BORDERRADIUS, COLORS, FONTSIZE} from '../theme/theme';
 import ProfileHeader from '../components/Profile/ProfileHeader';
-import {useRecoilValue} from 'recoil';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
 import {userInfoState} from '../recoil/User';
 import ImageSelectWayModal from '../components/Profile/ImageSelectWayModal';
 import ReusableModal from '../components/Modal/ReusableModal';
@@ -36,6 +36,7 @@ const imagePickerOption = {
 
 const EditProfileScreen = () => {
   const myInfo = useRecoilValue(userInfoState);
+  const setMyInfo = useSetRecoilState(userInfoState);
 
   const [profileImage, setProfileImage] = React.useState<Asset | null>(null);
 
@@ -107,8 +108,13 @@ const EditProfileScreen = () => {
       type: profileImage?.type,
       uri: profileImage?.uri,
     };
-    formdata.append('file', file);
+    formdata.append('image', file);
     changeInfo(formdata, userName);
+    setMyInfo({
+      ...myInfo,
+      profileImage: profileImage?.uri,
+      user_name: userName,
+    });
   };
 
   return (

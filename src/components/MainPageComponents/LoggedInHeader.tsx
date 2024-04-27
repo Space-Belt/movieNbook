@@ -13,8 +13,8 @@ const LoggedInHeader = () => {
   return (
     <View style={styles.wrapper}>
       <FastImage
-        source={ImageAssets.profileImage}
-        // source={{uri: myInfo.profileImage}}
+        // source={ImageAssets.profileImage}
+        source={{uri: myInfo.profileImage}}
         style={styles.imageStyle}
       />
       <Text style={styles.textStyle}>{myInfo.user_name} 님! 반가워요👋 </Text>
