@@ -1,5 +1,5 @@
 import {API_KEY} from '@env';
-import {apiClient} from './apiClient';
+import {apiClient, customApiClient} from './apiClient';
 
 export const queryKey = [
   'id',
@@ -98,6 +98,34 @@ export const getCastings = async (id: number) => {
   const endPoint = `/movie/${id}/credits?api_key=${API_KEY}&language=ko-KR`;
   try {
     const response = (await apiClient.get(endPoint)).data;
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
+};
+
+export const getMovie = async (
+  category: string,
+  page: number,
+): Promise<IMovie[]> => {
+  const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}&language=ko-KR`;
+  try {
+    const response = (await customApiClient.get(endPoint)).data.results;
+    // console.log(response);
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
+};
+
+export const getMovieDate = async (movieId: number) => {
+  const endPoint = `booking/showtimes?movieId=${movieId}`;
+  try {
+    const response = (await customApiClient.get(endPoint)).data;
+    console.log('이거임');
+    console.log(response);
     return response;
   } catch (error) {
     console.error('Error fetching movies:', error);
