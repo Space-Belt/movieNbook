@@ -21,11 +21,9 @@ import {
 import moment from 'moment';
 import CategoryHeader from '../CategoryHeader';
 import CastPicComponent from './CastPicComponent';
-import {MutationMeta} from '@tanstack/react-query';
 
 type Props = {
   movieDetail: any;
-  castingMember: any;
   handleGoBack: () => void;
   page: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -34,7 +32,6 @@ type Props = {
 const DetailBasicComponents = ({
   movieDetail,
   handleGoBack,
-  castingMember,
   page,
   setPage,
 }: Props) => {
@@ -54,11 +51,13 @@ const DetailBasicComponents = ({
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.topWrapper}>
         <LinearHeader
-          imagePath={movieDetail?.backdrop_path}
+          imagePath={movieDetail?.movieDetail.backdrop_path}
           action={handleGoBack}
         />
         <FastImage
-          source={{uri: baseImagePath('w342', movieDetail?.poster_path)}}
+          source={{
+            uri: baseImagePath('w342', movieDetail?.movieDetail?.poster_path),
+          }}
           style={styles.cardImage}
         />
       </View>
@@ -71,7 +70,7 @@ const DetailBasicComponents = ({
       </View>
       <Text style={styles.title}>{movieDetail?.original_title}</Text>
       <View style={styles.genreWrapper}>
-        {movieDetail?.genres.map((item: any) => {
+        {movieDetail?.movieDetail?.genres.map((item: any) => {
           return (
             <View style={styles.genreBox} key={item.id}>
               <Text style={styles.genreText}>{item.name}</Text>
@@ -83,19 +82,21 @@ const DetailBasicComponents = ({
       <View style={styles.rateWrapper}>
         <CustomIcon name="star" style={styles.starIcon} />
         <Text style={styles.runtimeText}>
-          {movieDetail?.vote_average.toFixed(1)} (
-          {movieDetail?.vote_count.toLocaleString()})
+          {movieDetail?.movieDetail?.vote_average.toFixed(1)} (
+          {movieDetail?.movieDetail?.vote_count.toLocaleString()})
         </Text>
       </View>
 
       <Text style={styles.dateText}>
         {moment(movieDetail?.release_date).format('YYYY년 MM월 DD일')}
       </Text>
-      <Text style={styles.descriptionText}>{movieDetail?.overview}</Text>
+      <Text style={styles.descriptionText}>
+        {movieDetail?.movieDetail?.overview}
+      </Text>
 
       <CategoryHeader title="캐스팅" />
       <FlatList
-        data={castingMember?.cast}
+        data={movieDetail?.cast}
         keyExtractor={keyExtractor}
         renderItem={castingRendring}
         horizontal

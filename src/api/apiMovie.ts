@@ -73,9 +73,10 @@ export const getMovies = async (
   category: string,
   page: number,
 ): Promise<IMovie[]> => {
+  // const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}&language=ko-KR`;
   const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}&language=ko-KR`;
   try {
-    const response = (await apiClient.get(endPoint)).data.results;
+    const response = (await customApiClient.get(endPoint)).data.results;
     return response;
   } catch (error) {
     console.error('Error fetching movies:', error);
@@ -84,9 +85,13 @@ export const getMovies = async (
 };
 
 export const movieDetails = async (id: number) => {
-  const endPoint = `/movie/${id}?api_key=${API_KEY}&language=ko-KR`;
+  // const endPoint = `/movie/${id}?api_key=${API_KEY}&language=ko-KR`;
+  const endPoint = `/movie/${id}`;
   try {
-    const response = (await apiClient.get(endPoint)).data;
+    const response = (await customApiClient.get(endPoint)).data;
+    console.log('dfdfd');
+    console.log(response);
+    console.log('dfdfd');
     return response;
   } catch (error) {
     console.error('Error fetching movies:', error);
@@ -109,7 +114,7 @@ export const getMovie = async (
   category: string,
   page: number,
 ): Promise<IMovie[]> => {
-  const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}&language=ko-KR`;
+  const endPoint = `/movie/${category}`;
   try {
     const response = (await customApiClient.get(endPoint)).data.results;
     return response;
@@ -123,7 +128,6 @@ export const getMovieDate = async (movieId: number) => {
   const endPoint = `booking/showtimes?movieId=${movieId}`;
   try {
     const response = (await customApiClient.get(endPoint)).data;
-    console.log('이거임');
     console.log(response);
     return response;
   } catch (error) {
@@ -133,7 +137,7 @@ export const getMovieDate = async (movieId: number) => {
 };
 
 export const getSeats = async (shotimeId: number) => {
-  const endPoint = `booking/seats/10`;
+  const endPoint = 'booking/seats/10';
   try {
     const response = (await customApiClient.get(endPoint)).data;
     console.log(response);

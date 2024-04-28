@@ -1,38 +1,13 @@
-import {
-  ActivityIndicator,
-  Image,
-  ImageBackground,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 
-import React from 'react';
-import {RootStackParamList} from './MainScreen';
-import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
-import {useQuery} from '@tanstack/react-query';
-import {
-  getCastings,
-  getMovieDate,
-  movieDetails,
-  searchMovies,
-} from '../api/apiMovie';
-import {
-  BORDERRADIUS,
-  COLORS,
-  FONTFAMILY,
-  FONTSIZE,
-  SPACING,
-} from '../theme/theme';
-import {baseImagePath} from '../api/apicalls';
-import LinearGradient from 'react-native-linear-gradient';
-import CustomIcon from '../components/icons/CustomIcon';
 import {useFocusEffect} from '@react-navigation/native';
-import LinearHeader from '../components/DetailPageComponents/LinearHeader';
-import FastImage from 'react-native-fast-image';
+import {useQuery} from '@tanstack/react-query';
+import React from 'react';
+import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
+import {getCastings, movieDetails} from '../api/apiMovie';
+import {COLORS} from '../theme/theme';
+import {RootStackParamList} from './MainScreen';
+
 import DetailBasicComponents from '../components/DetailPageComponents/DetailBasicComponents';
 import SelectSeatComponent from '../components/DetailPageComponents/SelectSeatComponent';
 
@@ -80,7 +55,6 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     return (
       <DetailBasicComponents
         movieDetail={movieDetail}
-        castingMember={castingMember}
         handleGoBack={handleGoBack}
         page={reservationPage}
         setPage={setReservationPage}
