@@ -4,7 +4,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {useQuery} from '@tanstack/react-query';
 import React from 'react';
 import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
-import {getCastings, movieDetails} from '../api/apiMovie';
+import {movieDetails} from '../api/apiMovie';
 import {COLORS} from '../theme/theme';
 import {RootStackParamList} from './MainScreen';
 
@@ -26,22 +26,20 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     queryFn: () => movieDetails(route.params.movieId),
     staleTime: 5 * 60 * 1000,
   });
-  const {data: castingMember, refetch: castingRefetch} = useQuery({
-    queryKey: ['castingActors'],
-    queryFn: () => getCastings(route.params.movieId),
-    staleTime: 5 * 60 * 1000,
-  });
 
   const [reservationPage, setReservationPage] = React.useState<number>(0);
 
   const handleGoBack = () => {
-    navigation.goBack();
+    if (reservationPage == 0) {
+      navigation.goBack();
+    } else {
+      setReservationPage(prev => prev - 1);
+    }
   };
 
   useFocusEffect(
     React.useCallback(() => {
       refetch();
-      castingRefetch();
     }, []),
   );
 
@@ -66,7 +64,7 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     return (
       <SelectSeatComponent
         handleGoBack={handleGoBack}
-        poster={movieDetail?.backdrop_path}
+        poster={movieDetail?.movieDetail?.backdrop_path}
         movieId={route.params.movieId}
       />
     );

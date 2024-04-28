@@ -57,16 +57,16 @@ export interface IMovie {
   vote_count: number;
 }
 
-export const searchMovies = async (keyword: string): Promise<IMovie[]> => {
-  const endPoint = `search/movie?api_key=${API_KEY}&query=${keyword}`;
-  const response: any = [];
-  const totalPage = (await apiClient.get(endPoint)).data.total_pages;
-  for (let i = 1; i <= totalPage; i++) {
-    const temp = (await apiClient.get(`${endPoint}&page=${i}&language=ko-KR`))
-      .data.results;
-    response.push(...temp);
+export const searchMovies = async (keyword: string) => {
+  const endPoint = `movie?keyword=${keyword}`;
+
+  try {
+    const response = (await customApiClient.get(`${endPoint}`)).data.results;
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
   }
-  return response;
 };
 
 export const getMovies = async (
@@ -85,13 +85,9 @@ export const getMovies = async (
 };
 
 export const movieDetails = async (id: number) => {
-  // const endPoint = `/movie/${id}?api_key=${API_KEY}&language=ko-KR`;
   const endPoint = `/movie/${id}`;
   try {
     const response = (await customApiClient.get(endPoint)).data;
-    console.log('dfdfd');
-    console.log(response);
-    console.log('dfdfd');
     return response;
   } catch (error) {
     console.error('Error fetching movies:', error);
@@ -99,21 +95,7 @@ export const movieDetails = async (id: number) => {
   }
 };
 
-export const getCastings = async (id: number) => {
-  const endPoint = `/movie/${id}/credits?api_key=${API_KEY}&language=ko-KR`;
-  try {
-    const response = (await apiClient.get(endPoint)).data;
-    return response;
-  } catch (error) {
-    console.error('Error fetching movies:', error);
-    throw error;
-  }
-};
-
-export const getMovie = async (
-  category: string,
-  page: number,
-): Promise<IMovie[]> => {
+export const getMovie = async (category: string): Promise<IMovie[]> => {
   const endPoint = `/movie/${category}`;
   try {
     const response = (await customApiClient.get(endPoint)).data.results;

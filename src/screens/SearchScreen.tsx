@@ -28,7 +28,7 @@ const SearchScreen = () => {
     refetch,
   } = useQuery({
     queryKey: ['searchResults'],
-    queryFn: async () => await searchMovies(searchText),
+    queryFn: () => searchMovies(searchText),
     enabled: true,
   });
 
@@ -55,8 +55,17 @@ const SearchScreen = () => {
     // }
   }, [debouncedQuery]);
 
-  if (isLoading) {
-    return <ActivityIndicator size={'large'} color={'white'} />;
+  if (isError) {
+    return (
+      <View style={styles.container}>
+        <InputHeader
+          handleDelete={initSearchText}
+          searchText={searchText}
+          setSearchText={setSearchText}
+        />
+        <ActivityIndicator size={'large'} color={'white'} />
+      </View>
+    );
   }
   return (
     <View style={styles.container}>
