@@ -93,7 +93,7 @@ const SelectSeatComponent = ({poster, handleGoBack, movieId}: Props) => {
         <View style={styles.buttonPriceContainer}>
           <View style={styles.priceContainer}>
             <Text style={styles.totalPriceText}>Total Price</Text>
-            <Text style={styles.price}>$ {movieDate.price}.00</Text>
+            <Text style={styles.price}>$ {movieDate?.price}.00</Text>
           </View>
           <TouchableOpacity style={styles.buttonWrapper} onPress={() => {}}>
             <Text style={styles.buttonText}>Buy Tickets</Text>
