@@ -1,9 +1,18 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {COLORS} from '../theme/theme';
+import ProfileHeader from '../components/Profile/ProfileHeader';
+import EmptyResult from '../components/EmptyResult';
 
 const TicketScreen = () => {
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <ProfileHeader title={'My Tickets'} closeBtnVisible={true} />
+        <EmptyResult noticeContent={`You Don't Have Any Tickets`} />
+      </SafeAreaView>
+    </View>
+  );
 };
 
 export default TicketScreen;
