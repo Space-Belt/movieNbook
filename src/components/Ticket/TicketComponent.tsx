@@ -20,52 +20,54 @@ const TicketComponent = (props: Props) => {
   const poster = baseImagePath('w185', '/cxevDYdeFkiixRShbObdwAHBZry.jpg');
 
   return (
-    <View style={styles.ticketWrapper}>
-      <ImageBackground source={{uri: poster}} style={styles.ticketBGImage}>
-        <LinearGradient
-          colors={[COLORS.OrangeRGBA0, COLORS.Orange]}
-          style={styles.linearGradient}></LinearGradient>
-      </ImageBackground>
+    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View style={styles.ticketWrapper}>
+        <ImageBackground source={{uri: poster}} style={styles.ticketBGImage}>
+          <LinearGradient
+            colors={[COLORS.OrangeRGBA0, COLORS.Orange]}
+            style={styles.linearGradient}></LinearGradient>
+        </ImageBackground>
+        <View>
+          <DashedLine
+            dashLength={15}
+            dashThickness={1}
+            dashGap={5}
+            dashColor={COLORS.Black}
+            style={styles.dashedLine}
+          />
+        </View>
 
-      <DashedLine
-        dashLength={15}
-        dashThickness={1}
-        dashGap={5}
-        dashColor={COLORS.Black}
-        style={styles.dashedLine}
-      />
-
-      <View style={styles.ticketBottom}>
-        <View style={styles.textBox}>
-          <View>
+        <View style={styles.ticketBottom}>
+          <View style={styles.textBox}>
             <View style={styles.movieInfoTextWrapper}>
               <Text style={styles.dateText}>18</Text>
               <Text style={styles.mediumSubText}>Mon</Text>
             </View>
-            <View style={styles.movieInfoTextWrapper}>
-              <Text style={styles.dateText}>18</Text>
-              <Text style={styles.mediumSubText}>Mon</Text>
-            </View>
-          </View>
-          <View>
             <View style={styles.movieInfoTextWrapper}>
               <CustomIcon name="clock" style={styles.clockIcon} />
+              <Text style={styles.mediumSubText}>02:40</Text>
+            </View>
+          </View>
+
+          <View style={styles.textBox}>
+            <View style={styles.movieInfoTextWrapper}>
+              <Text style={styles.rowNSeatText}>Rows</Text>
               <Text style={styles.runtimeText}>
                 {/* {Math.floor(movieData?.runtime / 60)}h{' '}
                 {Math.floor(movieData?.runtime % 60)}m */}
-                02:40
+                04
               </Text>
             </View>
             <View style={styles.movieInfoTextWrapper}>
-              <Text style={styles.dateText}>18</Text>
-              <Text style={styles.mediumSubText}>Mon</Text>
+              <Text style={styles.rowNSeatText}>Seats</Text>
+              <Text style={styles.mediumSubText}>24,25</Text>
             </View>
           </View>
+          <FastImage
+            source={ImageAssets.barcodeImage}
+            style={styles.barcodeStyle}
+          />
         </View>
-        <FastImage
-          source={ImageAssets.barcodeImage}
-          style={styles.barcodeStyle}
-        />
       </View>
     </View>
   );
@@ -75,12 +77,15 @@ export default TicketComponent;
 
 const styles = StyleSheet.create({
   ticketWrapper: {
+    width: 300,
     marginTop: 35,
     justifyContent: 'center',
+    overflow: 'hidden',
   },
   ticketBGImage: {
     alignSelf: 'center',
     width: 300,
+
     aspectRatio: 2 / 3,
     borderTopLeftRadius: BORDERRADIUS.radius_25,
     borderTopRightRadius: BORDERRADIUS.radius_25,
@@ -91,6 +96,7 @@ const styles = StyleSheet.create({
     height: '70%',
   },
   dashedLine: {
+    width: 300,
     backgroundColor: COLORS.Orange,
   },
   leftBlackCircle: {
@@ -139,21 +145,25 @@ const styles = StyleSheet.create({
     right: -40,
   },
   movieInfoTextWrapper: {
+    width: 50,
+    height: 50,
     alignItems: 'center',
-    justifyContent: 'center',
-    height: 48,
+    justifyContent: 'space-between',
   },
   textBox: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: 150,
     justifyContent: 'space-between',
-    gap: 40,
+    marginTop: 15,
   },
   dateText: {
-    fontSize: 24,
+    fontSize: FONTSIZE.size_24,
+    height: 40,
     fontWeight: '500',
     color: COLORS.White,
     fontFamily: FONTFAMILY.poppins_medium,
+    justifyContent: 'center',
   },
   mediumSubText: {
     fontSize: 12,
@@ -161,7 +171,10 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_medium,
   },
   clockIcon: {
+    top: 5,
     fontSize: FONTSIZE.size_24,
+    justifyContent: 'center',
+    height: 40,
     color: COLORS.White,
   },
   runtimeText: {
@@ -169,8 +182,14 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_12,
     color: COLORS.White,
   },
+  rowNSeatText: {
+    fontSize: FONTSIZE.size_16,
+    color: COLORS.White,
+    fontFamily: FONTFAMILY.poppins_medium,
+  },
   barcodeStyle: {
     height: 50,
     aspectRatio: 156 / 50,
+    marginTop: 25,
   },
 });

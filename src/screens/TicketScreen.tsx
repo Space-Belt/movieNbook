@@ -11,6 +11,7 @@ const TicketScreen = () => {
       <SafeAreaView style={styles.container}>
         <ProfileHeader title={'My Tickets'} closeBtnVisible={true} />
         {/* <EmptyResult noticeContent={`You Don't Have Any Tickets`} /> */}
+
         <TicketComponent />
       </SafeAreaView>
     </ScrollView>
