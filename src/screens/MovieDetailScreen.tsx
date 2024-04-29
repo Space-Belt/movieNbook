@@ -11,6 +11,7 @@ import {RootStackParamList} from './MainScreen';
 import DetailBasicComponents from '../components/DetailPageComponents/DetailBasicComponents';
 import SelectSeatComponent from '../components/DetailPageComponents/SelectSeatComponent';
 import PayComponent from '../components/DetailPageComponents/PayComponent';
+import PayResultComponent from '../components/DetailPageComponents/PayResultComponent';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -71,8 +72,20 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
       />
     );
   }
+
   if (reservationPage === 2) {
-    return <PayComponent handleGoBack={handleGoBack} />;
+    return (
+      <PayComponent handleGoBack={handleGoBack} setPage={setReservationPage} />
+    );
+  }
+
+  if (reservationPage === 3) {
+    return (
+      <PayResultComponent
+        handleGoBack={handleGoBack}
+        setPage={setReservationPage}
+      />
+    );
   }
 };
 

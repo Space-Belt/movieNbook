@@ -7,7 +7,7 @@ import {
   ViewProps,
   ViewStyle,
 } from 'react-native';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import ProfileHeader from '../Profile/ProfileHeader';
 import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
 import CardChip from '../../assets/images/cardChip.svg';
@@ -17,9 +17,10 @@ import Wallet from '../../assets/images/wallet.svg';
 
 type Props = {
   handleGoBack: () => void;
+  setPage: Dispatch<SetStateAction<number>>;
 };
 
-const PayComponent = ({handleGoBack}: Props) => {
+const PayComponent = ({handleGoBack, setPage}: Props) => {
   const [selectedCard, setSelectedCard] = React.useState<number>();
 
   const selectedCardStyle: StyleProp<ViewStyle> = {
@@ -101,8 +102,10 @@ const PayComponent = ({handleGoBack}: Props) => {
           </View>
         </View>
         <TouchableOpacity
-          onPress={() => {}}
-          style={[styles.signUpBtn, regesBtnColor]}>
+          onPress={() => {
+            setPage(prev => prev + 1);
+          }}
+          style={[styles.btnStyle, regesBtnColor]}>
           <Text style={styles.buttonText}>Insufficient Balance</Text>
         </TouchableOpacity>
       </View>
@@ -237,7 +240,7 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_24,
     color: COLORS.White,
   },
-  signUpBtn: {
+  btnStyle: {
     backgroundColor: COLORS.Grey,
     flexDirection: 'row',
     alignItems: 'center',
