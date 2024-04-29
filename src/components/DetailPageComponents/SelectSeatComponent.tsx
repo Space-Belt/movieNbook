@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import LinearHeader from './LinearHeader';
 import {
   BORDERRADIUS,
@@ -18,14 +18,22 @@ import {
 import {getMovieDate, getSeats} from '../../api/apiMovie';
 import {useQuery} from '@tanstack/react-query';
 import moment from 'moment';
+import {getPayHistory, getPayMethod} from '../../api/apiPay';
+import CustomIcon from '../icons/CustomIcon';
 
 type Props = {
   poster: string;
   handleGoBack: () => void;
   movieId: number;
+  setPage: Dispatch<SetStateAction<number>>;
 };
 
-const SelectSeatComponent = ({poster, handleGoBack, movieId}: Props) => {
+const SelectSeatComponent = ({
+  poster,
+  handleGoBack,
+  movieId,
+  setPage,
+}: Props) => {
   const [availableDate, setAvailableDate] = React.useState<
     {
       date: string;
@@ -56,7 +64,13 @@ const SelectSeatComponent = ({poster, handleGoBack, movieId}: Props) => {
       setAvailableDate(result);
     }
   }, [movieDate]);
-  console.log(movieSeats);
+
+  React.useEffect(() => {
+    const aa = async () => {
+      await getPayHistory();
+    };
+    aa();
+  }, []);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -90,12 +104,36 @@ const SelectSeatComponent = ({poster, handleGoBack, movieId}: Props) => {
             );
           }}
         />
+        <View style={styles.seatInfoContainer}>
+          <View style={styles.seatInfoWrapper}>
+            <CustomIcon name="radio" style={styles.seatInfoIcon} />
+            <Text style={styles.seatInfoText}>Available</Text>
+          </View>
+          <View style={styles.seatInfoWrapper}>
+            <CustomIcon
+              name="radio"
+              style={[styles.seatInfoIcon, {color: COLORS.Grey}]}
+            />
+            <Text style={styles.seatInfoText}>Taken</Text>
+          </View>
+          <View style={styles.seatInfoWrapper}>
+            <CustomIcon
+              name="radio"
+              style={[styles.seatInfoIcon, {color: COLORS.Orange}]}
+            />
+            <Text style={styles.seatInfoText}>Selected</Text>
+          </View>
+        </View>
         <View style={styles.buttonPriceContainer}>
           <View style={styles.priceContainer}>
             <Text style={styles.totalPriceText}>Total Price</Text>
             <Text style={styles.price}>$ {movieDate?.price}.00</Text>
           </View>
-          <TouchableOpacity style={styles.buttonWrapper} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.buttonWrapper}
+            onPress={() => {
+              setPage(prev => prev + 1);
+            }}>
             <Text style={styles.buttonText}>Buy Tickets</Text>
           </TouchableOpacity>
         </View>
@@ -163,10 +201,29 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.Orange,
   },
   buttonText: {
-    // paddingHorizontal: SPACING.space_24,
-    // paddingVertical: SPACING.space_10,
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_16,
+    color: COLORS.White,
+  },
+  seatInfoContainer: {
+    flexDirection: 'row',
+    marginTop: SPACING.space_36,
+    marginBottom: SPACING.space_10,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  seatInfoWrapper: {
+    flexDirection: 'row',
+    gap: SPACING.space_10,
+    alignItems: 'center',
+  },
+  seatInfoIcon: {
+    fontSize: FONTSIZE.size_20,
+    color: COLORS.White,
+  },
+  seatInfoText: {
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_12,
     color: COLORS.White,
   },
 });

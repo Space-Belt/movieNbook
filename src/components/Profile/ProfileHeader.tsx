@@ -13,28 +13,35 @@ import {useNavigation} from '@react-navigation/native';
 interface IProfileHeader {
   closeBtnVisible: boolean;
   title: string;
+  handleGoBack?: () => void;
 }
 
-const ProfileHeader = React.memo(({closeBtnVisible, title}: IProfileHeader) => {
-  const navigation = useNavigation();
-  return (
-    <View style={styles.container}>
-      <View style={styles.invisibleIcon}>
-        {closeBtnVisible && (
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => {
-              navigation.goBack();
-            }}>
-            <CustomIcon name="close" style={styles.iconStyle} />
-          </TouchableOpacity>
-        )}
+const ProfileHeader = React.memo(
+  ({closeBtnVisible, title, handleGoBack}: IProfileHeader) => {
+    const navigation = useNavigation();
+    return (
+      <View style={styles.container}>
+        <View style={styles.invisibleIcon}>
+          {closeBtnVisible && (
+            <TouchableOpacity
+              style={styles.iconContainer}
+              onPress={() => {
+                if (handleGoBack) {
+                  handleGoBack();
+                } else {
+                  navigation.goBack();
+                }
+              }}>
+              <CustomIcon name="close" style={styles.iconStyle} />
+            </TouchableOpacity>
+          )}
+        </View>
+        <Text style={styles.title}>{title}</Text>
+        <View style={styles.invisibleIcon} />
       </View>
-      <Text style={styles.title}>{title}</Text>
-      <View style={styles.invisibleIcon} />
-    </View>
-  );
-});
+    );
+  },
+);
 
 export default ProfileHeader;
 
