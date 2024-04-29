@@ -10,6 +10,7 @@ import {RootStackParamList} from './MainScreen';
 
 import DetailBasicComponents from '../components/DetailPageComponents/DetailBasicComponents';
 import SelectSeatComponent from '../components/DetailPageComponents/SelectSeatComponent';
+import PayComponent from '../components/DetailPageComponents/PayComponent';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -64,10 +65,14 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     return (
       <SelectSeatComponent
         handleGoBack={handleGoBack}
+        setPage={setReservationPage}
         poster={movieDetail?.movieDetail?.backdrop_path}
         movieId={route.params.movieId}
       />
     );
+  }
+  if (reservationPage === 2) {
+    return <PayComponent handleGoBack={handleGoBack} />;
   }
 };
 
