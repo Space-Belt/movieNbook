@@ -117,11 +117,12 @@ export const getMovieDate = async (movieId: number) => {
   }
 };
 
-export const getSeats = async (shotimeId: number) => {
-  const endPoint = 'booking/seats/10';
+export const getSeats = async (showtimeId: number) => {
+  const endPoint = `booking/seats/${showtimeId}`;
+
   try {
     const response = (await customApiClient.get(endPoint)).data;
-    console.log(response);
+
     return response;
   } catch (error) {
     console.error('Error fetching movies:', error);
