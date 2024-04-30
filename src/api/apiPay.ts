@@ -29,8 +29,6 @@ export const getPayHistory = async () => {
       },
     });
 
-    console.log('실행딤?');
-    console.log(payWay);
     return payWay;
   } catch (error) {
     console.log(error);
