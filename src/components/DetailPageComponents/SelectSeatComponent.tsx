@@ -47,10 +47,12 @@ const SelectSeatComponent = ({
 
   const [selectedTimeIndex, setSelectedTimeIndex] = React.useState<number>();
 
-  const [selectedSeat, setSelectedSeat] = React.useState<{
-    col: number;
-    row: number;
-  }>();
+  const [selectedSeat, setSelectedSeat] = React.useState<
+    {
+      col: number;
+      row: number;
+    }[]
+  >();
 
   const {data: movieDate, refetch: dateRefetch} = useQuery({
     queryKey: ['movieDate'],
@@ -85,6 +87,12 @@ const SelectSeatComponent = ({
         </Text>
       </TouchableOpacity>
     );
+  };
+
+  const isSeatSelected = (col: number, row: number) => {
+    if (selectedSeat !== undefined) {
+      return selectedSeat?.some(seat => seat.col === col && seat.row === row);
+    }
   };
 
   React.useEffect(() => {
@@ -129,19 +137,15 @@ const SelectSeatComponent = ({
                       return (
                         <TouchableOpacity
                           onPress={() => {
-                            let temp = {
-                              col: el.col,
-                              row: el.row,
-                            };
-
-                            setSelectedSeat({
+                            let temp = selectedSeat ? [...selectedSeat] : [];
+                            temp.push({
                               col: el.col,
                               row: el.row,
                             });
+
+                            setSelectedSeat([...temp]);
                           }}>
-                          {selectedSeat !== undefined &&
-                          selectedSeat.col === el.col &&
-                          selectedSeat.row === el.row ? (
+                          {isSeatSelected(el.col, el.row) ? (
                             <SelectedSeatIcon />
                           ) : (
                             <AvailableSeat />
@@ -226,7 +230,9 @@ const SelectSeatComponent = ({
       <View style={styles.buttonPriceContainer}>
         <View style={styles.priceContainer}>
           <Text style={styles.totalPriceText}>Total Price</Text>
-          <Text style={styles.price}>$ {movieDate?.price}.00</Text>
+          <Text style={styles.price}>
+            $ {movieDate?.price * selectedSeat.length}.00
+          </Text>
         </View>
         <TouchableOpacity
           style={styles.buttonWrapper}
