@@ -22,7 +22,7 @@ import {getPayHistory, getPayMethod} from '../../api/apiPay';
 import CustomIcon from '../icons/CustomIcon';
 import AvailableSeat from '../../assets/images/availableSeat.svg';
 import TakenSeat from '../../assets/images/takenSeat.svg';
-import selectedSeat from '../../assets/images/selectedSeat.svg';
+import SelectedSeatIcon from '../../assets/images/selectedSeat.svg';
 
 type Props = {
   poster: string;
@@ -46,6 +46,11 @@ const SelectSeatComponent = ({
   const [selectedDateIndex, setSelectedDateIndex] = React.useState<number>();
 
   const [selectedTimeIndex, setSelectedTimeIndex] = React.useState<number>();
+
+  const [selectedSeat, setSelectedSeat] = React.useState<{
+    col: number;
+    row: number;
+  }>();
 
   const {data: movieDate, refetch: dateRefetch} = useQuery({
     queryKey: ['movieDate'],
@@ -121,7 +126,28 @@ const SelectSeatComponent = ({
                   }}>
                   {el.map(el => {
                     if (!el.is_reserved) {
-                      return <AvailableSeat />;
+                      return (
+                        <TouchableOpacity
+                          onPress={() => {
+                            let temp = {
+                              col: el.col,
+                              row: el.row,
+                            };
+
+                            setSelectedSeat({
+                              col: el.col,
+                              row: el.row,
+                            });
+                          }}>
+                          {selectedSeat !== undefined &&
+                          selectedSeat.col === el.col &&
+                          selectedSeat.row === el.row ? (
+                            <SelectedSeatIcon />
+                          ) : (
+                            <AvailableSeat />
+                          )}
+                        </TouchableOpacity>
+                      );
                     } else {
                       return <TakenSeat />;
                     }
