@@ -20,6 +20,9 @@ import {useQuery} from '@tanstack/react-query';
 import moment from 'moment';
 import {getPayHistory, getPayMethod} from '../../api/apiPay';
 import CustomIcon from '../icons/CustomIcon';
+import AvailableSeat from '../../assets/images/availableSeat.svg';
+import TakenSeat from '../../assets/images/takenSeat.svg';
+import selectedSeat from '../../assets/images/selectedSeat.svg';
 
 type Props = {
   poster: string;
@@ -50,11 +53,19 @@ const SelectSeatComponent = ({
   });
   const {data: movieSeats, refetch: seatRefetch} = useQuery({
     queryKey: ['movieSeats'],
-    queryFn: () => getSeats(movieId),
+    queryFn: () => {
+      if (selectedDateIndex !== undefined && selectedTimeIndex !== undefined) {
+        return getSeats(
+          movieDate.result[availableDate[selectedDateIndex].date][
+            selectedTimeIndex
+          ].id,
+        );
+      }
+      return getSeats(0);
+    },
   });
 
   const renderItem = (item: any) => {
-    console.log(item);
     return (
       <TouchableOpacity
         style={[
@@ -72,6 +83,12 @@ const SelectSeatComponent = ({
   };
 
   React.useEffect(() => {
+    if (selectedTimeIndex !== undefined) {
+      seatRefetch();
+    }
+  }, [selectedTimeIndex]);
+
+  React.useEffect(() => {
     if (movieDate !== undefined) {
       let result = [];
       for (const date in movieDate?.result) {
@@ -85,17 +102,35 @@ const SelectSeatComponent = ({
     }
   }, [movieDate]);
 
-  React.useEffect(() => {
-    const aa = async () => {
-      await getPayHistory();
-    };
-    aa();
-  }, []);
-
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* <View style={styles.topWrapper}> */}
       <LinearHeader imagePath={poster} action={handleGoBack} />
+
+      <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View>
+          {movieSeats.length > 0 &&
+            movieSeats.map(el => {
+              return (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    width: 288,
+                    justifyContent: 'space-between',
+                    marginBottom: 15,
+                  }}>
+                  {el.map(el => {
+                    if (!el.is_reserved) {
+                      return <AvailableSeat />;
+                    } else {
+                      return <TakenSeat />;
+                    }
+                  })}
+                </View>
+              );
+            })}
+        </View>
+      </View>
 
       <View style={styles.seatInfoContainer}>
         <View style={styles.seatInfoWrapper}>
