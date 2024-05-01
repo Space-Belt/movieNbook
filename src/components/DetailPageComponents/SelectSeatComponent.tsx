@@ -120,33 +120,28 @@ const SelectSeatComponent = ({
       {/* <View style={styles.topWrapper}> */}
       <LinearHeader imagePath={poster} action={handleGoBack} />
 
-      <View style={{alignItems: 'center', justifyContent: 'center'}}>
+      <View style={styles.movieSeatWrapper}>
         <View>
           {movieSeats !== undefined &&
             movieSeats.length > 0 &&
             movieSeats.map(el => {
               return (
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    width: 288,
-                    justifyContent: 'space-between',
-                    marginBottom: 15,
-                  }}>
-                  {el.map(el => {
+                <View style={styles.movieSeatStyle} key={JSON.stringify(el)}>
+                  {el.map(secondEl => {
                     if (!el.is_reserved) {
                       return (
                         <TouchableOpacity
+                          key={JSON.stringify(secondEl)}
                           onPress={() => {
                             let temp = selectedSeat ? [...selectedSeat] : [];
                             temp.push({
-                              col: el.col,
-                              row: el.row,
+                              col: secondEl.col,
+                              row: secondEl.row,
                             });
 
                             setSelectedSeat([...temp]);
                           }}>
-                          {isSeatSelected(el.col, el.row) ? (
+                          {isSeatSelected(secondEl.col, secondEl.row) ? (
                             <SelectedSeatIcon />
                           ) : (
                             <AvailableSeat />
@@ -258,6 +253,13 @@ const styles = StyleSheet.create({
   topWrapper: {height: 471},
   containerGap24: {
     gap: SPACING.space_24,
+  },
+  movieSeatWrapper: {alignItems: 'center', justifyContent: 'center'},
+  movieSeatStyle: {
+    flexDirection: 'row',
+    width: 288,
+    justifyContent: 'space-between',
+    marginBottom: 15,
   },
   dateContainer: {
     width: SPACING.space_10 * 7,
