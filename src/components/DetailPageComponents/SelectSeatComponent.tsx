@@ -122,7 +122,8 @@ const SelectSeatComponent = ({
 
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
         <View>
-          {movieSeats.length > 0 &&
+          {movieSeats !== undefined &&
+            movieSeats.length > 0 &&
             movieSeats.map(el => {
               return (
                 <View
@@ -231,7 +232,8 @@ const SelectSeatComponent = ({
         <View style={styles.priceContainer}>
           <Text style={styles.totalPriceText}>Total Price</Text>
           <Text style={styles.price}>
-            $ {movieDate?.price * selectedSeat.length}.00
+            {selectedSeat !== undefined &&
+              `$ ${movieDate?.price * selectedSeat.length}.00`}
           </Text>
         </View>
         <TouchableOpacity
