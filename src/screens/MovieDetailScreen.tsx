@@ -32,7 +32,7 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
 
   const [reservationPage, setReservationPage] = React.useState<number>(0);
 
-  const [seatId, setSeatId] = React.useState<number[]>();
+  const [seatId, setSeatId] = React.useState<number[]>([]);
 
   const [showTimeId, setShowTimeId] = React.useState<number>();
 

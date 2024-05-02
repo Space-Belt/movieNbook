@@ -67,17 +67,16 @@ const PayComponent = ({
       if (paymentWay === 'CREDIT_CARD') {
         setBtnText('Pay from Credit Card');
       } else if (paymentWay === 'WALLET') {
-        if (totalPrice !== undefined && data.wallet.balance < totalPrice) {
+        if (totalPrice !== undefined && data?.wallet?.balance < totalPrice) {
           setBtnText('Insufficient Balance');
         } else if (
           totalPrice !== undefined &&
-          data.wallet.balance > totalPrice
+          data?.wallet?.balance > totalPrice
         ) {
           setBtnText('Pay from Wallet');
         }
       }
     }
-    console.log(data);
   }, [paymentWay]);
 
   return (
@@ -159,7 +158,7 @@ const PayComponent = ({
               <Wallet />
               <Text style={styles.leftSideText}>Wallet</Text>
             </View>
-            <Text style={styles.rightSideText}>$ {data.wallet.balance}</Text>
+            <Text style={styles.rightSideText}>$ {data?.wallet?.balance}</Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

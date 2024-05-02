@@ -29,8 +29,9 @@ type Props = {
   handleGoBack: () => void;
   movieId: number;
   setPage: Dispatch<SetStateAction<number>>;
-  seatId?: number[];
-  setSeatId: Dispatch<SetStateAction<number[] | undefined>>;
+  seatId: number[];
+  setSeatId: Dispatch<SetStateAction<number[]>>;
+
   setShowTimeId: Dispatch<SetStateAction<number | undefined>>;
   totalPrice: number | undefined;
   setTotalPrice: Dispatch<SetStateAction<number | undefined>>;
@@ -43,6 +44,7 @@ const SelectSeatComponent = ({
   setPage,
   seatId,
   setSeatId,
+
   setShowTimeId,
   totalPrice,
   setTotalPrice,
@@ -216,7 +218,6 @@ const SelectSeatComponent = ({
             <TouchableOpacity
               onPress={() => {
                 setSelectedDateIndex(index);
-                // setShowTimeId()
                 setSelectedTimeIndex(undefined);
                 setSeatId([]);
               }}>
@@ -260,12 +261,16 @@ const SelectSeatComponent = ({
         </View>
         <TouchableOpacity
           style={styles.buttonWrapper}
+          disabled={seatId.length === 0}
           onPress={() => {
             setPage(prev => prev + 1);
           }}>
-          <Text style={styles.buttonText}>Buy Tickets</Text>
+          <Text style={styles.buttonText}>
+            {seatId.length > 0 ? 'Buy Tickets' : 'Choose seats'}
+          </Text>
         </TouchableOpacity>
       </View>
+      <Text style={{color: 'red'}}>{seatId}</Text>
     </ScrollView>
   );
 };
