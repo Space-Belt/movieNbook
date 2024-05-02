@@ -68,7 +68,9 @@ const DetailBasicComponents = ({
           {Math.floor(movieDetail?.runtime % 60)}m
         </Text>
       </View>
-      <Text style={styles.title}>{movieDetail?.original_title}</Text>
+      <Text style={styles.title}>
+        {movieDetail?.movieDetail?.original_title}
+      </Text>
       <View style={styles.genreWrapper}>
         {movieDetail?.movieDetail?.genres.map((item: any) => {
           return (
