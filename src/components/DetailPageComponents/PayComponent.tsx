@@ -23,7 +23,7 @@ type Props = {
   setPage: Dispatch<SetStateAction<number>>;
   paymentWay: 'WALLET' | 'CREDIT_CARD' | undefined;
   setPaymentWay: Dispatch<SetStateAction<'WALLET' | 'CREDIT_CARD' | undefined>>;
-  handleMakeOrder: () => void;
+  handleMakeOrder: () => Promise<any>;
   totalPrice?: number;
 };
 
@@ -59,6 +59,7 @@ const PayComponent = ({
   const handleResult = async () => {
     const result = await handleMakeOrder();
     if (result.status === 200) {
+      setPage(prev => prev + 1);
     }
   };
 

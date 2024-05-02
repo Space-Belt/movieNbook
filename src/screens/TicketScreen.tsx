@@ -9,7 +9,7 @@ const TicketScreen = () => {
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView style={styles.container}>
-        <ProfileHeader title={'My Tickets'} closeBtnVisible={true} />
+        <ProfileHeader title={'My Tickets'} closeBtnVisible={false} />
         {/* <EmptyResult noticeContent={`You Don't Have Any Tickets`} /> */}
 
         <TicketComponent />
