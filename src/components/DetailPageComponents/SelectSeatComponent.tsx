@@ -29,6 +29,11 @@ type Props = {
   handleGoBack: () => void;
   movieId: number;
   setPage: Dispatch<SetStateAction<number>>;
+  seatId?: number[];
+  setSeatId: Dispatch<SetStateAction<number[] | undefined>>;
+  setShowTimeId: Dispatch<SetStateAction<number | undefined>>;
+  totalPrice: number | undefined;
+  setTotalPrice: Dispatch<SetStateAction<number | undefined>>;
 };
 
 const SelectSeatComponent = ({
@@ -36,6 +41,11 @@ const SelectSeatComponent = ({
   handleGoBack,
   movieId,
   setPage,
+  seatId,
+  setSeatId,
+  setShowTimeId,
+  totalPrice,
+  setTotalPrice,
 }: Props) => {
   const [availableDate, setAvailableDate] = React.useState<
     {
@@ -46,13 +56,6 @@ const SelectSeatComponent = ({
   const [selectedDateIndex, setSelectedDateIndex] = React.useState<number>();
 
   const [selectedTimeIndex, setSelectedTimeIndex] = React.useState<number>();
-
-  const [selectedSeat, setSelectedSeat] = React.useState<
-    {
-      col: number;
-      row: number;
-    }[]
-  >();
 
   const {data: movieDate, refetch: dateRefetch} = useQuery({
     queryKey: ['movieDate'],
@@ -81,6 +84,7 @@ const SelectSeatComponent = ({
         ]}
         onPress={() => {
           setSelectedTimeIndex(item.index);
+          setSeatId([]);
         }}>
         <Text style={{color: COLORS.White}}>
           {item.item.start_time.slice(0, 5)}
@@ -89,15 +93,22 @@ const SelectSeatComponent = ({
     );
   };
 
-  const isSeatSelected = (col: number, row: number) => {
-    if (selectedSeat !== undefined) {
-      return selectedSeat?.some(seat => seat.col === col && seat.row === row);
+  const isSeatSelected = (id: number) => {
+    if (seatId !== undefined) {
+      return seatId?.some(seat => seat === id);
     }
   };
 
   React.useEffect(() => {
     if (selectedTimeIndex !== undefined) {
       seatRefetch();
+      if (selectedDateIndex !== undefined) {
+        setShowTimeId(
+          movieDate.result[availableDate[selectedDateIndex].date][
+            selectedTimeIndex
+          ].id,
+        );
+      }
     }
   }, [selectedTimeIndex]);
 
@@ -114,6 +125,15 @@ const SelectSeatComponent = ({
       setAvailableDate(result);
     }
   }, [movieDate]);
+
+  React.useEffect(() => {
+    if (seatId !== undefined && seatId.length > 0) {
+      let price = seatId.length * movieDate?.price;
+      console.log(price);
+      setTotalPrice(price);
+    }
+    // console.log(movieDate);
+  }, [seatId]);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -133,15 +153,21 @@ const SelectSeatComponent = ({
                         <TouchableOpacity
                           key={JSON.stringify(secondEl)}
                           onPress={() => {
-                            let temp = selectedSeat ? [...selectedSeat] : [];
-                            temp.push({
-                              col: secondEl.col,
-                              row: secondEl.row,
-                            });
+                            let tempId = seatId ? [...seatId] : [];
+                            if (tempId.some(item => item === secondEl.id)) {
+                              console.log(
+                                tempId.filter(item => item !== secondEl.id),
+                              );
+                              setSeatId(
+                                tempId.filter(item => item !== secondEl.id),
+                              );
+                            } else {
+                              tempId.push(secondEl.id);
+                            }
 
-                            setSelectedSeat([...temp]);
+                            setSeatId(tempId);
                           }}>
-                          {isSeatSelected(secondEl.col, secondEl.row) ? (
+                          {isSeatSelected(secondEl.id) ? (
                             <SelectedSeatIcon />
                           ) : (
                             <AvailableSeat />
@@ -190,7 +216,9 @@ const SelectSeatComponent = ({
             <TouchableOpacity
               onPress={() => {
                 setSelectedDateIndex(index);
+                // setShowTimeId()
                 setSelectedTimeIndex(undefined);
+                setSeatId([]);
               }}>
               <View
                 style={[
@@ -227,8 +255,7 @@ const SelectSeatComponent = ({
         <View style={styles.priceContainer}>
           <Text style={styles.totalPriceText}>Total Price</Text>
           <Text style={styles.price}>
-            {selectedSeat !== undefined &&
-              `$ ${movieDate?.price * selectedSeat.length}.00`}
+            {totalPrice === undefined ? '$ 0' : '$ ' + totalPrice}
           </Text>
         </View>
         <TouchableOpacity
