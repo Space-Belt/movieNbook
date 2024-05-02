@@ -28,8 +28,29 @@ export const getPayHistory = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-
+    console.log('dfdsfsd');
+    console.log(payWay);
     return payWay;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const payMovie = async (
+  movie_id: number,
+  showtime_id: number,
+  seatIds: number[],
+  payment_method: 'WALLET' | 'CREDIT_CARD',
+) => {
+  const endPoint = 'payment/order';
+  try {
+    const response = await customApiClient.post(endPoint, {
+      movie_id,
+      showtime_id,
+      seatIds,
+      payment_method,
+    });
+    return response;
   } catch (error) {
     console.log(error);
   }
