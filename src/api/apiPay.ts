@@ -43,13 +43,22 @@ export const payMovie = async (
   payment_method: 'WALLET' | 'CREDIT_CARD',
 ) => {
   const endPoint = 'payment/order';
+  const token = await AsyncStorage.getItem('accessToken');
   try {
-    const response = await customApiClient.post(endPoint, {
-      movie_id,
-      showtime_id,
-      seatIds,
-      payment_method,
-    });
+    const response = await customApiClient.post(
+      endPoint,
+      {
+        movie_id,
+        showtime_id,
+        seatIds,
+        payment_method,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
     return response;
   } catch (error) {
     console.log(error);

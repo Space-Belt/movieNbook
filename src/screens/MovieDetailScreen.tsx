@@ -12,6 +12,7 @@ import DetailBasicComponents from '../components/DetailPageComponents/DetailBasi
 import SelectSeatComponent from '../components/DetailPageComponents/SelectSeatComponent';
 import PayComponent from '../components/DetailPageComponents/PayComponent';
 import PayResultComponent from '../components/DetailPageComponents/PayResultComponent';
+import {payMovie} from '../api/apiPay';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -31,6 +32,16 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
 
   const [reservationPage, setReservationPage] = React.useState<number>(0);
 
+  const [seatId, setSeatId] = React.useState<number[]>();
+
+  const [showTimeId, setShowTimeId] = React.useState<number>();
+
+  const [paymentWay, setPaymentWay] = React.useState<
+    'WALLET' | 'CREDIT_CARD'
+  >();
+
+  const [totalPrice, setTotalPrice] = React.useState<number>();
+
   const handleGoBack = () => {
     if (reservationPage == 0) {
       navigation.goBack();
@@ -39,11 +50,26 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     }
   };
 
+  const handleMakeOrder = async () => {
+    let result: any;
+    if (seatId && showTimeId && paymentWay) {
+      result = await payMovie(
+        route.params.movieId,
+        showTimeId,
+        seatId,
+        paymentWay,
+      );
+    }
+    return result;
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       refetch();
     }, []),
   );
+
+  console.log(movieDetail);
 
   if (isLoading) {
     <View>
@@ -69,13 +95,25 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
         setPage={setReservationPage}
         poster={movieDetail?.movieDetail?.backdrop_path}
         movieId={route.params.movieId}
+        seatId={seatId}
+        setSeatId={setSeatId}
+        setShowTimeId={setShowTimeId}
+        totalPrice={totalPrice}
+        setTotalPrice={setTotalPrice}
       />
     );
   }
 
   if (reservationPage === 2) {
     return (
-      <PayComponent handleGoBack={handleGoBack} setPage={setReservationPage} />
+      <PayComponent
+        handleGoBack={handleGoBack}
+        setPage={setReservationPage}
+        paymentWay={paymentWay}
+        setPaymentWay={setPaymentWay}
+        handleMakeOrder={handleMakeOrder}
+        totalPrice={totalPrice}
+      />
     );
   }
 
