@@ -37,10 +37,6 @@ const NowPlayingList = ({data}: Props) => {
     return `${item.id}-${item.original_title}-${index}`;
   };
 
-  React.useEffect(() => {
-    console.log(windowWidth);
-  }, []);
-
   return (
     <View style={styles.container}>
       <Carousel
@@ -50,7 +46,7 @@ const NowPlayingList = ({data}: Props) => {
         inactiveSlideScale={0.87}
         itemWidth={266}
         keyExtractor={(item, index) => keyExtractor(item, index)}
-        initialNumToRender={2}
+        initialNumToRender={3}
         layout={'default'}
         loop={true}
       />
@@ -62,7 +58,6 @@ export default NowPlayingList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     width: '100%',
   },
 });

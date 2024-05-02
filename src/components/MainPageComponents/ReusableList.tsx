@@ -31,7 +31,6 @@ export default ReusableList;
 const styles = StyleSheet.create({
   containerStyle: {
     gap: 35,
-    flex: 1,
   },
   imageBox: {
     flex: 1,

@@ -131,10 +131,9 @@ const SelectSeatComponent = ({
   React.useEffect(() => {
     if (seatId !== undefined && seatId.length > 0) {
       let price = seatId.length * movieDate?.price;
-      console.log(price);
+
       setTotalPrice(price);
     }
-    // console.log(movieDate);
   }, [seatId]);
 
   return (

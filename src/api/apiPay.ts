@@ -28,7 +28,7 @@ export const getPayHistory = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('dfdsfsd');
+
     console.log(payWay);
     return payWay;
   } catch (error) {

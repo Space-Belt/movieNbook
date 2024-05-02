@@ -62,8 +62,7 @@ const EditProfileScreen = () => {
     if (res.didCancel || !res) {
       return;
     }
-    console.log('PickImage', res);
-    // setProfileImage(res.assets[0]);
+
     setProfileImage({
       ...res.assets[0],
       uri:

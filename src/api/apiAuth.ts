@@ -20,9 +20,8 @@ export const signUp = async (
 
     return response;
   } catch (error) {
-    console.log(error);
-    console.error('Error fetching movies:', error);
-    return 500;
+    console.error('SignUp:', error);
+
     throw error;
   }
 };
@@ -39,8 +38,7 @@ export const signIn = async (email: string, password: string) => {
 
     return response.status;
   } catch (error) {
-    console.log(error);
-    console.error('Error fetching movies:', error);
+    console.error('Sign In:', error);
 
     throw error;
   }

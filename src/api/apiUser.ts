@@ -38,7 +38,7 @@ export const changeInfo = async (image: FormData, name: string) => {
         },
       },
     );
-    console.log(response);
+
     return response;
   } catch (error) {
     console.log(error);

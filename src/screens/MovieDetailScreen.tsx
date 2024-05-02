@@ -12,7 +12,6 @@ import DetailBasicComponents from '../components/DetailPageComponents/DetailBasi
 import SelectSeatComponent from '../components/DetailPageComponents/SelectSeatComponent';
 import PayComponent from '../components/DetailPageComponents/PayComponent';
 import PayResultComponent from '../components/DetailPageComponents/PayResultComponent';
-import {payMovie} from '../api/apiPay';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -68,8 +67,6 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
       refetch();
     }, []),
   );
-
-  console.log(movieDetail);
 
   if (isLoading) {
     <View>

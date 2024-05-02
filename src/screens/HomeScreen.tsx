@@ -4,7 +4,6 @@ import * as React from 'react';
 import {
   ActivityIndicator,
   Dimensions,
-  FlatList,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -20,79 +19,25 @@ import ReusableList from '../components/MainPageComponents/ReusableList';
 export const {width, height} = Dimensions.get('window');
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
-
-  const {
-    data: nowPlayingMovies,
-    isLoading: nowPlayingLoading,
-    isError: nowPlayingIsError,
-    error: nowPlayingError,
-    isSuccess: nowPlayingIsSuccess,
-  } = useQuery({
+  const {data: nowPlayingMovies, isLoading: nowPlayingLoading} = useQuery({
     queryKey: ['nowPlayingMoviesKey'],
     queryFn: () => getMovie('now-playing', 1),
     staleTime: 5 * 60 * 1000,
   });
 
-  const {
-    data: popularMovies,
-    isLoading: popularLoading,
-    isError: popularIsError,
-    error: popularError,
-    isSuccess: popularSuccess,
-  } = useQuery({
+  const {data: popularMovies, isLoading: popularLoading} = useQuery({
     queryKey: ['popularMoviesKey'],
     queryFn: () => getMovies('popular', 2),
     staleTime: 5 * 60 * 1000,
   });
 
-  const {
-    data: upcomingMovies,
-    isLoading: upcomingLoading,
-    isError: upcomingIsError,
-    error: upcomingError,
-    isSuccess: upcomingSuccess,
-  } = useQuery({
+  const {data: upcomingMovies, isLoading: upcomingLoading} = useQuery({
     queryKey: ['upcomingMoviesKey'],
     queryFn: () => getMovies('upcoming', 3),
     staleTime: 5 * 60 * 1000,
   });
 
-  const [nowPlayingMoviesList, setNowPlayingMoviesList] = React.useState<
-    IMovie[]
-  >([]);
-  const [popularMoviesList, setPopularMoviesList] = React.useState<IMovie[]>(
-    [],
-  );
-  const [upcomingMoviesList, setUpcomingMoviesList] = React.useState<IMovie[]>(
-    [],
-  );
-
-  const searchMoviesFunction = () => {};
-
-  React.useEffect(() => {
-    if (nowPlayingMovies !== undefined) {
-      setNowPlayingMoviesList(nowPlayingMovies);
-    }
-  }, [nowPlayingMovies]);
-
-  React.useEffect(() => {
-    if (popularMovies !== undefined) {
-      setPopularMoviesList(popularMovies);
-    }
-  }, [popularMovies]);
-
-  React.useEffect(() => {
-    if (upcomingMovies !== undefined) {
-      setUpcomingMoviesList(upcomingMovies);
-    }
-  }, [upcomingMovies]);
-
-  if (
-    nowPlayingLoading == null ||
-    popularLoading == null ||
-    upcomingLoading == null
-  ) {
+  if (nowPlayingLoading || popularLoading || upcomingLoading) {
     return (
       <ScrollView
         style={styles.container}
