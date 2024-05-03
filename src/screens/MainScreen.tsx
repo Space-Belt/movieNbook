@@ -11,6 +11,7 @@ import {getMyInfo} from '../api/apiUser';
 import {userInfoState} from '../recoil/User';
 import {isLoggedInState} from '../recoil/Auth';
 import EditProfileScreen from './EditProfileScreen';
+import {useNavigation} from '@react-navigation/native';
 
 export type RootStackParamList = {
   MovieDetailScreen: {movieId: number};
@@ -22,15 +23,16 @@ export type RootStackParamList = {
 const RootStack = createStackNavigator<RootStackParamList>();
 
 const MainScreen = () => {
+  const navigation = useNavigation();
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [isMyInfo, setIsMyInfo] = useRecoilState(userInfoState);
 
   React.useEffect(() => {
     const checkIsLogin = async () => {
       const result = await AsyncStorage.getItem('accessToken');
-      // const result = await AsyncStorage.clear();
       if (result) {
         setIsLoggedIn(true);
+        navigation.navigate('BottomTab' as never);
       } else {
         setIsLoggedIn(false);
       }
@@ -53,27 +55,10 @@ const MainScreen = () => {
 
   return (
     <RootStack.Navigator screenOptions={{headerShown: false}}>
-      {isLoggedIn ? (
-        <>
-          <RootStack.Screen
-            name="BottomTabNavigator"
-            component={BottomTabNavigator}
-          />
-          <RootStack.Screen
-            name="MovieDetailScreen"
-            component={MovieDetailScreen}
-          />
-          <RootStack.Screen
-            name="EditProfileScreen"
-            component={EditProfileScreen}
-          />
-        </>
-      ) : (
-        <RootStack.Screen
-          name="MainStackNavigator"
-          component={MainStackNavigator}
-        />
-      )}
+      <RootStack.Screen
+        name="MainStackNavigator"
+        component={MainStackNavigator}
+      />
     </RootStack.Navigator>
   );
 };

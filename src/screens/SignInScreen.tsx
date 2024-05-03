@@ -33,6 +33,7 @@ const SignInScreen = () => {
     const result = await signIn(email, password);
     if (result === 201) {
       setIsLoggedIn(true);
+      navigation.navigate('BottomTab' as never);
     } else {
       setIsLoggedIn(false);
     }

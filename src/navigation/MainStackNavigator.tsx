@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+import BottomTabNavigator from './BottomTabNavigator';
 
 const MainStack = createStackNavigator();
 
@@ -14,6 +15,7 @@ const MainStackNavigator = () => {
       initialRouteName="SignInScreen">
       <MainStack.Screen name="SignInScreen" component={SignInScreen} />
       <MainStack.Screen name="SignUpScreen" component={SignUpScreen} />
+      <MainStack.Screen name="BottomTab" component={BottomTabNavigator} />
     </MainStack.Navigator>
   );
 };
