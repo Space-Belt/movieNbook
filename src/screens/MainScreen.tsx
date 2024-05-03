@@ -2,16 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {useRecoilState} from 'recoil';
-import BottomTabNavigator from '../navigation/BottomTabNavigator';
 import MainStackNavigator from '../navigation/MainStackNavigator';
-import MovieDetailScreen from './MovieDetailScreen';
 
 import {getMyInfo} from '../api/apiUser';
 
-import {userInfoState} from '../recoil/User';
-import {isLoggedInState} from '../recoil/Auth';
-import EditProfileScreen from './EditProfileScreen';
 import {useNavigation} from '@react-navigation/native';
+import {isLoggedInState} from '../recoil/Auth';
+import {userInfoState} from '../recoil/User';
 
 export type RootStackParamList = {
   MovieDetailScreen: {movieId: number};

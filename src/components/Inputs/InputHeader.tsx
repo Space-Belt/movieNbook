@@ -1,11 +1,5 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import {
   BORDERRADIUS,
   COLORS,

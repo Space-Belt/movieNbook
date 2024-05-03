@@ -1,21 +1,12 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {BORDERRADIUS, COLORS, FONTSIZE, SPACING} from '../theme/theme';
-import CustomIcon from '../components/icons/CustomIcon';
-import ProfileHeader from '../components/Profile/ProfileHeader';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useRecoilValue} from 'recoil';
-import {userInfoState} from '../recoil/User';
 import {ImageAssets} from '../assets/images/ImageAssets';
 import MenuComponent from '../components/Profile/MenuComponent';
-import {useNavigation} from '@react-navigation/native';
+import ProfileHeader from '../components/Profile/ProfileHeader';
+import {userInfoState} from '../recoil/User';
+import {COLORS, FONTSIZE} from '../theme/theme';
 
 const UserScreen = () => {
   const myInfo = useRecoilValue(userInfoState);

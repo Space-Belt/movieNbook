@@ -1,4 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
 import {useQuery} from '@tanstack/react-query';
 import * as React from 'react';
 import {
@@ -9,12 +8,12 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {IMovie, getMovie, getMovies, queryKey} from '../api/apiMovie';
+import {getMovie, getMovies} from '../api/apiMovie';
 import CategoryHeader from '../components/CategoryHeader';
-import NowPlayingList from '../components/MainPageComponents/NowPlayingList';
-import {COLORS, SPACING} from '../theme/theme';
 import LoggedInHeader from '../components/MainPageComponents/LoggedInHeader';
+import NowPlayingList from '../components/MainPageComponents/NowPlayingList';
 import ReusableList from '../components/MainPageComponents/ReusableList';
+import {COLORS, SPACING} from '../theme/theme';
 
 export const {width, height} = Dimensions.get('window');
 

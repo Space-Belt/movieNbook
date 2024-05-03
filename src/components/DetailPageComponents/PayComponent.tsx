@@ -1,22 +1,20 @@
+import {useQuery} from '@tanstack/react-query';
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  ViewProps,
   ViewStyle,
 } from 'react-native';
-import React, {Dispatch, SetStateAction} from 'react';
-import ProfileHeader from '../Profile/ProfileHeader';
-import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
+import LinearGradient from 'react-native-linear-gradient';
+import {getPayMethod} from '../../api/apiPay';
 import CardChip from '../../assets/images/cardChip.svg';
 import Visa from '../../assets/images/visa.svg';
-import LinearGradient from 'react-native-linear-gradient';
 import Wallet from '../../assets/images/wallet.svg';
-import {getPayHistory, getPayMethod} from '../../api/apiPay';
-import {useQuery} from '@tanstack/react-query';
-import moment from 'moment';
+import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
+import ProfileHeader from '../Profile/ProfileHeader';
 
 type Props = {
   handleGoBack: () => void;

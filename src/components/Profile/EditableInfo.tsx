@@ -1,3 +1,4 @@
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   StyleSheet,
   Text,
@@ -5,12 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {Dispatch, SetStateAction} from 'react';
 import FastImage from 'react-native-fast-image';
+import {Asset} from 'react-native-image-picker';
 import {ImageAssets} from '../../assets/images/ImageAssets';
-import EditIcon from '../../assets/images/editIcon.svg';
 import CloseIcon from '../../assets/images/closeIcon.svg';
-import {Asset, ImagePickerResponse} from 'react-native-image-picker';
+import EditIcon from '../../assets/images/editIcon.svg';
 import {COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
 
 interface IProps {

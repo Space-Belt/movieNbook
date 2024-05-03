@@ -1,3 +1,6 @@
+import {useQuery} from '@tanstack/react-query';
+import moment from 'moment';
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   FlatList,
   ScrollView,
@@ -6,8 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {Dispatch, SetStateAction} from 'react';
-import LinearHeader from './LinearHeader';
+import {getMovieDate, getSeats} from '../../api/apiMovie';
+import AvailableSeat from '../../assets/images/availableSeat.svg';
+import SelectedSeatIcon from '../../assets/images/selectedSeat.svg';
+import TakenSeat from '../../assets/images/takenSeat.svg';
 import {
   BORDERRADIUS,
   COLORS,
@@ -15,14 +20,8 @@ import {
   FONTSIZE,
   SPACING,
 } from '../../theme/theme';
-import {getMovieDate, getSeats} from '../../api/apiMovie';
-import {useQuery} from '@tanstack/react-query';
-import moment from 'moment';
-import {getPayHistory, getPayMethod} from '../../api/apiPay';
 import CustomIcon from '../icons/CustomIcon';
-import AvailableSeat from '../../assets/images/availableSeat.svg';
-import TakenSeat from '../../assets/images/takenSeat.svg';
-import SelectedSeatIcon from '../../assets/images/selectedSeat.svg';
+import LinearHeader from './LinearHeader';
 
 type Props = {
   poster: string;

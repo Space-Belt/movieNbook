@@ -1,17 +1,10 @@
 import * as React from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
 import InputHeader from '../components/Inputs/InputHeader';
 import {searchMovies} from '../api/apiMovie';
 import {COLORS, SPACING} from '../theme/theme';
 import EmptyResult from '../components/EmptyResult';
 import {useQuery} from '@tanstack/react-query';
-import debounce from 'lodash/debounce';
 import {useDebouncedState} from '../components/hooks/useDebounceSearch';
 import MovieCard from '../components/MainPageComponents/MovieCard';
 import {width} from './HomeScreen';

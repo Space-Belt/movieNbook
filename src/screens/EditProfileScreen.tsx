@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ActionSheetIOS,
   Platform,
@@ -8,24 +9,21 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React, {useCallback} from 'react';
-import CustomIcon from '../components/icons/CustomIcon';
-import {SPACING, BORDERRADIUS, COLORS, FONTSIZE} from '../theme/theme';
-import ProfileHeader from '../components/Profile/ProfileHeader';
-import {useRecoilValue, useSetRecoilState} from 'recoil';
-import {userInfoState} from '../recoil/User';
-import ImageSelectWayModal from '../components/Profile/ImageSelectWayModal';
-import ReusableModal from '../components/Modal/ReusableModal';
-import EditableInfo from '../components/Profile/EditableInfo';
 import {
   Asset,
   CameraOptions,
   ImageLibraryOptions,
-  ImagePickerResponse,
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
 import {changeInfo} from '../api/apiUser';
+import ReusableModal from '../components/Modal/ReusableModal';
+import EditableInfo from '../components/Profile/EditableInfo';
+import ImageSelectWayModal from '../components/Profile/ImageSelectWayModal';
+import ProfileHeader from '../components/Profile/ProfileHeader';
+import {userInfoState} from '../recoil/User';
+import {BORDERRADIUS, COLORS, FONTSIZE, SPACING} from '../theme/theme';
 
 const imagePickerOption = {
   mediaType: 'photo',

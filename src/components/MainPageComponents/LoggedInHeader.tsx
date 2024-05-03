@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {ImageAssets} from '../../assets/images/ImageAssets';
+
 import {COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
 import {useRecoilValue} from 'recoil';
 import {userInfoState} from '../../recoil/User';

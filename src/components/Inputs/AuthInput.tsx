@@ -1,3 +1,4 @@
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   KeyboardTypeOptions,
   StyleProp,
@@ -6,9 +7,7 @@ import {
   TextStyle,
   View,
 } from 'react-native';
-import React, {Dispatch, SetStateAction} from 'react';
 import {BORDERRADIUS, COLORS, FONTSIZE} from '../../theme/theme';
-import {SvgProps} from 'react-native-svg';
 
 type Props = {
   value: any;

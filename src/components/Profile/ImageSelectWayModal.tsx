@@ -1,13 +1,7 @@
-import {Modal, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import CustomIcon from '../icons/CustomIcon';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {FONTSIZE} from '../../theme/theme';
-import {
-  CameraOptions,
-  ImageLibraryOptions,
-  launchCamera,
-  launchImageLibrary,
-} from 'react-native-image-picker';
+import CustomIcon from '../icons/CustomIcon';
 
 interface IProps {
   onClose: () => void;

@@ -1,5 +1,3 @@
-// import {COLORS} from "../theme/theme";
-// import CustomIcon from '../components/icons/CustomIcon';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
 
@@ -42,7 +40,7 @@ const BottomTabNavigator = () => {
         component={HomeScreen}
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({focused, color, size}) => {
+          tabBarIcon: ({focused}) => {
             return tabBarIconRendering('video', focused);
           },
         }}
@@ -52,7 +50,7 @@ const BottomTabNavigator = () => {
         component={SearchScreen}
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({focused, color, size}) => {
+          tabBarIcon: ({focused}) => {
             return tabBarIconRendering('search', focused);
           },
         }}
@@ -62,7 +60,7 @@ const BottomTabNavigator = () => {
         component={TicketScreen}
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({focused, color, size}) => {
+          tabBarIcon: ({focused}) => {
             return tabBarIconRendering('ticket', focused);
           },
         }}
@@ -73,7 +71,7 @@ const BottomTabNavigator = () => {
         options={{
           tabBarShowLabel: false,
 
-          tabBarIcon: ({focused, color, size}) => {
+          tabBarIcon: ({focused}) => {
             return tabBarIconRendering('user', focused);
           },
         }}

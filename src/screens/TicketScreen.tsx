@@ -1,9 +1,8 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {COLORS} from '../theme/theme';
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import ProfileHeader from '../components/Profile/ProfileHeader';
-import EmptyResult from '../components/EmptyResult';
 import TicketComponent from '../components/Ticket/TicketComponent';
+import {COLORS} from '../theme/theme';
 
 const TicketScreen = () => {
   return (

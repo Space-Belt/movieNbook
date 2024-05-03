@@ -1,4 +1,4 @@
-import {Modal, StyleSheet, Text, View} from 'react-native';
+import {Modal, StyleSheet} from 'react-native';
 import React from 'react';
 
 interface IProps {

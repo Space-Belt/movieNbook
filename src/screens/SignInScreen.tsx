@@ -1,23 +1,16 @@
-import React, {Dispatch, SetStateAction} from 'react';
-import {
-  SafeAreaView,
-  StyleProp,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import React from 'react';
+import {SafeAreaView, StyleProp, StyleSheet, Text, View} from 'react-native';
 import KeyIcon from '../assets/images/key.svg';
 import UserIcon from '../assets/images/user.svg';
 
-import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../theme/theme';
-import AuthInput from '../components/Inputs/AuthInput';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ViewStyle} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {signIn} from '../api/apiAuth';
+import {ViewStyle} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useSetRecoilState} from 'recoil';
+import {signIn} from '../api/apiAuth';
+import AuthInput from '../components/Inputs/AuthInput';
 import {isLoggedInState} from '../recoil/Auth';
+import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../theme/theme';
 
 const SignInScreen = () => {
   const navigation = useNavigation();

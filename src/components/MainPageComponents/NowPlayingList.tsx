@@ -5,7 +5,6 @@ import {IMovie} from '../../api/apiMovie';
 import NowPlayingCard from './NowPlayingCard';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../screens/MainScreen';
-// import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 type Props = {
