@@ -4,6 +4,8 @@ import {StyleSheet} from 'react-native';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import BottomTabNavigator from './BottomTabNavigator';
+import MovieDetailScreen from '../screens/MovieDetailScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 
 const MainStack = createStackNavigator();
 
@@ -15,6 +17,14 @@ const MainStackNavigator = () => {
       <MainStack.Screen name="SignInScreen" component={SignInScreen} />
       <MainStack.Screen name="SignUpScreen" component={SignUpScreen} />
       <MainStack.Screen name="BottomTab" component={BottomTabNavigator} />
+      <MainStack.Screen
+        name="MovieDetailScreen"
+        component={MovieDetailScreen}
+      />
+      <MainStack.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+      />
     </MainStack.Navigator>
   );
 };

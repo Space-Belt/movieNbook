@@ -5,14 +5,25 @@ import FastImage from 'react-native-fast-image';
 import {baseImagePath} from '../../api/apicalls';
 import {IMovie} from '../../api/apiMovie';
 import {COLORS, FONTSIZE} from '../../theme/theme';
+import {useNavigation} from '@react-navigation/native';
+import {MovieProps} from './NowPlayingList';
 
 type Props = {
   item: IMovie;
 };
 
 const ReusableCard = ({item}: Props) => {
+  const navigation = useNavigation<MovieProps>();
+  const handleNavigate = (id: number) => {
+    navigation.navigate('MovieDetailScreen', {
+      movieId: id,
+    });
+  };
   return (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity
+      onPress={() => {
+        handleNavigate(item.id);
+      }}>
       <View style={styles.imageBox}>
         <FastImage
           source={{uri: baseImagePath('w780', item.poster_path)}}

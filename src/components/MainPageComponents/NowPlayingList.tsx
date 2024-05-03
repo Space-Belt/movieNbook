@@ -13,7 +13,10 @@ type Props = {
 
 const windowWidth = Dimensions.get('window').width;
 
-type MovieProps = StackNavigationProp<RootStackParamList, 'MovieDetailScreen'>;
+export type MovieProps = StackNavigationProp<
+  RootStackParamList,
+  'MovieDetailScreen'
+>;
 
 const NowPlayingList = ({data}: Props) => {
   const navigation = useNavigation<MovieProps>();
