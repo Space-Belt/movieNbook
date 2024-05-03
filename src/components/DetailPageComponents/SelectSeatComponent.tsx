@@ -135,6 +135,18 @@ const SelectSeatComponent = ({
     }
   }, [seatId]);
 
+  const handleSelectSeat = (id: number) => {
+    let temp = [...seatId];
+    if (seatId.length === 0) {
+      temp.push(id);
+    } else if (seatId.length > 0 && seatId?.some(seat => seat === id)) {
+      temp = temp.filter(el => el !== id);
+    } else if (seatId.length > 0 && !seatId?.some(seat => seat === id)) {
+      temp.push(id);
+    }
+    setSeatId(temp);
+  };
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* <View style={styles.topWrapper}> */}
@@ -153,19 +165,7 @@ const SelectSeatComponent = ({
                         <TouchableOpacity
                           key={JSON.stringify(secondEl)}
                           onPress={() => {
-                            let tempId = seatId ? [...seatId] : [];
-                            if (tempId.some(item => item === secondEl.id)) {
-                              console.log(
-                                tempId.filter(item => item !== secondEl.id),
-                              );
-                              setSeatId(
-                                tempId.filter(item => item !== secondEl.id),
-                              );
-                            } else {
-                              tempId.push(secondEl.id);
-                            }
-
-                            setSeatId(tempId);
+                            handleSelectSeat(secondEl.id);
                           }}>
                           {isSeatSelected(secondEl.id) ? (
                             <SelectedSeatIcon />
