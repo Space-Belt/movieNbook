@@ -27,6 +27,7 @@ const MainScreen = () => {
   React.useEffect(() => {
     const checkIsLogin = async () => {
       const result = await AsyncStorage.getItem('accessToken');
+      // const result = await AsyncStorage.clear();
       if (result) {
         setIsLoggedIn(true);
         navigation.navigate('BottomTab' as never);

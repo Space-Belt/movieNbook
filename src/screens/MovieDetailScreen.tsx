@@ -12,6 +12,7 @@ import DetailBasicComponents from '../components/DetailPageComponents/DetailBasi
 import SelectSeatComponent from '../components/DetailPageComponents/SelectSeatComponent';
 import PayComponent from '../components/DetailPageComponents/PayComponent';
 import PayResultComponent from '../components/DetailPageComponents/PayResultComponent';
+import {payMovie} from '../api/apiPay';
 
 type MovieProps = NativeStackScreenProps<
   RootStackParamList,
@@ -39,7 +40,7 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     'WALLET' | 'CREDIT_CARD'
   >();
 
-  const [totalPrice, setTotalPrice] = React.useState<number>();
+  const [totalPrice, setTotalPrice] = React.useState<number>(0);
 
   const handleGoBack = () => {
     if (reservationPage == 0) {

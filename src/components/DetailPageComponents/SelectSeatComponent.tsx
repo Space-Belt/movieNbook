@@ -30,10 +30,9 @@ type Props = {
   setPage: Dispatch<SetStateAction<number>>;
   seatId: number[];
   setSeatId: Dispatch<SetStateAction<number[]>>;
-
   setShowTimeId: Dispatch<SetStateAction<number | undefined>>;
-  totalPrice: number | undefined;
-  setTotalPrice: Dispatch<SetStateAction<number | undefined>>;
+  totalPrice: number;
+  setTotalPrice: Dispatch<SetStateAction<number>>;
 };
 
 const SelectSeatComponent = ({
@@ -43,7 +42,6 @@ const SelectSeatComponent = ({
   setPage,
   seatId,
   setSeatId,
-
   setShowTimeId,
   totalPrice,
   setTotalPrice,
