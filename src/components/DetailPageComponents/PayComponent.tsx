@@ -67,6 +67,7 @@ const PayComponent = ({
       );
       return response;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   };
@@ -74,6 +75,7 @@ const PayComponent = ({
     mutationFn: payMovie,
     onSuccess: data => {
       console.log(data);
+      setPage(prev => prev + 1);
     },
     onError(error) {
       console.log(error);
@@ -213,7 +215,6 @@ const PayComponent = ({
         <TouchableOpacity
           onPress={() => {
             mutate();
-            setPage(prev => prev + 1);
           }}
           style={[styles.btnStyle, regesBtnColor]}>
           <Text style={styles.buttonText}>{btnText}</Text>
