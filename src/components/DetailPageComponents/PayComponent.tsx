@@ -1,4 +1,4 @@
-import {useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import React, {Dispatch, SetStateAction} from 'react';
 import {
   StyleProp,
@@ -15,6 +15,8 @@ import Visa from '../../assets/images/visa.svg';
 import Wallet from '../../assets/images/wallet.svg';
 import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
 import ProfileHeader from '../Profile/ProfileHeader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {customApiClient} from '../../api/apiClient';
 
 type Props = {
   handleGoBack: () => void;
@@ -22,6 +24,9 @@ type Props = {
   paymentWay: 'WALLET' | 'CREDIT_CARD' | undefined;
   setPaymentWay: Dispatch<SetStateAction<'WALLET' | 'CREDIT_CARD' | undefined>>;
   handleMakeOrder: () => Promise<any>;
+  seatId: number[];
+  showTimeId: number | undefined;
+  movieId: number;
   totalPrice?: number;
 };
 
@@ -31,12 +36,48 @@ const PayComponent = ({
   paymentWay,
   setPaymentWay,
   handleMakeOrder,
+  seatId,
+  showTimeId,
+  movieId,
   totalPrice,
 }: Props) => {
   const {data} = useQuery({
     queryKey: ['payWay'],
     queryFn: () => getPayMethod(),
     staleTime: 60 * 60 * 1000,
+  });
+
+  const payMovie = async () => {
+    const endPoint = 'payment/order';
+    const token = await AsyncStorage.getItem('accessToken');
+    try {
+      const response = await customApiClient.post(
+        endPoint,
+        {
+          movie_id: movieId,
+          showtime_id: showTimeId,
+          seatIds: seatId,
+          payment_method: paymentWay,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+  const {mutate} = useMutation({
+    mutationFn: payMovie,
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError(error) {
+      console.log(error);
+    },
   });
 
   const [selectedCard, setSelectedCard] = React.useState<number>();
@@ -52,13 +93,6 @@ const PayComponent = ({
 
   const regesBtnColor: StyleProp<ViewStyle> = {
     backgroundColor: COLORS.Orange,
-  };
-
-  const handleResult = async () => {
-    const result = await handleMakeOrder();
-    if (result.status === 200) {
-      setPage(prev => prev + 1);
-    }
   };
 
   React.useEffect(() => {
@@ -78,6 +112,9 @@ const PayComponent = ({
     }
   }, [paymentWay]);
 
+  // React.useEffect(() => {
+  //   console.log(error);
+  // }, [error]);
   return (
     <View style={styles.container}>
       <View>
@@ -175,7 +212,7 @@ const PayComponent = ({
         </View>
         <TouchableOpacity
           onPress={() => {
-            handleMakeOrder();
+            mutate();
             setPage(prev => prev + 1);
           }}
           style={[styles.btnStyle, regesBtnColor]}>

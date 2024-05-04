@@ -111,6 +111,9 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
         setPaymentWay={setPaymentWay}
         handleMakeOrder={handleMakeOrder}
         totalPrice={totalPrice}
+        movieId={route.params.movieId}
+        seatId={seatId}
+        showTimeId={showTimeId}
       />
     );
   }
