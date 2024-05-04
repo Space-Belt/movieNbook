@@ -248,9 +248,7 @@ const SelectSeatComponent = ({
       <View style={styles.buttonPriceContainer}>
         <View style={styles.priceContainer}>
           <Text style={styles.totalPriceText}>Total Price</Text>
-          <Text style={styles.price}>
-            {totalPrice === undefined ? '$ 0' : '$ ' + totalPrice}
-          </Text>
+          <Text style={styles.price}>{totalPrice} $</Text>
         </View>
         <TouchableOpacity
           style={styles.buttonWrapper}

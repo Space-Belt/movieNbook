@@ -64,8 +64,8 @@ const DetailBasicComponents = ({
       <View style={styles.runtimeWrapper}>
         <CustomIcon name="clock" style={styles.clockIcon} />
         <Text style={styles.runtimeText}>
-          {Math.floor(movieDetail?.runtime / 60)}h{' '}
-          {Math.floor(movieDetail?.runtime % 60)}m
+          {Math.floor(movieDetail?.movieDetail?.runtime / 60)}h{' '}
+          {Math.floor(movieDetail?.movieDetail?.runtime % 60)}m
         </Text>
       </View>
       <Text style={styles.title}>

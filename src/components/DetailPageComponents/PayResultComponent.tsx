@@ -3,6 +3,7 @@ import React, {Dispatch, SetStateAction} from 'react';
 import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
 import ProfileHeader from '../Profile/ProfileHeader';
 import SuccessIcon from '../../assets/images/paySuccess.svg';
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {
   handleGoBack: () => void;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 const PayResultComponent = ({handleGoBack, setPage}: Props) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <ProfileHeader
@@ -24,10 +26,10 @@ const PayResultComponent = ({handleGoBack, setPage}: Props) => {
       </View>
       <TouchableOpacity
         onPress={() => {
-          setPage(prev => prev + 1);
+          navigation.navigate('Ticket' as never);
         }}
         style={styles.btnStyle}>
-        <Text style={styles.buttonText}>Insufficient Balance</Text>
+        <Text style={styles.buttonText}>SUCCESS</Text>
       </TouchableOpacity>
     </View>
   );
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
     color: COLORS.White,
   },
   btnStyle: {
-    backgroundColor: COLORS.Grey,
+    backgroundColor: COLORS.Orange,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
