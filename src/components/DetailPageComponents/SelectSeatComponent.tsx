@@ -128,11 +128,9 @@ const SelectSeatComponent = ({
   }, [movieDate]);
 
   React.useEffect(() => {
-    if (seatId !== undefined && seatId.length > 0) {
-      let price = seatId.length * movieDate?.price;
+    let price = seatId.length * movieDate?.price;
 
-      setTotalPrice(price);
-    }
+    setTotalPrice(price);
   }, [seatId]);
 
   const handleSelectSeat = (id: number) => {
@@ -149,7 +147,6 @@ const SelectSeatComponent = ({
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* <View style={styles.topWrapper}> */}
       <LinearHeader imagePath={poster} action={handleGoBack} />
 
       <View style={styles.movieSeatWrapper}>
@@ -204,7 +201,7 @@ const SelectSeatComponent = ({
           <Text style={styles.seatInfoText}>Selected</Text>
         </View>
       </View>
-      {/* </View> */}
+
       <FlatList
         data={availableDate}
         keyExtractor={item => item.date}
@@ -268,7 +265,6 @@ const SelectSeatComponent = ({
           </Text>
         </TouchableOpacity>
       </View>
-      <Text style={{color: 'red'}}>{seatId}</Text>
     </ScrollView>
   );
 };
