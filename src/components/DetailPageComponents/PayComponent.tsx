@@ -114,9 +114,6 @@ const PayComponent = ({
     }
   }, [paymentWay]);
 
-  // React.useEffect(() => {
-  //   console.log(error);
-  // }, [error]);
   return (
     <View style={styles.container}>
       <View>
@@ -206,9 +203,7 @@ const PayComponent = ({
             <Text style={styles.totalPriceTitle}>Total Price</Text>
             <View style={styles.priceTextWrapper}>
               <Text style={styles.dollorSign}>$</Text>
-              <Text style={styles.moneyText}>
-                {totalPrice ? totalPrice : 0}
-              </Text>
+              <Text style={styles.moneyText}>{totalPrice}</Text>
             </View>
           </View>
         </View>
@@ -241,6 +236,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-between',
   },
   cardWrapper: {
+    marginTop: 20,
     borderWidth: 2,
     borderRadius: 25,
     height: 241,
