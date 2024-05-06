@@ -28,14 +28,18 @@ export const signUp = async (
 
 export const signIn = async (email: string, password: string) => {
   const endPoint = 'auth/login';
+
+  const currentTime = new Date().getTime();
+
+  const twoDaysLater = currentTime + 2 * 24 * 60 * 60 * 1000;
+
   try {
     const response = await customApiClient.post(endPoint, {
       email: email,
       password: password,
     });
-
     await AsyncStorage.setItem('accessToken', response.data.accessToken);
-
+    await AsyncStorage.setItem('tokenExpired', twoDaysLater.toString());
     return response.status;
   } catch (error) {
     console.error('Sign In:', error);
