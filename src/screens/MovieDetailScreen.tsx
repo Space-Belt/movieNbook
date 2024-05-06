@@ -69,12 +69,6 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
     }, []),
   );
 
-  if (isLoading) {
-    <View>
-      <ActivityIndicator size={'large'} color={COLORS.White} />
-    </View>;
-  }
-
   if (reservationPage === 0) {
     return (
       <DetailBasicComponents
@@ -130,4 +124,11 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
 
 export default MovieDetailScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.Black,
+  },
+});

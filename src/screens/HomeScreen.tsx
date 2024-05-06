@@ -3,6 +3,7 @@ import * as React from 'react';
 import {
   ActivityIndicator,
   Dimensions,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -51,30 +52,37 @@ const HomeScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <StatusBar hidden />
-      <LoggedInHeader />
-      <View style={styles.categoryWrapper}>
-        <CategoryHeader title={'Now Playing'} />
-      </View>
-      <NowPlayingList
-        data={nowPlayingMovies !== undefined ? nowPlayingMovies : []}
-      />
-      <View style={styles.categoryWrapper}>
-        <CategoryHeader title={'Popular'} />
-      </View>
-      <ReusableList data={popularMovies !== undefined ? popularMovies : []} />
-      <View style={styles.categoryWrapper}>
-        <CategoryHeader title={'Upcoming'} />
-      </View>
-      <ReusableList data={upcomingMovies !== undefined ? upcomingMovies : []} />
-    </ScrollView>
+    <SafeAreaView style={styles.safeWrapper}>
+      <ScrollView style={styles.container}>
+        <LoggedInHeader />
+        <View style={styles.categoryWrapper}>
+          <CategoryHeader title={'Now Playing'} />
+        </View>
+        <NowPlayingList
+          data={nowPlayingMovies !== undefined ? nowPlayingMovies : []}
+        />
+        <View style={styles.categoryWrapper}>
+          <CategoryHeader title={'Popular'} />
+        </View>
+        <ReusableList data={popularMovies !== undefined ? popularMovies : []} />
+        <View style={styles.categoryWrapper}>
+          <CategoryHeader title={'Upcoming'} />
+        </View>
+        <ReusableList
+          data={upcomingMovies !== undefined ? upcomingMovies : []}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  safeWrapper: {
+    flex: 1,
+    backgroundColor: COLORS.Black,
+  },
   container: {
     display: 'flex',
     backgroundColor: COLORS.Black,
@@ -93,6 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 25,
     marginBottom: 25,
+    paddingHorizontal: 15,
   },
   containerGap36: {
     gap: SPACING.space_36,

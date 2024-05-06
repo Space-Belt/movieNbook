@@ -1,5 +1,7 @@
 import {
+  ActivityIndicator,
   FlatList,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -25,15 +27,15 @@ import CastPicComponent from './CastPicComponent';
 type Props = {
   movieDetail: any;
   handleGoBack: () => void;
-  page: number;
   setPage: Dispatch<SetStateAction<number>>;
+  isLoading: boolean;
 };
 
 const DetailBasicComponents = ({
   movieDetail,
   handleGoBack,
-  page,
   setPage,
+  isLoading,
 }: Props) => {
   const keyExtractor = (item: any) => {
     return `${item.id}`;
@@ -47,78 +49,91 @@ const DetailBasicComponents = ({
       />
     );
   };
+
+  if (isLoading) {
+    <View style={styles.container}>
+      <ActivityIndicator size={'large'} color={COLORS.White} />
+    </View>;
+  }
+
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.topWrapper}>
-        <LinearHeader
-          imagePath={movieDetail?.movieDetail.backdrop_path}
-          action={handleGoBack}
-        />
-        <FastImage
-          source={{
-            uri: baseImagePath('w342', movieDetail?.movieDetail?.poster_path),
-          }}
-          style={styles.cardImage}
-        />
-      </View>
-      <View style={styles.runtimeWrapper}>
-        <CustomIcon name="clock" style={styles.clockIcon} />
-        <Text style={styles.runtimeText}>
-          {Math.floor(movieDetail?.movieDetail?.runtime / 60)}h{' '}
-          {Math.floor(movieDetail?.movieDetail?.runtime % 60)}m
+    <SafeAreaView style={styles.safeWrapper}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.topWrapper}>
+          <LinearHeader
+            imagePath={movieDetail?.movieDetail.backdrop_path}
+            action={handleGoBack}
+          />
+          <FastImage
+            source={{
+              uri: baseImagePath('w342', movieDetail?.movieDetail?.poster_path),
+            }}
+            style={styles.cardImage}
+          />
+        </View>
+        <View style={styles.runtimeWrapper}>
+          <CustomIcon name="clock" style={styles.clockIcon} />
+          <Text style={styles.runtimeText}>
+            {Math.floor(movieDetail?.movieDetail?.runtime / 60)}h{' '}
+            {Math.floor(movieDetail?.movieDetail?.runtime % 60)}m
+          </Text>
+        </View>
+        <Text style={styles.title}>
+          {movieDetail?.movieDetail?.original_title}
         </Text>
-      </View>
-      <Text style={styles.title}>
-        {movieDetail?.movieDetail?.original_title}
-      </Text>
-      <View style={styles.genreWrapper}>
-        {movieDetail?.movieDetail?.genres.map((item: any) => {
-          return (
-            <View style={styles.genreBox} key={item.id}>
-              <Text style={styles.genreText}>{item.name}</Text>
-            </View>
-          );
-        })}
-      </View>
-      <Text style={styles.subDescription}>{movieDetail?.tagline}</Text>
-      <View style={styles.rateWrapper}>
-        <CustomIcon name="star" style={styles.starIcon} />
-        <Text style={styles.runtimeText}>
-          {movieDetail?.movieDetail?.vote_average.toFixed(1)} (
-          {movieDetail?.movieDetail?.vote_count.toLocaleString()})
+        <View style={styles.genreWrapper}>
+          {movieDetail?.movieDetail?.genres.map((item: any) => {
+            return (
+              <View style={styles.genreBox} key={item.id}>
+                <Text style={styles.genreText}>{item.name}</Text>
+              </View>
+            );
+          })}
+        </View>
+        <Text style={styles.subDescription}>{movieDetail?.tagline}</Text>
+        <View style={styles.rateWrapper}>
+          <CustomIcon name="star" style={styles.starIcon} />
+          <Text style={styles.runtimeText}>
+            {movieDetail?.movieDetail?.vote_average.toFixed(1)} (
+            {movieDetail?.movieDetail?.vote_count.toLocaleString()})
+          </Text>
+        </View>
+
+        <Text style={styles.dateText}>
+          {moment(movieDetail?.release_date).format('YYYY년 MM월 DD일')}
         </Text>
-      </View>
+        <Text style={styles.descriptionText}>
+          {movieDetail?.movieDetail?.overview}
+        </Text>
 
-      <Text style={styles.dateText}>
-        {moment(movieDetail?.release_date).format('YYYY년 MM월 DD일')}
-      </Text>
-      <Text style={styles.descriptionText}>
-        {movieDetail?.movieDetail?.overview}
-      </Text>
+        <CategoryHeader title="캐스팅" />
+        <FlatList
+          data={movieDetail?.cast}
+          keyExtractor={keyExtractor}
+          renderItem={castingRendring}
+          horizontal
+          contentContainerStyle={styles.castingListWrapper}
+        />
 
-      <CategoryHeader title="캐스팅" />
-      <FlatList
-        data={movieDetail?.cast}
-        keyExtractor={keyExtractor}
-        renderItem={castingRendring}
-        horizontal
-        contentContainerStyle={styles.castingListWrapper}
-      />
-
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={() => {
-          setPage(prev => prev + 1);
-        }}>
-        <Text style={styles.buttonText}>예약하기</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => {
+            setPage(prev => prev + 1);
+          }}>
+          <Text style={styles.buttonText}>예약하기</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 export default DetailBasicComponents;
 
 const styles = StyleSheet.create({
+  safeWrapper: {
+    flex: 1,
+    backgroundColor: COLORS.Black,
+  },
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
