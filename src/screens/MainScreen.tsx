@@ -25,13 +25,25 @@ const MainScreen = () => {
   const [isMyInfo, setIsMyInfo] = useRecoilState(userInfoState);
 
   React.useEffect(() => {
+    const currentTime = new Date().getTime();
     const checkIsLogin = async () => {
-      const result = await AsyncStorage.getItem('accessToken');
+      const tokenResult = await AsyncStorage.getItem('accessToken');
+      const tokenExpired = await AsyncStorage.getItem('tokenExpired');
+
       // const result = await AsyncStorage.clear();
-      if (result) {
-        setIsLoggedIn(true);
-        navigation.navigate('BottomTab' as never);
+
+      if (tokenResult && tokenExpired) {
+        if (currentTime < parseInt(tokenExpired)) {
+          setIsLoggedIn(true);
+          navigation.navigate('BottomTab' as never);
+        } else {
+          await AsyncStorage.removeItem('accessToken');
+          await AsyncStorage.removeItem('expiryTime');
+          setIsLoggedIn(false);
+        }
       } else {
+        await AsyncStorage.removeItem('accessToken');
+        await AsyncStorage.removeItem('expiryTime');
         setIsLoggedIn(false);
       }
     };
@@ -48,8 +60,10 @@ const MainScreen = () => {
         profileImage: result?.profileImage,
       });
     };
-    getInfo();
-  }, []);
+    if (isLoggedIn) {
+      getInfo();
+    }
+  }, [isLoggedIn]);
 
   return (
     <RootStack.Navigator screenOptions={{headerShown: false}}>
