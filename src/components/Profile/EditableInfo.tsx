@@ -38,8 +38,11 @@ const EditableInfo = ({
             style={styles.imageWrapper}
             onPress={handleModalOpen}>
             <FastImage
-              // source={{uri: myInfo.profileImage}}
-              source={ImageAssets.profileImage}
+              source={
+                myInfo.profileImage
+                  ? {uri: myInfo.profileImage}
+                  : ImageAssets.profileImage
+              }
               style={styles.imageStyle}
             />
             <EditIcon style={styles.editIconStyle} />

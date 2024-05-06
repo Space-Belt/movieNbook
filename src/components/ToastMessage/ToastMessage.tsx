@@ -9,6 +9,9 @@ import {toastContent, toastVisibility} from '../../recoil/ToastStore';
 const DEFAULT_WIDTH = 350;
 
 const ToastMessage = () => {
+  const toastMessage = useRecoilValue(toastContent);
+  const isToastOn = useRecoilValue(toastVisibility);
+
   return (
     <View style={[styles.wrapper, isToastOn ? styles.shadowStyle : {}]}>
       {isToastOn && (

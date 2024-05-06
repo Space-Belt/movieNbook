@@ -17,7 +17,7 @@ const UserScreen = () => {
       <View style={styles.nameProfile}>
         <View style={styles.profileImg}>
           <FastImage
-            source={ImageAssets.profileImage}
+            source={{uri: myInfo.profileImage}}
             style={styles.imageStyle}
           />
           <Text style={styles.userNameText}>{myInfo.user_name}</Text>
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: 60,
     height: 60,
+    borderRadius: 30,
   },
   userNameText: {
     marginTop: 20,

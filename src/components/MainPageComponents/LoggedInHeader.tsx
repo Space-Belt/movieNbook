@@ -13,7 +13,6 @@ const LoggedInHeader = () => {
   return (
     <View style={styles.wrapper}>
       <FastImage
-        // source={ImageAssets.profileImage}
         source={{uri: myInfo.profileImage}}
         style={styles.imageStyle}
       />
@@ -33,6 +32,7 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: 35,
     height: 35,
+    borderRadius: 17.5,
     resizeMode: 'cover',
     marginRight: 10,
   },
