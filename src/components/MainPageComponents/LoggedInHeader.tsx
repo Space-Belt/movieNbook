@@ -10,6 +10,7 @@ const LoggedInHeader = () => {
   const myInfo = useRecoilValue(userInfoState);
 
   React.useEffect(() => {}, []);
+
   return (
     <View style={styles.wrapper}>
       <FastImage
