@@ -22,6 +22,7 @@ import {
 } from '../../theme/theme';
 import CustomIcon from '../icons/CustomIcon';
 import LinearHeader from './LinearHeader';
+import BasicWrapper from '../BasicWrapper';
 
 type Props = {
   poster: string;
@@ -144,124 +145,128 @@ const SelectSeatComponent = ({
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <LinearHeader imagePath={poster} action={handleGoBack} />
+    <BasicWrapper>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <LinearHeader imagePath={poster} action={handleGoBack} />
 
-      <View style={styles.movieSeatWrapper}>
-        <View>
-          {movieSeats !== undefined &&
-            movieSeats.length > 0 &&
-            movieSeats.map(el => {
-              return (
-                <View style={styles.movieSeatStyle} key={JSON.stringify(el)}>
-                  {el.map(secondEl => {
-                    if (!el.is_reserved) {
-                      return (
-                        <TouchableOpacity
-                          key={JSON.stringify(secondEl)}
-                          onPress={() => {
-                            handleSelectSeat(secondEl.id);
-                          }}>
-                          {isSeatSelected(secondEl.id) ? (
-                            <SelectedSeatIcon />
-                          ) : (
-                            <AvailableSeat />
-                          )}
-                        </TouchableOpacity>
-                      );
-                    } else {
-                      return <TakenSeat />;
-                    }
-                  })}
-                </View>
-              );
-            })}
-        </View>
-      </View>
-
-      <View style={styles.seatInfoContainer}>
-        <View style={styles.seatInfoWrapper}>
-          <CustomIcon name="radio" style={styles.seatInfoIcon} />
-          <Text style={styles.seatInfoText}>Available</Text>
-        </View>
-        <View style={styles.seatInfoWrapper}>
-          <CustomIcon
-            name="radio"
-            style={[styles.seatInfoIcon, {color: COLORS.Grey}]}
-          />
-          <Text style={styles.seatInfoText}>Taken</Text>
-        </View>
-        <View style={styles.seatInfoWrapper}>
-          <CustomIcon
-            name="radio"
-            style={[styles.seatInfoIcon, {color: COLORS.Orange}]}
-          />
-          <Text style={styles.seatInfoText}>Selected</Text>
-        </View>
-      </View>
-
-      <FlatList
-        data={availableDate}
-        keyExtractor={item => item.date}
-        horizontal
-        bounces={false}
-        contentContainerStyle={styles.containerGap24}
-        renderItem={({item, index}) => {
-          return (
-            <TouchableOpacity
-              onPress={() => {
-                setSelectedDateIndex(index);
-                setSelectedTimeIndex(undefined);
-                setSeatId([]);
-              }}>
-              <View
-                style={[
-                  styles.dateContainer,
-                  index === selectedDateIndex && {
-                    backgroundColor: COLORS.Orange,
-                  },
-                ]}>
-                <Text style={styles.dateText}>{item.date.split('-')[2]}</Text>
-                <Text style={styles.dayText}>{item.dayOfWeek.slice(0, 3)}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-      />
-      <View style={styles.dateWrapper}>
-        {selectedDateIndex !== undefined &&
-        movieDate.result[availableDate[selectedDateIndex].date].length > 0 ? (
-          <FlatList
-            data={movieDate.result[availableDate[selectedDateIndex].date]}
-            renderItem={item => renderItem(item)}
-            horizontal
-            contentContainerStyle={styles.timeContainer}
-          />
-        ) : (
-          <View style={styles.noTicketBox}>
-            <Text style={styles.emptyText}>
-              Sorry, no tickets available at this date
-            </Text>
+        <View style={styles.movieSeatWrapper}>
+          <View>
+            {movieSeats !== undefined &&
+              movieSeats.length > 0 &&
+              movieSeats.map(el => {
+                return (
+                  <View style={styles.movieSeatStyle} key={JSON.stringify(el)}>
+                    {el.map(secondEl => {
+                      if (!el.is_reserved) {
+                        return (
+                          <TouchableOpacity
+                            key={JSON.stringify(secondEl)}
+                            onPress={() => {
+                              handleSelectSeat(secondEl.id);
+                            }}>
+                            {isSeatSelected(secondEl.id) ? (
+                              <SelectedSeatIcon />
+                            ) : (
+                              <AvailableSeat />
+                            )}
+                          </TouchableOpacity>
+                        );
+                      } else {
+                        return <TakenSeat />;
+                      }
+                    })}
+                  </View>
+                );
+              })}
           </View>
-        )}
-      </View>
-      <View style={styles.buttonPriceContainer}>
-        <View style={styles.priceContainer}>
-          <Text style={styles.totalPriceText}>Total Price</Text>
-          <Text style={styles.price}>{totalPrice} $</Text>
         </View>
-        <TouchableOpacity
-          style={styles.buttonWrapper}
-          disabled={seatId.length === 0}
-          onPress={() => {
-            setPage(prev => prev + 1);
-          }}>
-          <Text style={styles.buttonText}>
-            {seatId.length > 0 ? 'Buy Tickets' : 'Choose seats'}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+
+        <View style={styles.seatInfoContainer}>
+          <View style={styles.seatInfoWrapper}>
+            <CustomIcon name="radio" style={styles.seatInfoIcon} />
+            <Text style={styles.seatInfoText}>Available</Text>
+          </View>
+          <View style={styles.seatInfoWrapper}>
+            <CustomIcon
+              name="radio"
+              style={[styles.seatInfoIcon, {color: COLORS.Grey}]}
+            />
+            <Text style={styles.seatInfoText}>Taken</Text>
+          </View>
+          <View style={styles.seatInfoWrapper}>
+            <CustomIcon
+              name="radio"
+              style={[styles.seatInfoIcon, {color: COLORS.Orange}]}
+            />
+            <Text style={styles.seatInfoText}>Selected</Text>
+          </View>
+        </View>
+
+        <FlatList
+          data={availableDate}
+          keyExtractor={item => item.date}
+          horizontal
+          bounces={false}
+          contentContainerStyle={styles.containerGap24}
+          renderItem={({item, index}) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedDateIndex(index);
+                  setSelectedTimeIndex(undefined);
+                  setSeatId([]);
+                }}>
+                <View
+                  style={[
+                    styles.dateContainer,
+                    index === selectedDateIndex && {
+                      backgroundColor: COLORS.Orange,
+                    },
+                  ]}>
+                  <Text style={styles.dateText}>{item.date.split('-')[2]}</Text>
+                  <Text style={styles.dayText}>
+                    {item.dayOfWeek.slice(0, 3)}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
+        <View style={styles.dateWrapper}>
+          {selectedDateIndex !== undefined &&
+          movieDate.result[availableDate[selectedDateIndex].date].length > 0 ? (
+            <FlatList
+              data={movieDate.result[availableDate[selectedDateIndex].date]}
+              renderItem={item => renderItem(item)}
+              horizontal
+              contentContainerStyle={styles.timeContainer}
+            />
+          ) : (
+            <View style={styles.noTicketBox}>
+              <Text style={styles.emptyText}>
+                Sorry, no tickets available at this date
+              </Text>
+            </View>
+          )}
+        </View>
+        <View style={styles.buttonPriceContainer}>
+          <View style={styles.priceContainer}>
+            <Text style={styles.totalPriceText}>Total Price</Text>
+            <Text style={styles.price}>{totalPrice} $</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.buttonWrapper}
+            disabled={seatId.length === 0}
+            onPress={() => {
+              setPage(prev => prev + 1);
+            }}>
+            <Text style={styles.buttonText}>
+              {seatId.length > 0 ? 'Buy Tickets' : 'Choose seats'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </BasicWrapper>
   );
 };
 

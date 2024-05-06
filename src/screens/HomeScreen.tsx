@@ -15,6 +15,7 @@ import LoggedInHeader from '../components/MainPageComponents/LoggedInHeader';
 import NowPlayingList from '../components/MainPageComponents/NowPlayingList';
 import ReusableList from '../components/MainPageComponents/ReusableList';
 import {COLORS, SPACING} from '../theme/theme';
+import BasicWrapper from '../components/BasicWrapper';
 
 export const {width, height} = Dimensions.get('window');
 
@@ -52,7 +53,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.safeWrapper}>
+    <BasicWrapper>
       <ScrollView style={styles.container}>
         <LoggedInHeader />
         <View style={styles.categoryWrapper}>
@@ -72,7 +73,7 @@ const HomeScreen = () => {
           data={upcomingMovies !== undefined ? upcomingMovies : []}
         />
       </ScrollView>
-    </SafeAreaView>
+    </BasicWrapper>
   );
 };
 

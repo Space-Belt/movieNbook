@@ -13,6 +13,7 @@ import AuthInput from '../components/Inputs/AuthInput';
 import KeyIcon from '../assets/images/key.svg';
 import UserIcon from '../assets/images/user.svg';
 import {signUp} from '../api/apiAuth';
+import BasicWrapper from '../components/BasicWrapper';
 
 const SignUpScreen = () => {
   const [userName, setUserName] = React.useState<string>('');
@@ -31,7 +32,7 @@ const SignUpScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BasicWrapper>
       <View>
         <Text style={styles.signInText}>회원가입</Text>
         <AuthInput
@@ -78,7 +79,7 @@ const SignUpScreen = () => {
           <Text style={styles.buttonText}>회원가입</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </BasicWrapper>
   );
 };
 

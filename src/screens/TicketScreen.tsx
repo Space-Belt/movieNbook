@@ -3,17 +3,18 @@ import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import TicketComponent from '../components/Ticket/TicketComponent';
 import {COLORS} from '../theme/theme';
+import BasicWrapper from '../components/BasicWrapper';
 
 const TicketScreen = () => {
   return (
-    <ScrollView style={styles.container}>
+    <BasicWrapper>
       <SafeAreaView style={styles.container}>
         <ProfileHeader title={'My Tickets'} closeBtnVisible={false} />
         {/* <EmptyResult noticeContent={`You Don't Have Any Tickets`} /> */}
 
         <TicketComponent />
       </SafeAreaView>
-    </ScrollView>
+    </BasicWrapper>
   );
 };
 

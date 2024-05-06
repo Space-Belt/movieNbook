@@ -11,6 +11,7 @@ import {signIn} from '../api/apiAuth';
 import AuthInput from '../components/Inputs/AuthInput';
 import {isLoggedInState} from '../recoil/Auth';
 import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../theme/theme';
+import BasicWrapper from '../components/BasicWrapper';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -37,7 +38,7 @@ const SignInScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BasicWrapper>
       <View>
         <Text style={styles.signInText}>Sign In</Text>
         <AuthInput
@@ -71,7 +72,7 @@ const SignInScreen = () => {
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </BasicWrapper>
   );
 };
 

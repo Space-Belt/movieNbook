@@ -18,6 +18,7 @@ import ProfileHeader from '../Profile/ProfileHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {customApiClient} from '../../api/apiClient';
 import {useToast} from '../hooks/useToast';
+import BasicWrapper from '../BasicWrapper';
 
 type Props = {
   handleGoBack: () => void;
@@ -120,7 +121,7 @@ const PayComponent = ({
   }, [paymentWay]);
 
   return (
-    <View style={styles.container}>
+    <BasicWrapper>
       <View>
         <ProfileHeader
           closeBtnVisible={true}
@@ -220,7 +221,7 @@ const PayComponent = ({
           <Text style={styles.buttonText}>{btnText}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </BasicWrapper>
   );
 };
 

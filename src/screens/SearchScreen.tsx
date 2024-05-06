@@ -9,6 +9,7 @@ import {useDebouncedState} from '../components/hooks/useDebounceSearch';
 import MovieCard from '../components/MainPageComponents/MovieCard';
 import {width} from './HomeScreen';
 import {baseImagePath} from '../api/apicalls';
+import BasicWrapper from '../components/BasicWrapper';
 
 const SearchScreen = () => {
   const [searchText, setSearchText] = React.useState<string>('');
@@ -50,45 +51,49 @@ const SearchScreen = () => {
 
   if (isError) {
     return (
+      <BasicWrapper>
+        <View style={styles.container}>
+          <InputHeader
+            handleDelete={initSearchText}
+            searchText={searchText}
+            setSearchText={setSearchText}
+          />
+          <ActivityIndicator size={'large'} color={'white'} />
+        </View>
+      </BasicWrapper>
+    );
+  }
+  return (
+    <BasicWrapper>
       <View style={styles.container}>
         <InputHeader
           handleDelete={initSearchText}
           searchText={searchText}
           setSearchText={setSearchText}
         />
-        <ActivityIndicator size={'large'} color={'white'} />
-      </View>
-    );
-  }
-  return (
-    <View style={styles.container}>
-      <InputHeader
-        handleDelete={initSearchText}
-        searchText={searchText}
-        setSearchText={setSearchText}
-      />
-      {searchResult?.length === 0 ? (
-        <EmptyResult
-          noticeContent={
-            searchText.length === 0
-              ? '검색어를 입력해보세요!'
-              : `검색어 : ${searchText}에 \n 부합하는 결과가 없습니다.`
-          }
-        />
-      ) : (
-        <View style={styles.flatWrapper}>
-          <FlatList
-            data={searchResult}
-            renderItem={renderItem}
-            numColumns={2}
-            initialNumToRender={10}
-            keyExtractor={(item: any, index) => keyExtractor(item, index)}
-            contentContainerStyle={styles.contentContainerStyle}
-            style={styles.flatStyle}
+        {searchResult?.length === 0 ? (
+          <EmptyResult
+            noticeContent={
+              searchText.length === 0
+                ? '검색어를 입력해보세요!'
+                : `검색어 : ${searchText}에 \n 부합하는 결과가 없습니다.`
+            }
           />
-        </View>
-      )}
-    </View>
+        ) : (
+          <View style={styles.flatWrapper}>
+            <FlatList
+              data={searchResult}
+              renderItem={renderItem}
+              numColumns={2}
+              initialNumToRender={10}
+              keyExtractor={(item: any, index) => keyExtractor(item, index)}
+              contentContainerStyle={styles.contentContainerStyle}
+              style={styles.flatStyle}
+            />
+          </View>
+        )}
+      </View>
+    </BasicWrapper>
   );
 };
 

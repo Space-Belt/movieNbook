@@ -23,6 +23,7 @@ import {
 import moment from 'moment';
 import CategoryHeader from '../CategoryHeader';
 import CastPicComponent from './CastPicComponent';
+import BasicWrapper from '../BasicWrapper';
 
 type Props = {
   movieDetail: any;
@@ -57,7 +58,7 @@ const DetailBasicComponents = ({
   }
 
   return (
-    <SafeAreaView style={styles.safeWrapper}>
+    <BasicWrapper>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.topWrapper}>
           <LinearHeader
@@ -123,7 +124,7 @@ const DetailBasicComponents = ({
           <Text style={styles.buttonText}>예약하기</Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </BasicWrapper>
   );
 };
 

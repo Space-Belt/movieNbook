@@ -7,12 +7,13 @@ import MenuComponent from '../components/Profile/MenuComponent';
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import {userInfoState} from '../recoil/User';
 import {COLORS, FONTSIZE} from '../theme/theme';
+import BasicWrapper from '../components/BasicWrapper';
 
 const UserScreen = () => {
   const myInfo = useRecoilValue(userInfoState);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <BasicWrapper>
       <ProfileHeader title={'My Profile'} closeBtnVisible={false} />
       <View style={styles.nameProfile}>
         <View style={styles.profileImg}>
@@ -24,7 +25,7 @@ const UserScreen = () => {
         </View>
       </View>
       <MenuComponent />
-    </SafeAreaView>
+    </BasicWrapper>
   );
 };
 

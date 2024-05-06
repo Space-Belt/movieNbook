@@ -4,6 +4,7 @@ import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
 import ProfileHeader from '../Profile/ProfileHeader';
 import SuccessIcon from '../../assets/images/paySuccess.svg';
 import {useNavigation} from '@react-navigation/native';
+import BasicWrapper from '../BasicWrapper';
 
 type Props = {
   handleGoBack: () => void;
@@ -13,25 +14,27 @@ type Props = {
 const PayResultComponent = ({handleGoBack, setPage}: Props) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <ProfileHeader
-        closeBtnVisible={true}
-        title=""
-        handleGoBack={handleGoBack}
-      />
-      <View style={styles.centerBox}>
-        <SuccessIcon />
-        <Text style={styles.infoText}>Thank you!</Text>
-        <Text style={styles.infoText}>your order is confirmed</Text>
+    <BasicWrapper>
+      <View style={styles.container}>
+        <ProfileHeader
+          closeBtnVisible={true}
+          title=""
+          handleGoBack={handleGoBack}
+        />
+        <View style={styles.centerBox}>
+          <SuccessIcon />
+          <Text style={styles.infoText}>Thank you!</Text>
+          <Text style={styles.infoText}>your order is confirmed</Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Ticket' as never);
+          }}
+          style={styles.btnStyle}>
+          <Text style={styles.buttonText}>SUCCESS</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Ticket' as never);
-        }}
-        style={styles.btnStyle}>
-        <Text style={styles.buttonText}>SUCCESS</Text>
-      </TouchableOpacity>
-    </View>
+    </BasicWrapper>
   );
 };
 

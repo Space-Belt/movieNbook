@@ -24,6 +24,7 @@ import ImageSelectWayModal from '../components/Profile/ImageSelectWayModal';
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import {userInfoState} from '../recoil/User';
 import {BORDERRADIUS, COLORS, FONTSIZE, SPACING} from '../theme/theme';
+import BasicWrapper from '../components/BasicWrapper';
 
 const imagePickerOption = {
   mediaType: 'photo',
@@ -116,26 +117,28 @@ const EditProfileScreen = () => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.topWrapper}>
-          <ProfileHeader title={'Edit Profile'} closeBtnVisible={true} />
-          <EditableInfo
-            setProfileImage={setProfileImage}
-            myInfo={myInfo}
-            profileImage={profileImage}
-            userName={userName}
-            setUserName={setUserName}
-            handleModalOpen={handleModalOpen}
-          />
-        </View>
-        <TouchableOpacity
-          style={[styles.btnStyle, changeBtnStyle]}
-          onPress={() => {
-            changeProfile();
-          }}>
-          <Text style={[styles.btnText, changeTextStyle]}>Save</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+      <BasicWrapper>
+        <>
+          <View style={styles.topWrapper}>
+            <ProfileHeader title={'Edit Profile'} closeBtnVisible={true} />
+            <EditableInfo
+              setProfileImage={setProfileImage}
+              myInfo={myInfo}
+              profileImage={profileImage}
+              userName={userName}
+              setUserName={setUserName}
+              handleModalOpen={handleModalOpen}
+            />
+          </View>
+          <TouchableOpacity
+            style={[styles.btnStyle, changeBtnStyle]}
+            onPress={() => {
+              changeProfile();
+            }}>
+            <Text style={[styles.btnText, changeTextStyle]}>Save</Text>
+          </TouchableOpacity>
+        </>
+      </BasicWrapper>
       <ReusableModal
         visible={modalOpen}
         onClose={modalClose}
