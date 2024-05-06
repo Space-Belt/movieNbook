@@ -17,6 +17,7 @@ import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
 import ProfileHeader from '../Profile/ProfileHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {customApiClient} from '../../api/apiClient';
+import {useToast} from '../hooks/useToast';
 
 type Props = {
   handleGoBack: () => void;
@@ -41,6 +42,8 @@ const PayComponent = ({
   movieId,
   totalPrice,
 }: Props) => {
+  const {showToast} = useToast();
+
   const {data} = useQuery({
     queryKey: ['payWay'],
     queryFn: () => getPayMethod(),
@@ -76,9 +79,11 @@ const PayComponent = ({
     onSuccess: data => {
       console.log(data);
       setPage(prev => prev + 1);
+      showToast('Reservation Success', 'success');
     },
     onError(error) {
       console.log(error);
+      showToast('Reservation Failed', 'error');
     },
   });
 
