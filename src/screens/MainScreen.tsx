@@ -7,6 +7,7 @@ import MainStackNavigator from '../navigation/MainStackNavigator';
 import {getMyInfo} from '../api/apiUser';
 
 import {useNavigation} from '@react-navigation/native';
+import {useToast} from '../components/hooks/useToast';
 import {isLoggedInState} from '../recoil/Auth';
 import {userInfoState} from '../recoil/User';
 
@@ -24,6 +25,8 @@ const MainScreen = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
   const [isMyInfo, setIsMyInfo] = useRecoilState(userInfoState);
 
+  const {showToast} = useToast();
+
   React.useEffect(() => {
     const currentTime = new Date().getTime();
     const checkIsLogin = async () => {
@@ -36,10 +39,12 @@ const MainScreen = () => {
         if (currentTime < parseInt(tokenExpired)) {
           setIsLoggedIn(true);
           navigation.navigate('BottomTab' as never);
+          showToast('Login Success', 'success');
         } else {
           await AsyncStorage.removeItem('accessToken');
           await AsyncStorage.removeItem('expiryTime');
           setIsLoggedIn(false);
+          showToast('Login Failed', 'error');
         }
       } else {
         await AsyncStorage.removeItem('accessToken');
