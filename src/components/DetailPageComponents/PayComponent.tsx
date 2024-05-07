@@ -78,7 +78,6 @@ const PayComponent = ({
   const {mutate} = useMutation({
     mutationFn: payMovie,
     onSuccess: data => {
-      console.log(data);
       setPage(prev => prev + 1);
       showToast('Reservation Success', 'success');
     },
