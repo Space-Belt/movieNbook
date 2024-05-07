@@ -13,8 +13,11 @@ import {userInfoState} from '../recoil/User';
 
 export type RootStackParamList = {
   MovieDetailScreen: {movieId: number};
+  SignInScreen: undefined;
   BottomTabNavigator: undefined;
   MainStackNavigator: undefined;
+  SignUpScreen: undefined;
+  BottomTab: undefined;
   EditProfileScreen: undefined;
 };
 
@@ -32,8 +35,6 @@ const MainScreen = () => {
     const checkIsLogin = async () => {
       const tokenResult = await AsyncStorage.getItem('accessToken');
       const tokenExpired = await AsyncStorage.getItem('tokenExpired');
-
-      // const result = await AsyncStorage.clear();
 
       if (tokenResult && tokenExpired) {
         if (currentTime < parseInt(tokenExpired)) {
