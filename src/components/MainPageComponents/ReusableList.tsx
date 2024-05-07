@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {IMovie} from '../../api/apiMovie';
 import {COLORS, FONTSIZE} from '../../theme/theme';
 import ReusableCard from './ReusableCard';
@@ -16,22 +16,28 @@ const ReusableList = ({data}: Props) => {
     return <ReusableCard item={item} />;
   };
   return (
-    <FlatList
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={(item, index) => keyExtractor({item}, index)}
-      horizontal={true}
-      contentContainerStyle={styles.containerStyle}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => keyExtractor({item}, index)}
+        horizontal={true}
+        contentContainerStyle={styles.containerStyle}
+      />
+    </View>
   );
 };
 
 export default ReusableList;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.Black,
+    paddingHorizontal: 15,
+  },
   containerStyle: {
     gap: 35,
-    flex: 1,
   },
   imageBox: {
     flex: 1,

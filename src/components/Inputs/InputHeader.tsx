@@ -1,11 +1,5 @@
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {Dispatch, SetStateAction} from 'react';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import {
   BORDERRADIUS,
   COLORS,
@@ -16,12 +10,12 @@ import {
 import CustomIcon from '../icons/CustomIcon';
 
 interface Props {
-  searchFunction: () => void;
+  handleDelete: () => void;
+  searchText: string;
+  setSearchText: Dispatch<SetStateAction<string>>;
 }
 
-const InputHeader = ({searchFunction}: Props) => {
-  const [searchText, setSearchText] = React.useState<string>('');
-
+const InputHeader = ({handleDelete, searchText, setSearchText}: Props) => {
   return (
     <View style={styles.inputBox}>
       <TextInput
@@ -31,16 +25,13 @@ const InputHeader = ({searchFunction}: Props) => {
         placeholder="Search your Movies..."
         placeholderTextColor={COLORS.WhiteRGBA32}
       />
-      <TouchableOpacity
-        style={styles.searchIcon}
-        onPress={() => searchFunction()}>
+      <TouchableOpacity style={styles.searchIcon} onPress={handleDelete}>
         <CustomIcon
           name="search"
           color={COLORS.Orange}
           size={FONTSIZE.size_20}
         />
       </TouchableOpacity>
-      <Text style={styles.searchedText}>{searchText}</Text>
     </View>
   );
 };

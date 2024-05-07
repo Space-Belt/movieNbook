@@ -5,7 +5,6 @@ import {IMovie} from '../../api/apiMovie';
 import NowPlayingCard from './NowPlayingCard';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../screens/MainScreen';
-// import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {StackNavigationProp} from '@react-navigation/stack';
 
 type Props = {
@@ -14,7 +13,10 @@ type Props = {
 
 const windowWidth = Dimensions.get('window').width;
 
-type MovieProps = StackNavigationProp<RootStackParamList, 'MovieDetailScreen'>;
+export type MovieProps = StackNavigationProp<
+  RootStackParamList,
+  'MovieDetailScreen'
+>;
 
 const NowPlayingList = ({data}: Props) => {
   const navigation = useNavigation<MovieProps>();
@@ -37,10 +39,6 @@ const NowPlayingList = ({data}: Props) => {
     return `${item.id}-${item.original_title}-${index}`;
   };
 
-  React.useEffect(() => {
-    console.log(windowWidth);
-  }, []);
-
   return (
     <View style={styles.container}>
       <Carousel
@@ -50,7 +48,7 @@ const NowPlayingList = ({data}: Props) => {
         inactiveSlideScale={0.87}
         itemWidth={266}
         keyExtractor={(item, index) => keyExtractor(item, index)}
-        initialNumToRender={2}
+        initialNumToRender={3}
         layout={'default'}
         loop={true}
       />
@@ -62,7 +60,6 @@ export default NowPlayingList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     width: '100%',
   },
 });

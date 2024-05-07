@@ -1,98 +1,44 @@
-import {useNavigation} from '@react-navigation/native';
 import {useQuery} from '@tanstack/react-query';
 import * as React from 'react';
 import {
   ActivityIndicator,
   Dimensions,
-  FlatList,
+  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
-import {IMovie, getMovies, queryKey} from '../api/apiMovie';
+import {getMovie, getMovies} from '../api/apiMovie';
 import CategoryHeader from '../components/CategoryHeader';
-import NowPlayingList from '../components/MainPageComponents/NowPlayingList';
-import {COLORS, SPACING} from '../theme/theme';
 import LoggedInHeader from '../components/MainPageComponents/LoggedInHeader';
+import NowPlayingList from '../components/MainPageComponents/NowPlayingList';
 import ReusableList from '../components/MainPageComponents/ReusableList';
+import {COLORS, SPACING} from '../theme/theme';
+import BasicWrapper from '../components/BasicWrapper';
 
 export const {width, height} = Dimensions.get('window');
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
-
-  const {
-    data: nowPlayingMovies,
-    isLoading: nowPlayingLoading,
-    isError: nowPlayingIsError,
-    error: nowPlayingError,
-    isSuccess: nowPlayingIsSuccess,
-  } = useQuery({
+  const {data: nowPlayingMovies, isLoading: nowPlayingLoading} = useQuery({
     queryKey: ['nowPlayingMoviesKey'],
-    queryFn: () => getMovies('now_playing', 1),
+    queryFn: () => getMovie('now-playing', 1),
     staleTime: 5 * 60 * 1000,
   });
 
-  const {
-    data: popularMovies,
-    isLoading: popularLoading,
-    isError: popularIsError,
-    error: popularError,
-    isSuccess: popularSuccess,
-  } = useQuery({
+  const {data: popularMovies, isLoading: popularLoading} = useQuery({
     queryKey: ['popularMoviesKey'],
     queryFn: () => getMovies('popular', 2),
     staleTime: 5 * 60 * 1000,
   });
 
-  const {
-    data: upcomingMovies,
-    isLoading: upcomingLoading,
-    isError: upcomingIsError,
-    error: upcomingError,
-    isSuccess: upcomingSuccess,
-  } = useQuery({
+  const {data: upcomingMovies, isLoading: upcomingLoading} = useQuery({
     queryKey: ['upcomingMoviesKey'],
     queryFn: () => getMovies('upcoming', 3),
     staleTime: 5 * 60 * 1000,
   });
 
-  const [nowPlayingMoviesList, setNowPlayingMoviesList] = React.useState<
-    IMovie[]
-  >([]);
-  const [popularMoviesList, setPopularMoviesList] = React.useState<IMovie[]>(
-    [],
-  );
-  const [upcomingMoviesList, setUpcomingMoviesList] = React.useState<IMovie[]>(
-    [],
-  );
-
-  const searchMoviesFunction = () => {};
-
-  React.useEffect(() => {
-    if (nowPlayingMovies !== undefined) {
-      setNowPlayingMoviesList(nowPlayingMovies);
-    }
-  }, [nowPlayingMovies]);
-
-  React.useEffect(() => {
-    if (popularMovies !== undefined) {
-      setPopularMoviesList(popularMovies);
-    }
-  }, [popularMovies]);
-
-  React.useEffect(() => {
-    if (upcomingMovies !== undefined) {
-      setUpcomingMoviesList(upcomingMovies);
-    }
-  }, [upcomingMovies]);
-
-  if (
-    nowPlayingLoading == null ||
-    popularLoading == null ||
-    upcomingLoading == null
-  ) {
+  if (nowPlayingLoading || popularLoading || upcomingLoading) {
     return (
       <ScrollView
         style={styles.container}
@@ -107,30 +53,37 @@ const HomeScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <StatusBar hidden />
-      <LoggedInHeader />
-      <View style={styles.categoryWrapper}>
-        <CategoryHeader title={'Now Playing'} />
-      </View>
-      <NowPlayingList
-        data={nowPlayingMovies !== undefined ? nowPlayingMovies : []}
-      />
-      <View style={styles.categoryWrapper}>
-        <CategoryHeader title={'Popular'} />
-      </View>
-      <ReusableList data={popularMovies !== undefined ? popularMovies : []} />
-      <View style={styles.categoryWrapper}>
-        <CategoryHeader title={'Upcoming'} />
-      </View>
-      <ReusableList data={upcomingMovies !== undefined ? upcomingMovies : []} />
-    </ScrollView>
+    <BasicWrapper>
+      <ScrollView style={styles.container}>
+        <LoggedInHeader />
+        <View style={styles.categoryWrapper}>
+          <CategoryHeader title={'Now Playing'} />
+        </View>
+        <NowPlayingList
+          data={nowPlayingMovies !== undefined ? nowPlayingMovies : []}
+        />
+        <View style={styles.categoryWrapper}>
+          <CategoryHeader title={'Popular'} />
+        </View>
+        <ReusableList data={popularMovies !== undefined ? popularMovies : []} />
+        <View style={styles.categoryWrapper}>
+          <CategoryHeader title={'Upcoming'} />
+        </View>
+        <ReusableList
+          data={upcomingMovies !== undefined ? upcomingMovies : []}
+        />
+      </ScrollView>
+    </BasicWrapper>
   );
 };
 
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  safeWrapper: {
+    flex: 1,
+    backgroundColor: COLORS.Black,
+  },
   container: {
     display: 'flex',
     backgroundColor: COLORS.Black,
@@ -149,6 +102,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 25,
     marginBottom: 25,
+    paddingHorizontal: 15,
   },
   containerGap36: {
     gap: SPACING.space_36,

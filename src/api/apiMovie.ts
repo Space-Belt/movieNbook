@@ -1,5 +1,5 @@
 import {API_KEY} from '@env';
-import {apiClient} from './apiClient';
+import {apiClient, customApiClient} from './apiClient';
 
 export const queryKey = [
   'id',
@@ -57,20 +57,26 @@ export interface IMovie {
   vote_count: number;
 }
 
-export const searchMovies = async (keyword: string): Promise<IMovie[]> => {
-  const endPoint = `search/movie?api_key=${API_KEY}&query=${keyword}`;
-  const response = (await apiClient.get(endPoint)).data.result;
+export const searchMovies = async (keyword: string) => {
+  const endPoint = `movie?keyword=${keyword}`;
 
-  return response;
+  try {
+    const response = (await customApiClient.get(`${endPoint}`)).data.results;
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
 };
 
 export const getMovies = async (
   category: string,
   page: number,
 ): Promise<IMovie[]> => {
-  const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}`;
+  // const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}&language=ko-KR`;
+  const endPoint = `/movie/${category}?api_key=${API_KEY}&page=${page}&language=ko-KR`;
   try {
-    const response = (await apiClient.get(endPoint)).data.results;
+    const response = (await customApiClient.get(endPoint)).data.results;
     return response;
   } catch (error) {
     console.error('Error fetching movies:', error);
@@ -79,9 +85,44 @@ export const getMovies = async (
 };
 
 export const movieDetails = async (id: number) => {
-  const endPoint = `/movie/${id}?api_key=${API_KEY}`;
+  const endPoint = `/movie/${id}`;
   try {
-    const response = (await apiClient.get(endPoint)).data;
+    const response = (await customApiClient.get(endPoint)).data;
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
+};
+
+export const getMovie = async (category: string): Promise<IMovie[]> => {
+  const endPoint = `/movie/${category}`;
+  try {
+    const response = (await customApiClient.get(endPoint)).data.results;
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
+};
+
+export const getMovieDate = async (movieId: number) => {
+  const endPoint = `booking/showtimes?movieId=${movieId}`;
+  try {
+    const response = (await customApiClient.get(endPoint)).data;
+    return response;
+  } catch (error) {
+    console.error('Error fetching movies:', error);
+    throw error;
+  }
+};
+
+export const getSeats = async (showtimeId: number) => {
+  const endPoint = `booking/seats/${showtimeId}`;
+
+  try {
+    const response = (await customApiClient.get(endPoint)).data;
+
     return response;
   } catch (error) {
     console.error('Error fetching movies:', error);
