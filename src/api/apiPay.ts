@@ -29,7 +29,6 @@ export const getPayHistory = async () => {
       },
     });
 
-    console.log(payWay);
     return payWay;
   } catch (error) {
     console.log(error);
