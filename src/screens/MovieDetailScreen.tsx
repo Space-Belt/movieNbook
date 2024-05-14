@@ -74,8 +74,8 @@ const MovieDetailScreen = ({route, navigation}: MovieProps) => {
       <DetailBasicComponents
         movieDetail={movieDetail}
         handleGoBack={handleGoBack}
-        page={reservationPage}
         setPage={setReservationPage}
+        isLoading={isLoading}
       />
     );
   }

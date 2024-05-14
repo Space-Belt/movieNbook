@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 15,
+    paddingHorizontal: 15,
   },
   imageStyle: {
     width: 35,
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   textStyle: {
-    fontSize: FONTSIZE.size_16,
+    fontSize: FONTSIZE.size_12,
     color: COLORS.White,
     fontFamily: FONTFAMILY.poppins_medium,
   },

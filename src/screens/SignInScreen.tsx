@@ -38,7 +38,7 @@ const SignInScreen = () => {
   };
 
   return (
-    <BasicWrapper>
+    <SafeAreaView style={styles.container}>
       <View>
         <Text style={styles.signInText}>Sign In</Text>
         <AuthInput
@@ -72,7 +72,7 @@ const SignInScreen = () => {
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
-    </BasicWrapper>
+    </SafeAreaView>
   );
 };
 
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
+    paddingHorizontal: 25,
   },
   inputWrapper: {
     marginTop: 10,
