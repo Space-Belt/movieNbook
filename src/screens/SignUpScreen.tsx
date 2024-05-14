@@ -33,7 +33,7 @@ const SignUpScreen = () => {
 
   return (
     <BasicWrapper>
-      <View>
+      <View style={styles.container}>
         <Text style={styles.signInText}>회원가입</Text>
         <AuthInput
           icon={<UserIcon />}
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
+    paddingHorizontal: 20,
   },
   inputWrapper: {
     marginTop: 10,
