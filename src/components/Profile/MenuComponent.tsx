@@ -13,7 +13,7 @@ const MenuComponent = React.memo(() => {
       <TouchableOpacity
         style={styles.menuWrapper}
         onPress={() => {
-          navigation.navigate('EditProfileScreen');
+          navigation.navigate('EditProfileScreen' as never);
         }}>
         <View style={styles.menuFrontWrapper}>
           <CustomIcon name="user" style={styles.userIcon} />
