@@ -5,6 +5,7 @@ import {StyleSheet} from 'react-native';
 import {RecoilRoot} from 'recoil';
 import MainScreen from './screens/MainScreen';
 import ToastMessage from './components/ToastMessage/ToastMessage';
+import {navigationRef} from './lib/navigation';
 
 const queryClient = new QueryClient();
 
@@ -12,7 +13,7 @@ function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <MainScreen />
           <ToastMessage />
         </NavigationContainer>
