@@ -15,6 +15,7 @@ export default BasicWrapper;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 20,
     backgroundColor: COLORS.Black,
   },
 });

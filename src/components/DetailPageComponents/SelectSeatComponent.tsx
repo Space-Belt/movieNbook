@@ -3,6 +3,7 @@ import moment from 'moment';
 import React, {Dispatch, SetStateAction} from 'react';
 import {
   FlatList,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -256,7 +257,7 @@ const SelectSeatComponent = ({
           </View>
           <TouchableOpacity
             style={styles.buttonWrapper}
-            disabled={seatId.length === 0}
+            // disabled={seatId.length === 0}
             onPress={() => {
               setPage(prev => prev + 1);
             }}>
@@ -281,7 +282,10 @@ const styles = StyleSheet.create({
   containerGap24: {
     gap: SPACING.space_24,
   },
-  movieSeatWrapper: {alignItems: 'center', justifyContent: 'center'},
+  movieSeatWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   movieSeatStyle: {
     flexDirection: 'row',
     width: 288,
@@ -310,7 +314,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 46,
+    height: Platform.OS === 'ios' ? 46 : 'auto',
     paddingHorizontal: SPACING.space_24,
     // paddingBottom: SPACING.space_24,
   },
@@ -342,7 +346,7 @@ const styles = StyleSheet.create({
   },
   seatInfoContainer: {
     flexDirection: 'row',
-
+    paddingHorizontal: 15,
     marginTop: SPACING.space_36,
     marginBottom: SPACING.space_10,
     alignItems: 'center',
@@ -354,12 +358,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   seatInfoIcon: {
-    fontSize: FONTSIZE.size_20,
+    fontSize: FONTSIZE.size_14,
     color: COLORS.White,
   },
   seatInfoText: {
     fontFamily: FONTFAMILY.poppins_medium,
-    fontSize: FONTSIZE.size_12,
+    fontSize: FONTSIZE.size_10,
     color: COLORS.White,
   },
   timeWrapper: {
@@ -384,8 +388,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     color: COLORS.White,
-    fontSize: FONTSIZE.size_14,
-
+    fontSize: FONTSIZE.size_12,
     textAlign: 'center',
   },
 });
