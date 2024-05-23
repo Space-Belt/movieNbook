@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     right: -40,
   },
   movieInfoTextWrapper: {
-    width: 50,
+    width: 70,
     height: 50,
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   textBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: 150,
+    width: 160,
     justifyContent: 'space-between',
     marginTop: 15,
   },
