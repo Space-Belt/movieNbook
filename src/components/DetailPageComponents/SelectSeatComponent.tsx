@@ -128,9 +128,10 @@ const SelectSeatComponent = ({
   }, [movieDate]);
 
   React.useEffect(() => {
-    let price = seatId.length * movieDate?.price;
-
-    setTotalPrice(price);
+    if (seatId.length > 0) {
+      let price = seatId.length * movieDate?.price;
+      setTotalPrice(price);
+    }
   }, [seatId]);
 
   const handleSelectSeat = (id: number) => {
