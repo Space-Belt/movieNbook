@@ -11,14 +11,11 @@ import {BORDERRADIUS, COLORS, FONTSIZE} from '../../theme/theme';
 
 type Props = {
   value: any;
-  // icon: React.FC<SvgProps>;
   icon: React.ReactElement;
   setValue: Dispatch<SetStateAction<any>>;
   placeholder: string;
   type: KeyboardTypeOptions | undefined;
   secureTextEntry: boolean;
-
-  regex?: RegExp;
 };
 
 const AuthInput = ({
@@ -28,7 +25,6 @@ const AuthInput = ({
   placeholder,
   type,
   secureTextEntry,
-  regex,
 }: Props) => {
   const [isFocused, setIsFocused] = React.useState<boolean>(false);
 

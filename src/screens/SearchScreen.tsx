@@ -18,7 +18,6 @@ const SearchScreen = () => {
 
   const {
     data: searchResult,
-    isLoading,
     isError,
     refetch,
   } = useQuery({
@@ -45,9 +44,7 @@ const SearchScreen = () => {
   };
 
   React.useEffect(() => {
-    // if (debouncedQuery.length > 0) {
     refetch();
-    // }
   }, [debouncedQuery]);
 
   if (isError) {
