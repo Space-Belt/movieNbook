@@ -118,7 +118,7 @@ const EditProfileScreen = () => {
   return (
     <>
       <BasicWrapper>
-        <>
+        <View style={styles.container}>
           <View style={styles.topWrapper}>
             <ProfileHeader title={'Edit Profile'} closeBtnVisible={true} />
             <EditableInfo
@@ -137,7 +137,7 @@ const EditProfileScreen = () => {
             }}>
             <Text style={[styles.btnText, changeTextStyle]}>Save</Text>
           </TouchableOpacity>
-        </>
+        </View>
       </BasicWrapper>
       <ReusableModal
         visible={modalOpen}
@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
+    paddingHorizontal: 20,
   },
   topWrapper: {
     flex: 1,
