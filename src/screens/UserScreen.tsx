@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
-    paddingHorizontal: getPlatform() ? 0 : 25,
+    paddingHorizontal: getPlatform() ? 20 : 25,
   },
   nameProfile: {
     alignItems: 'center',

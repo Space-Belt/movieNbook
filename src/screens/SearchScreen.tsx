@@ -100,7 +100,7 @@ export default SearchScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: getPlatform() ? 10 : 20,
+    paddingHorizontal: getPlatform() ? 0 : 20,
     backgroundColor: COLORS.Black,
   },
   flatWrapper: {
