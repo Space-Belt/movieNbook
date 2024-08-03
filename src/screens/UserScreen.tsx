@@ -8,23 +8,26 @@ import ProfileHeader from '../components/Profile/ProfileHeader';
 import {userInfoState} from '../recoil/User';
 import {COLORS, FONTSIZE} from '../theme/theme';
 import BasicWrapper from '../components/BasicWrapper';
+import {getPlatform} from '../utils/getPlatform';
 
 const UserScreen = () => {
   const myInfo = useRecoilValue(userInfoState);
 
   return (
     <BasicWrapper>
-      <ProfileHeader title={'My Profile'} closeBtnVisible={false} />
-      <View style={styles.nameProfile}>
-        <View style={styles.profileImg}>
-          <FastImage
-            source={{uri: myInfo.profileImage}}
-            style={styles.imageStyle}
-          />
-          <Text style={styles.userNameText}>{myInfo.user_name}</Text>
+      <View style={styles.container}>
+        <ProfileHeader title={'My Profile'} closeBtnVisible={false} />
+        <View style={styles.nameProfile}>
+          <View style={styles.profileImg}>
+            <FastImage
+              source={{uri: myInfo.profileImage}}
+              style={styles.imageStyle}
+            />
+            <Text style={styles.userNameText}>{myInfo.user_name}</Text>
+          </View>
         </View>
+        <MenuComponent />
       </View>
-      <MenuComponent />
     </BasicWrapper>
   );
 };
@@ -35,6 +38,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
+    paddingHorizontal: getPlatform() ? 20 : 25,
   },
   nameProfile: {
     alignItems: 'center',

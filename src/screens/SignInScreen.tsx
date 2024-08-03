@@ -1,5 +1,12 @@
 import React from 'react';
-import {SafeAreaView, StyleProp, StyleSheet, Text, View} from 'react-native';
+import {
+  Platform,
+  SafeAreaView,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import KeyIcon from '../assets/images/key.svg';
 import UserIcon from '../assets/images/user.svg';
 
@@ -38,8 +45,8 @@ const SignInScreen = () => {
   };
 
   return (
-    <BasicWrapper>
-      <View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.viewContainer}>
         <Text style={styles.signInText}>Sign In</Text>
         <AuthInput
           icon={<UserIcon />}
@@ -48,7 +55,6 @@ const SignInScreen = () => {
           placeholder={'Email'}
           type={'email-address'}
           secureTextEntry={false}
-          regex={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
         />
         <AuthInput
           icon={<KeyIcon />}
@@ -57,7 +63,6 @@ const SignInScreen = () => {
           placeholder={'Password'}
           type={'default'}
           secureTextEntry={true}
-          regex={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
         />
         <TouchableOpacity
           onPress={handleLogin}
@@ -72,7 +77,7 @@ const SignInScreen = () => {
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
-    </BasicWrapper>
+    </SafeAreaView>
   );
 };
 
@@ -82,6 +87,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
+    paddingHorizontal: 25,
+  },
+  viewContainer: {
+    paddingHorizontal: Platform.OS === 'ios' ? 0 : 25,
   },
   inputWrapper: {
     marginTop: 10,

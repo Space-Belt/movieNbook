@@ -3,6 +3,7 @@ import React from 'react';
 import CustomIcon from '../icons/CustomIcon';
 import {COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MenuComponent = React.memo(() => {
   const navigation = useNavigation();
@@ -12,7 +13,7 @@ const MenuComponent = React.memo(() => {
       <TouchableOpacity
         style={styles.menuWrapper}
         onPress={() => {
-          navigation.navigate('EditProfileScreen');
+          navigation.navigate('EditProfileScreen' as never);
         }}>
         <View style={styles.menuFrontWrapper}>
           <CustomIcon name="user" style={styles.userIcon} />
@@ -26,6 +27,17 @@ const MenuComponent = React.memo(() => {
           <Text style={styles.profileText}>App Version 1.1.0</Text>
         </View>
       </View>
+      <TouchableOpacity
+        style={styles.menuWrapper}
+        onPress={() => {
+          AsyncStorage.clear();
+          navigation.navigate('SignInScreen' as never);
+        }}>
+        <View style={styles.menuFrontWrapper}>
+          <Text style={styles.profileText}>Logout</Text>
+        </View>
+        <CustomIcon name={'arrow-right'} style={styles.rightArrowIcon} />
+      </TouchableOpacity>
     </View>
   );
 });

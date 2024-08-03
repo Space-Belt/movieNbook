@@ -1,6 +1,7 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import React, {Dispatch, SetStateAction} from 'react';
 import {
+  Platform,
   StyleProp,
   StyleSheet,
   Text,
@@ -19,6 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {customApiClient} from '../../api/apiClient';
 import {useToast} from '../hooks/useToast';
 import BasicWrapper from '../BasicWrapper';
+import {getPlatform} from '../../utils/getPlatform';
 
 type Props = {
   handleGoBack: () => void;
@@ -121,105 +123,110 @@ const PayComponent = ({
 
   return (
     <BasicWrapper>
-      <View>
-        <ProfileHeader
-          closeBtnVisible={true}
-          title=""
-          handleGoBack={handleGoBack}
-        />
-        {data?.cards.map((el: any) => (
-          <View
-            key={JSON.stringify(el)}
-            style={[
-              styles.cardWrapper,
-              selectedCard === el.id && selectedCardStyle,
-            ]}>
-            <Text style={styles.selectCardText}>Select Card</Text>
-            <LinearGradient
-              colors={['#262B33', '#0C0F14']}
-              start={{x: 0, y: 90}}
-              end={{x: 1, y: 90}}
-              style={styles.linearGradient}>
-              <TouchableOpacity
-                style={styles.cardStyle}
-                onPress={() => {
-                  setSelectedCard(el.id);
-                  setPaymentWay('CREDIT_CARD');
-                }}>
-                <View style={styles.cardTopIconWrapper}>
-                  <CardChip />
-                  <Visa />
-                </View>
-                <View style={styles.cardNumberTextWrapper}>
-                  <Text style={styles.cardNumberText}>
-                    {el.card_number.toString().slice(0, 4)}
-                  </Text>
-                  <Text style={styles.cardNumberText}>
-                    {el.card_number.toString().slice(4, 8)}
-                  </Text>
-                  <Text style={styles.cardNumberText}>
-                    {el.card_number.toString().slice(8, 12)}
-                  </Text>
-                  <Text style={styles.cardNumberText}>
-                    {el.card_number.toString().slice(12, 16)}
-                  </Text>
-                </View>
-                <View style={styles.cardBottomWrapper}>
-                  <View style={styles.ownerWrapper}>
-                    <Text style={styles.ownerTitle}>Card Holder Name</Text>
-                    <Text style={styles.ownerName}>{el.holder_name}</Text>
+      <>
+        <View style={styles.container}>
+          <ProfileHeader
+            closeBtnVisible={true}
+            title=""
+            handleGoBack={handleGoBack}
+          />
+          {data?.cards.map((el: any) => (
+            <View
+              key={JSON.stringify(el)}
+              style={[
+                styles.cardWrapper,
+                selectedCard === el.id && selectedCardStyle,
+              ]}>
+              <Text style={styles.selectCardText}>Select Card</Text>
+              <LinearGradient
+                colors={['#262B33', '#0C0F14']}
+                start={{x: 0, y: 90}}
+                end={{x: 1, y: 90}}
+                style={styles.linearGradient}>
+                <TouchableOpacity
+                  style={styles.cardStyle}
+                  onPress={() => {
+                    setSelectedCard(el.id);
+                    setPaymentWay('CREDIT_CARD');
+                  }}>
+                  <View style={styles.cardTopIconWrapper}>
+                    <CardChip />
+                    <Visa />
                   </View>
-                  <View style={styles.expireWrapper}>
-                    <Text style={styles.expireTitle}>Expiry Date</Text>
-                    <Text style={styles.expireText}>
-                      {el.expiry_date.slice(2, 4)}/{el.expiry_date.slice(5, 7)}
+                  <View style={styles.cardNumberTextWrapper}>
+                    <Text style={styles.cardNumberText}>
+                      {el.card_number.toString().slice(0, 4)}
+                    </Text>
+                    <Text style={styles.cardNumberText}>
+                      {el.card_number.toString().slice(4, 8)}
+                    </Text>
+                    <Text style={styles.cardNumberText}>
+                      {el.card_number.toString().slice(8, 12)}
+                    </Text>
+                    <Text style={styles.cardNumberText}>
+                      {el.card_number.toString().slice(12, 16)}
                     </Text>
                   </View>
-                </View>
-              </TouchableOpacity>
-            </LinearGradient>
-          </View>
-        ))}
+                  <View style={styles.cardBottomWrapper}>
+                    <View style={styles.ownerWrapper}>
+                      <Text style={styles.ownerTitle}>Card Holder Name</Text>
+                      <Text style={styles.ownerName}>{el.holder_name}</Text>
+                    </View>
+                    <View style={styles.expireWrapper}>
+                      <Text style={styles.expireTitle}>Expiry Date</Text>
+                      <Text style={styles.expireText}>
+                        {el.expiry_date.slice(2, 4)}/
+                        {el.expiry_date.slice(5, 7)}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </LinearGradient>
+            </View>
+          ))}
 
-        <TouchableOpacity
-          onPress={() => {
-            setSelectedCard(1);
-            setPaymentWay('WALLET');
-          }}>
-          <LinearGradient
-            colors={['#262B33', '#0C0F14']}
-            start={{x: 0, y: 25}}
-            end={{x: 1, y: 25}}
-            style={[
-              styles.walletWrapper,
-              selectedCard === 1 && selectedCardStyle,
-            ]}>
-            <View style={styles.walletLeftSide}>
-              <Wallet />
-              <Text style={styles.leftSideText}>Wallet</Text>
-            </View>
-            <Text style={styles.rightSideText}>$ {data?.wallet?.balance}</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
-      <View>
-        <View style={styles.priceWrapper}>
-          <View>
-            <Text style={styles.totalPriceTitle}>Total Price</Text>
-            <View style={styles.priceTextWrapper}>
-              <Text style={styles.dollorSign}>$</Text>
-              <Text style={styles.moneyText}>{totalPrice}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedCard(1);
+              setPaymentWay('WALLET');
+            }}>
+            <LinearGradient
+              colors={['#262B33', '#0C0F14']}
+              start={{x: 0, y: 25}}
+              end={{x: 1, y: 25}}
+              style={[
+                styles.walletWrapper,
+                selectedCard === 1 && selectedCardStyle,
+              ]}>
+              <View style={styles.walletLeftSide}>
+                <Wallet />
+                <Text style={styles.leftSideText}>Wallet</Text>
+              </View>
+              <Text style={styles.rightSideText}>
+                $ {data?.wallet?.balance}
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.container}>
+          <View style={styles.priceWrapper}>
+            <View>
+              <Text style={styles.totalPriceTitle}>Total Price</Text>
+              <View style={styles.priceTextWrapper}>
+                <Text style={styles.dollorSign}>$</Text>
+                <Text style={styles.moneyText}>{totalPrice}</Text>
+              </View>
             </View>
           </View>
+          <TouchableOpacity
+            onPress={() => {
+              mutate();
+            }}
+            style={[styles.btnStyle, regesBtnColor]}>
+            <Text style={styles.buttonText}>{btnText}</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() => {
-            mutate();
-          }}
-          style={[styles.btnStyle, regesBtnColor]}>
-          <Text style={styles.buttonText}>{btnText}</Text>
-        </TouchableOpacity>
-      </View>
+      </>
     </BasicWrapper>
   );
 };
@@ -228,9 +235,8 @@ export default PayComponent;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: COLORS.Black,
-    justifyContent: 'space-between',
+    paddingHorizontal: 15,
   },
   linearGradient: {
     padding: 10,
@@ -271,7 +277,7 @@ const styles = StyleSheet.create({
   cardNumberText: {
     letterSpacing: 4,
     color: COLORS.White,
-    fontSize: FONTSIZE.size_14,
+    fontSize: getPlatform() ? FONTSIZE.size_14 : FONTSIZE.size_10,
     fontWeight: '600',
     marginRight: 10,
   },

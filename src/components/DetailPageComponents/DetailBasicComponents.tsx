@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: SPACING.space_10,
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   starIcon: {
     fontSize: FONTSIZE.size_20,
@@ -214,6 +215,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_medium,
     fontSize: FONTSIZE.size_12,
     color: COLORS.White,
+    paddingHorizontal: 20,
   },
   descriptionText: {
     marginTop: 15,
@@ -221,10 +223,12 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_light,
     fontSize: FONTSIZE.size_14,
     color: COLORS.White,
+    paddingHorizontal: 20,
   },
   castingListWrapper: {
     gap: 30,
     marginTop: 15,
+    paddingHorizontal: 20,
   },
   buttonStyle: {
     flex: 1,
@@ -234,6 +238,7 @@ const styles = StyleSheet.create({
     marginVertical: SPACING.space_24,
     borderRadius: BORDERRADIUS.radius_25 * 2,
     height: 46,
+    marginHorizontal: 20,
   },
   buttonText: {
     fontFamily: FONTFAMILY.poppins_medium,

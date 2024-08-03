@@ -10,6 +10,7 @@ import MovieCard from '../components/MainPageComponents/MovieCard';
 import {width} from './HomeScreen';
 import {baseImagePath} from '../api/apicalls';
 import BasicWrapper from '../components/BasicWrapper';
+import {getPlatform} from '../utils/getPlatform';
 
 const SearchScreen = () => {
   const [searchText, setSearchText] = React.useState<string>('');
@@ -17,7 +18,6 @@ const SearchScreen = () => {
 
   const {
     data: searchResult,
-    isLoading,
     isError,
     refetch,
   } = useQuery({
@@ -44,9 +44,7 @@ const SearchScreen = () => {
   };
 
   React.useEffect(() => {
-    // if (debouncedQuery.length > 0) {
     refetch();
-    // }
   }, [debouncedQuery]);
 
   if (isError) {
@@ -102,6 +100,7 @@ export default SearchScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: getPlatform() ? 0 : 20,
     backgroundColor: COLORS.Black,
   },
   flatWrapper: {

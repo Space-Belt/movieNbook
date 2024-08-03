@@ -28,12 +28,27 @@ const SignUpScreen = () => {
   };
 
   const handleSignUp = () => {
-    signUp(userName, email, password);
+    let isValid = true;
+    if (userName.length < 5) {
+      isValid = false;
+    }
+
+    if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      isValid = false;
+    }
+
+    if (password.length < 10) {
+      isValid = false;
+    }
+
+    if (isValid) {
+      signUp(userName, email, password);
+    }
   };
 
   return (
     <BasicWrapper>
-      <View>
+      <View style={styles.container}>
         <Text style={styles.signInText}>회원가입</Text>
         <AuthInput
           icon={<UserIcon />}
@@ -42,7 +57,6 @@ const SignUpScreen = () => {
           placeholder={'이름'}
           type={'default'}
           secureTextEntry={false}
-          regex={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
         />
         <AuthInput
           icon={<UserIcon />}
@@ -51,7 +65,6 @@ const SignUpScreen = () => {
           placeholder={'이메일'}
           type={'email-address'}
           secureTextEntry={false}
-          regex={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
         />
         <AuthInput
           icon={<KeyIcon />}
@@ -60,7 +73,6 @@ const SignUpScreen = () => {
           placeholder={'비밀번호'}
           type={'default'}
           secureTextEntry={true}
-          regex={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
         />
         <AuthInput
           icon={<KeyIcon />}
@@ -69,7 +81,6 @@ const SignUpScreen = () => {
           placeholder={'비밀번호 확인'}
           type={'default'}
           secureTextEntry={true}
-          regex={/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/}
         />
         <TouchableOpacity
           onPress={() => {
@@ -89,6 +100,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
+    paddingHorizontal: 20,
   },
   inputWrapper: {
     marginTop: 10,
