@@ -1,9 +1,3 @@
-// url: user/me
-// file: "your new profile image file here"
-// body: {
-//         user_name?: string;
-// }
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {customApiClient} from './apiClient';
 
