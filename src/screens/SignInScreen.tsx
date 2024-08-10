@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Platform,
-  SafeAreaView,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {SafeAreaView, StyleProp, StyleSheet, Text, View} from 'react-native';
 import KeyIcon from '../assets/images/key.svg';
 import UserIcon from '../assets/images/user.svg';
 
@@ -18,7 +11,6 @@ import {signIn} from '../api/apiAuth';
 import AuthInput from '../components/Inputs/AuthInput';
 import {isLoggedInState} from '../recoil/Auth';
 import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../theme/theme';
-import BasicWrapper from '../components/BasicWrapper';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -69,13 +61,6 @@ const SignInScreen = () => {
           style={[styles.buttonStyle, filledStyle]}>
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('SignUpScreen' as never);
-          }}
-          style={styles.signUpBtn}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -87,10 +72,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
-    paddingHorizontal: 25,
   },
   viewContainer: {
-    paddingHorizontal: Platform.OS === 'ios' ? 0 : 25,
+    paddingHorizontal: 25,
   },
   inputWrapper: {
     marginTop: 10,
@@ -126,13 +110,12 @@ const styles = StyleSheet.create({
     color: COLORS.White,
   },
   signUpBtn: {
-    backgroundColor: '#E1CD17',
+    backgroundColor: COLORS.Orange,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: 46,
     marginTop: 20,
-
     borderRadius: BORDERRADIUS.radius_20,
   },
 });

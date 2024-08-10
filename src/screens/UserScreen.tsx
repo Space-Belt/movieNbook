@@ -1,14 +1,13 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useRecoilValue} from 'recoil';
-import {ImageAssets} from '../assets/images/ImageAssets';
+import BasicWrapper from '../components/BasicWrapper';
 import MenuComponent from '../components/Profile/MenuComponent';
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import {userInfoState} from '../recoil/User';
 import {COLORS, FONTSIZE} from '../theme/theme';
-import BasicWrapper from '../components/BasicWrapper';
-import {getPlatform} from '../utils/getPlatform';
+import {isAndroid} from '../utils/platform';
 
 const UserScreen = () => {
   const myInfo = useRecoilValue(userInfoState);
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.Black,
-    paddingHorizontal: getPlatform() ? 20 : 25,
+    paddingHorizontal: isAndroid ? 25 : 20,
   },
   nameProfile: {
     alignItems: 'center',

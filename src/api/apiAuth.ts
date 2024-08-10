@@ -8,15 +8,11 @@ export const signUp = async (
 ) => {
   const endPoint = 'auth/signup';
   try {
-    const response = await customApiClient
-      .post(endPoint, {
-        username: userName,
-        email: email,
-        password: password,
-      })
-      .then(res => {
-        console.log(res.data);
-      });
+    const response = await customApiClient.post(endPoint, {
+      username: userName,
+      email: email,
+      password: password,
+    });
 
     return response;
   } catch (error) {

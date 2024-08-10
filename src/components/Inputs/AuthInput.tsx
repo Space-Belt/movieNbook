@@ -49,6 +49,7 @@ const AuthInput = ({
           onChangeText={text => {
             setValue(text);
           }}
+          autoCapitalize="none"
           keyboardType={type}
           placeholder={placeholder}
           placeholderTextColor={COLORS.Grey}

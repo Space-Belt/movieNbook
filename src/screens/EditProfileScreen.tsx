@@ -1,10 +1,11 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   ActionSheetIOS,
   Platform,
-  SafeAreaView,
   StyleSheet,
   Text,
+  TextStyle,
   TouchableOpacity,
   View,
   ViewStyle,
@@ -18,13 +19,13 @@ import {
 } from 'react-native-image-picker';
 import {useRecoilValue, useSetRecoilState} from 'recoil';
 import {changeInfo} from '../api/apiUser';
+import BasicWrapper from '../components/BasicWrapper';
 import ReusableModal from '../components/Modal/ReusableModal';
 import EditableInfo from '../components/Profile/EditableInfo';
 import ImageSelectWayModal from '../components/Profile/ImageSelectWayModal';
 import ProfileHeader from '../components/Profile/ProfileHeader';
 import {userInfoState} from '../recoil/User';
 import {BORDERRADIUS, COLORS, FONTSIZE, SPACING} from '../theme/theme';
-import BasicWrapper from '../components/BasicWrapper';
 
 const imagePickerOption = {
   mediaType: 'photo',
@@ -34,6 +35,7 @@ const imagePickerOption = {
 };
 
 const EditProfileScreen = () => {
+  const navigation = useNavigation();
   const myInfo = useRecoilValue(userInfoState);
   const setMyInfo = useSetRecoilState(userInfoState);
 
@@ -99,20 +101,25 @@ const EditProfileScreen = () => {
     }
   };
 
-  const changeProfile = () => {
-    const formdata = new FormData();
+  const changeProfile = async () => {
+    const formData = new FormData();
     const file = {
       name: profileImage?.fileName,
       type: profileImage?.type,
       uri: profileImage?.uri,
     };
-    formdata.append('image', file);
-    changeInfo(formdata, userName);
+
+    formData.append('image', file);
+
+    await changeInfo(formData, userName);
+
     setMyInfo({
       ...myInfo,
       profileImage: profileImage?.uri,
       user_name: userName,
     });
+
+    navigation.goBack();
   };
 
   return (
@@ -132,13 +139,12 @@ const EditProfileScreen = () => {
           </View>
           <TouchableOpacity
             style={[styles.btnStyle, changeBtnStyle]}
-            onPress={() => {
-              changeProfile();
-            }}>
+            onPress={changeProfile}>
             <Text style={[styles.btnText, changeTextStyle]}>Save</Text>
           </TouchableOpacity>
         </View>
       </BasicWrapper>
+
       <ReusableModal
         visible={modalOpen}
         onClose={modalClose}

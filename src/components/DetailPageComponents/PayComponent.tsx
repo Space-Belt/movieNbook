@@ -1,7 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import React, {Dispatch, SetStateAction} from 'react';
 import {
-  Platform,
   StyleProp,
   StyleSheet,
   Text,
@@ -10,17 +10,16 @@ import {
   ViewStyle,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {customApiClient} from '../../api/apiClient';
 import {getPayMethod} from '../../api/apiPay';
 import CardChip from '../../assets/images/cardChip.svg';
 import Visa from '../../assets/images/visa.svg';
 import Wallet from '../../assets/images/wallet.svg';
 import {BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
-import ProfileHeader from '../Profile/ProfileHeader';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {customApiClient} from '../../api/apiClient';
-import {useToast} from '../hooks/useToast';
+import {isAndroid} from '../../utils/platform';
 import BasicWrapper from '../BasicWrapper';
-import {getPlatform} from '../../utils/getPlatform';
+import ProfileHeader from '../Profile/ProfileHeader';
+import {useToast} from '../hooks/useToast';
 
 type Props = {
   handleGoBack: () => void;
@@ -277,7 +276,7 @@ const styles = StyleSheet.create({
   cardNumberText: {
     letterSpacing: 4,
     color: COLORS.White,
-    fontSize: getPlatform() ? FONTSIZE.size_14 : FONTSIZE.size_10,
+    fontSize: isAndroid ? FONTSIZE.size_10 : FONTSIZE.size_14,
     fontWeight: '600',
     marginRight: 10,
   },

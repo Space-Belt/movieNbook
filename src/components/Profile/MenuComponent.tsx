@@ -1,43 +1,55 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
-import CustomIcon from '../icons/CustomIcon';
-import {COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
-import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
+import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useSetRecoilState} from 'recoil';
+import {version} from '../../../package.json';
+import LogoutIcon from '../../assets/images/icon_logout.svg';
+import {MainStackNavigationProp} from '../../navigation/MainStackNavigator';
+import {isLoggedInState} from '../../recoil/Auth';
+import {COLORS, FONTFAMILY, FONTSIZE} from '../../theme/theme';
+import CustomIcon from '../icons/CustomIcon';
+
+const APP_VERSION = version;
 
 const MenuComponent = React.memo(() => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<MainStackNavigationProp>();
+
+  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+
+  const handlePressProfile = () => {
+    navigation.navigate('EditProfileScreen');
+  };
+
+  const logout = async () => {
+    await AsyncStorage.removeItem('accessToken');
+    await AsyncStorage.removeItem('expiryTime');
+
+    setIsLoggedIn(false);
+  };
 
   return (
     <View>
-      <TouchableOpacity
-        style={styles.menuWrapper}
-        onPress={() => {
-          navigation.navigate('EditProfileScreen' as never);
-        }}>
+      <TouchableOpacity style={styles.menuWrapper} onPress={handlePressProfile}>
         <View style={styles.menuFrontWrapper}>
           <CustomIcon name="user" style={styles.userIcon} />
           <Text style={styles.profileText}>Profile</Text>
         </View>
         <CustomIcon name={'arrow-right'} style={styles.rightArrowIcon} />
       </TouchableOpacity>
-      <View style={styles.menuWrapper}>
+      <TouchableOpacity style={styles.menuWrapper} onPress={logout}>
         <View style={styles.menuFrontWrapper}>
-          <CustomIcon name={'info'} style={styles.infoIcon} />
-          <Text style={styles.profileText}>App Version 1.1.0</Text>
-        </View>
-      </View>
-      <TouchableOpacity
-        style={styles.menuWrapper}
-        onPress={() => {
-          AsyncStorage.clear();
-          navigation.navigate('SignInScreen' as never);
-        }}>
-        <View style={styles.menuFrontWrapper}>
+          <LogoutIcon width={18} height={18} />
           <Text style={styles.profileText}>Logout</Text>
         </View>
         <CustomIcon name={'arrow-right'} style={styles.rightArrowIcon} />
       </TouchableOpacity>
+      <View style={styles.menuWrapper}>
+        <View style={styles.menuFrontWrapper}>
+          <CustomIcon name={'info'} style={styles.infoIcon} />
+          <Text style={styles.profileText}>App Version {APP_VERSION}</Text>
+        </View>
+      </View>
     </View>
   );
 });
@@ -54,11 +66,11 @@ const styles = StyleSheet.create({
   menuFrontWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 10,
   },
   userIcon: {
     fontSize: FONTSIZE.size_18,
     color: COLORS.White,
-    marginRight: 20,
   },
   rightArrowIcon: {
     fontSize: FONTSIZE.size_18,
@@ -67,7 +79,6 @@ const styles = StyleSheet.create({
   infoIcon: {
     fontSize: FONTSIZE.size_18,
     color: COLORS.White,
-    marginRight: 16,
   },
   profileText: {
     fontSize: FONTSIZE.size_16,

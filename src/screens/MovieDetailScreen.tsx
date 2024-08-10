@@ -1,45 +1,48 @@
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 
-import {useFocusEffect} from '@react-navigation/native';
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {useQuery} from '@tanstack/react-query';
 import React from 'react';
-import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import {movieDetails} from '../api/apiMovie';
-import {COLORS} from '../theme/theme';
-import {RootStackParamList} from './MainScreen';
-
+import {payMovie} from '../api/apiPay';
 import DetailBasicComponents from '../components/DetailPageComponents/DetailBasicComponents';
-import SelectSeatComponent from '../components/DetailPageComponents/SelectSeatComponent';
 import PayComponent from '../components/DetailPageComponents/PayComponent';
 import PayResultComponent from '../components/DetailPageComponents/PayResultComponent';
-import {payMovie} from '../api/apiPay';
+import SelectSeatComponent from '../components/DetailPageComponents/SelectSeatComponent';
+import {
+  MainStackNavigationProp,
+  MainStackParamList,
+} from '../navigation/MainStackNavigator';
+import {COLORS} from '../theme/theme';
 
-type MovieProps = NativeStackScreenProps<
-  RootStackParamList,
-  'MovieDetailScreen'
->;
+type RouteProps = RouteProp<MainStackParamList, 'MovieDetailScreen'>;
 
-const MovieDetailScreen = ({route, navigation}: MovieProps) => {
+const MovieDetailScreen = () => {
+  const navigation = useNavigation<MainStackNavigationProp>();
+  const route = useRoute<RouteProps>();
+
   const {
     data: movieDetail,
     isLoading,
     refetch,
   } = useQuery({
     queryKey: ['movieDetail'],
-    queryFn: () => movieDetails(route.params.movieId),
+    queryFn: () => movieDetails(route?.params?.movieId),
     staleTime: 5 * 60 * 1000,
+    enabled: Boolean(route?.params?.movieId !== undefined),
   });
 
   const [reservationPage, setReservationPage] = React.useState<number>(0);
-
   const [seatId, setSeatId] = React.useState<number[]>([]);
-
   const [showTimeId, setShowTimeId] = React.useState<number>();
-
   const [paymentWay, setPaymentWay] = React.useState<
     'WALLET' | 'CREDIT_CARD'
   >();
-
   const [totalPrice, setTotalPrice] = React.useState<number>(0);
 
   const handleGoBack = () => {

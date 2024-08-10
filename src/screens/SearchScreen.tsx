@@ -1,16 +1,16 @@
+import {useQuery} from '@tanstack/react-query';
 import * as React from 'react';
 import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
-import InputHeader from '../components/Inputs/InputHeader';
 import {searchMovies} from '../api/apiMovie';
-import {COLORS, SPACING} from '../theme/theme';
-import EmptyResult from '../components/EmptyResult';
-import {useQuery} from '@tanstack/react-query';
-import {useDebouncedState} from '../components/hooks/useDebounceSearch';
-import MovieCard from '../components/MainPageComponents/MovieCard';
-import {width} from './HomeScreen';
 import {baseImagePath} from '../api/apicalls';
 import BasicWrapper from '../components/BasicWrapper';
-import {getPlatform} from '../utils/getPlatform';
+import EmptyResult from '../components/EmptyResult';
+import InputHeader from '../components/Inputs/InputHeader';
+import MovieCard from '../components/MainPageComponents/MovieCard';
+import {useDebouncedState} from '../components/hooks/useDebounceSearch';
+import {COLORS, SPACING} from '../theme/theme';
+import {isAndroid} from '../utils/platform';
+import {width} from './HomeScreen';
 
 const SearchScreen = () => {
   const [searchText, setSearchText] = React.useState<string>('');
@@ -100,7 +100,7 @@ export default SearchScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: getPlatform() ? 0 : 20,
+    paddingHorizontal: isAndroid ? 20 : 0,
     backgroundColor: COLORS.Black,
   },
   flatWrapper: {

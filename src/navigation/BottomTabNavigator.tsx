@@ -1,4 +1,7 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabNavigationProp,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 import React from 'react';
 
 import {StyleSheet, View} from 'react-native';
@@ -9,7 +12,17 @@ import TicketScreen from '../screens/TicketScreen';
 import UserScreen from '../screens/UserScreen';
 import {COLORS, FONTSIZE, SPACING} from '../theme/theme';
 
-const Tab = createBottomTabNavigator();
+export type BottomTabParamList = {
+  Home: undefined;
+  Search: undefined;
+  Ticket: undefined;
+  User: undefined;
+};
+
+export type BottomTabStackNavigationProp =
+  BottomTabNavigationProp<BottomTabParamList>;
+
+const Tab = createBottomTabNavigator<BottomTabParamList>();
 
 const tabBarIconRendering = (name: string, focused: boolean) => {
   return (

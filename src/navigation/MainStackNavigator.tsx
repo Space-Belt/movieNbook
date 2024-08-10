@@ -1,53 +1,35 @@
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import React from 'react';
 
-import {Alert, BackHandler, StyleSheet} from 'react-native';
-import SignInScreen from '../screens/SignInScreen';
-import SignUpScreen from '../screens/SignUpScreen';
-import BottomTabNavigator from './BottomTabNavigator';
-import MovieDetailScreen from '../screens/MovieDetailScreen';
+import {StyleSheet} from 'react-native';
+import useBackPressHandler from '../hooks/useBackPressHandler';
 import EditProfileScreen from '../screens/EditProfileScreen';
-import {RootStackParamList} from '../screens/MainScreen';
-import {navigationRef} from '../lib/navigation';
+import MovieDetailScreen from '../screens/MovieDetailScreen';
+import BottomTabNavigator, {BottomTabParamList} from './BottomTabNavigator';
 
-const MainStack = createStackNavigator<RootStackParamList>();
+export type MainStackParamList = {
+  BottomTab: {
+    screen: keyof BottomTabParamList;
+    params?: BottomTabParamList[keyof BottomTabParamList];
+  };
+  MovieDetailScreen: {movieId: number};
+  EditProfileScreen: undefined;
+};
+
+export type MainStackNavigationProp = StackNavigationProp<MainStackParamList>;
+
+const MainStack = createStackNavigator<MainStackParamList>();
 
 const MainStackNavigator = () => {
-  React.useEffect(() => {
-    const handleBackPress = () => {
-      console.log(navigationRef.getCurrentRoute());
-      if (
-        navigationRef.getCurrentRoute()?.name === 'Home' ||
-        navigationRef.getCurrentRoute()?.name === 'SignInScreen'
-      ) {
-        Alert.alert('잠깐!!', '정말 앱을 종료하시겠어요?', [
-          {
-            text: '취소',
-            onPress: () => null,
-            style: 'cancel',
-          },
-          {text: '나가기', onPress: () => BackHandler.exitApp()},
-        ]);
-      } else {
-        navigationRef.goBack();
-      }
-
-      return true;
-    };
-
-    BackHandler.addEventListener('hardwareBackPress', () => handleBackPress());
-
-    return BackHandler.removeEventListener('hardwareBackPress', () =>
-      handleBackPress(),
-    );
-  }, []);
+  useBackPressHandler();
 
   return (
     <MainStack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName="SignInScreen">
-      <MainStack.Screen name="SignInScreen" component={SignInScreen} />
-      <MainStack.Screen name="SignUpScreen" component={SignUpScreen} />
+      initialRouteName="BottomTab">
       <MainStack.Screen name="BottomTab" component={BottomTabNavigator} />
       <MainStack.Screen
         name="MovieDetailScreen"
